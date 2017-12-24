@@ -1,22 +1,4 @@
-// Hide all the upgrade detectors
-document.getElementsByClassName('upgradedetect')[0].style.display = 'none';
-document.getElementsByClassName('upgradedetect')[1].style.display = 'none';
-document.getElementsByClassName('upgradedetect')[2].style.display = 'none';
-document.getElementsByClassName('upgradedetect')[3].style.display = 'none';
-document.getElementsByClassName('upgradedetect')[4].style.display = 'none';
-document.getElementsByClassName('upgradedetect')[5].style.display = 'none';
-document.getElementsByClassName('upgradedetect')[6].style.display = 'none';
-document.getElementsByClassName('upgradedetect')[7].style.display = 'none';
-
-function isMobile() {
-	var mobile = false;
-	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-			navigator.userAgent)) {
-		mobile = true;
-	}
-	return mobile;
-}
-if (isMobile()) {
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 	alert(
 		'It looks likes you\'re on mobile. For the best experience, play on your PC.'
 	)
@@ -51,46 +33,17 @@ document.addEventListener('touchstart', this.handleTouchStart, {
 document.addEventListener('touchmove', this.handleTouchMove, {
 	passive: false
 })
-document.getElementsByClassName('upgradedetect')[0].onclick = function () {
-	socket.emit('upgrade', {
-		pos: 0
-	});
-};
-document.getElementsByClassName('upgradedetect')[1].onclick = function () {
-	socket.emit('upgrade', {
-		pos: 2
-	});
-};
-document.getElementsByClassName('upgradedetect')[2].onclick = function () {
-	socket.emit('upgrade', {
-		pos: 1
-	});
-};
-document.getElementsByClassName('upgradedetect')[3].onclick = function () {
-	socket.emit('upgrade', {
-		pos: 3
-	});
-};
-document.getElementsByClassName('upgradedetect')[4].onclick = function () {
-	socket.emit('upgrade', {
-		pos: 4
-	});
-};
-document.getElementsByClassName('upgradedetect')[5].onclick = function () {
-	socket.emit('upgrade', {
-		pos: 5
-	});
-};
-document.getElementsByClassName('upgradedetect')[6].onclick = function () {
-	socket.emit('upgrade', {
-		pos: 6
-	});
-};
-document.getElementsByClassName('upgradedetect')[7].onclick = function () {
-	socket.emit('upgrade', {
-		pos: 7
-	});
-};
+for (var i = 0; i < 8; i++) {
+	(function(id) {
+		var e = document.getElementsByClassName('upgradedetect')[id];
+		e.style.display = 'none'; // Hide all the upgrade detectors
+		e.onclick = function () {
+			socket.emit('upgrade', {
+				pos: id
+			});
+		};
+	})(i);
+}
 
 function randInt(min, max) {
 	min = Math.ceil(min);
@@ -158,7 +111,7 @@ function calculateBarrelPos(angle) {
 	var yPos = Math.sin(angle / 180 * Math.PI) * 15;
 	return {
 		x: xPos,
-		y: yPos
+		y: yPos,
 	};
 }
 
