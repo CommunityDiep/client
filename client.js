@@ -30,7 +30,7 @@ function shadeColor2(color, percent) {
 var softStroke = true;
 var inGame = false;
 
-var bgImage = new Image(window.innerWidth, window.innerHeight);
+var bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
 
 // Prevent scrolling
