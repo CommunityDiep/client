@@ -332,7 +332,7 @@ play.onclick = function() {
 		inGame = true;
 
 		/*global localStorage*/
-		localStorage.username = localStorage.username == undefined ? "" : document.getElementById("textInput").value;
+		localStorage.username = document.getElementById("textInput").value || "";
 
 		ga('send', {
 			hitType: 'event',
@@ -347,7 +347,7 @@ play.onclick = function() {
 }
 
 window.onload = function() {
-	document.getElementById("textInput").value = document.getElementById("textInput").value == undefined ? "" : localStorage.username;
+	document.getElementById("textInput").value = localStorage.username || "";
 };
 
 socket.on('signInResponse', function(data) {
