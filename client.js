@@ -1167,10 +1167,12 @@ setInterval(function() {
 		textInput.style.display = "initial";
 
 		// TITLE SCREEN IMAGE
-		if (canvas.width / canvas.height > bgImage.width / bgImage.height) {
-			ctx.drawImage(bgImage, canvas.width / 2 - bgImage.width / 2, 0, canvas.width, canvas.height);
+		var canvasRatio = canvas.width / canvas.height;
+		var bgImageRatio = bgImage.width / bgImage.height;
+		if (canvasRatio > bgImageRatio) {
+			ctx.drawImage(bgImage, 0, canvas.height / 2 - canvas.width / bgImageRatio / 2, canvas.width, canvas.width / bgImageRatio);
 		} else {
-			ctx.drawImage(bgImage, 0, canvas.height / 2 - bgImage.height / 2, canvas.width, canvas.height);
+			ctx.drawImage(bgImage, canvas.width / 2 - canvas.height * bgImageRatio / 2, 0, canvas.height * bgImageRatio, canvas.height);
 		}
 
 		// DARKEN THE IMAGE
