@@ -124,8 +124,8 @@ function calculateBarrelPos(angle) {
 }
 
 function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
-	hat == undefined ? true : hat;
-	
+	hat = hat == undefined ? true : hat;
+
 	var animationTime = new Date().getTime()
 	ctx.save();
 	ctx.translate(x, y);
@@ -255,7 +255,7 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 
 	if (hat && date.getMonth() == 11 && date.getDate() == 25) {
 		ctx.rotate(5.6);
-		ctx.drawImage(hatImage, -30, -130, radius * 5, radius * 5);
+		ctx.drawImage(hatImage, -5 - radius, -105 - radius, radius * 5, radius * 5);
 		ctx.rotate(-5.6);
 	}
 
