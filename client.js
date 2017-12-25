@@ -18,13 +18,21 @@ function shadeColor2(color, percent) {
 }
 var softStroke = true;
 var inGame = false;
+
 var bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
+
+var date = new Date();
+
+var hatImage = new Image();
+hatImage.src = 'http://www.officialpsds.com/images/thumbs/Santa-Hat-psd89867.png';
+
 // Prevent scrolling
 window.addEventListener('scroll', function (event) {
 	event.preventDefault();
 	window.scrollTo(0, 0);
 });
+
 // Disable Chrome two-finger swipe to go back/forward
 // Source: https://stackoverflow.com/a/46439501/5513988
 document.addEventListener('touchstart', this.handleTouchStart, {
@@ -115,7 +123,9 @@ function calculateBarrelPos(angle) {
 	};
 }
 
-function drawTank(x, y, angle, radius, color, barrels, bodyType) {
+function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
+	hat == undefined ? true : hat;
+	
 	var animationTime = new Date().getTime()
 	ctx.save();
 	ctx.translate(x, y);
@@ -242,6 +252,13 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType) {
 		ctx.closePath();
 		ctx.fillStyle = '#000000';
 	};
+
+	if (hat && date.getMonth() == 11 && date.getDate() == 25) {
+		ctx.rotate(5.6);
+		ctx.drawImage(hatImage, -30, -130, radius * 5, radius * 5);
+		ctx.rotate(-5.6);
+	}
+
 	ctx.restore();
 };
 var width = window.innerWidth;
@@ -457,7 +474,7 @@ var Shape = function (initPack) {
 			});*/
 					} else {
 						if (self.name === 'square') {
-							drawTank(x, y, self.angle, 18.5, self.color, [], 1);
+							drawTank(x, y, self.angle, 18.5, self.color, [], 1, false);
 							/* ga('send', {hitType: 'event',
 								eventCategory: 'Render',
 								eventAction: 'polygon-render',
