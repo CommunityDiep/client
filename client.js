@@ -251,7 +251,6 @@ var height = window.innerHeight;
 var gameDiv = document.getElementById('gameDiv');
 var signDiv = document.getElementById('signDiv');
 var input = document.getElementById('textInput');
-var play = document.getElementById('play');
 document.getElementById('textInput').onchange = function () {
 	ga('send', {
 		hitType: 'event',
@@ -261,13 +260,8 @@ document.getElementById('textInput').onchange = function () {
 	});
 }
 var spin_angle = 0;
-play.onclick = function () {
-	// var tank_choice = chooseTank.options[chooseTank.selectedIndex].value;
-	/* if(signDivUsername.value != ''){
-		$.getJSON('// api.ipify.org?format=jsonp&callback=?', function(data) {
-			var ip = JSON.stringify(data.ip, null, 2);
-			socket.emit('signIn',{name:signDivUsername.value,address:ip,tank:'Tank',width:width,height:height});
-		}); */
+
+function tryJoin() {
 	if (input.value != '') {
 		var ip = 104024 * Math.random();
 		socket.emit('signIn', {
@@ -284,12 +278,13 @@ play.onclick = function () {
 			hitType: 'event',
 			eventCategory: 'Title Screen',
 			eventAction: 'play',
-			eventLabel: 'Pressed play and joined game.'
+			eventLabel: 'Pressed enter on the title screen and joined game.'
 		});
 	} else {
 		alert('Please enter a name.');
 	}
 }
+
 window.onload = function () {
 	document.getElementById('textInput').value = localStorage.username || '';
 };
@@ -1179,6 +1174,10 @@ document.onkeydown = function (event) {
 			} else {
 				document.exitFullscreen();
 			}
+	}
+
+	if (document.activeElement == document.getElementById("textInput") && event.keyCode == 13) {
+		tryJoin();
 	}
 };
 document.onkeyup = function (event) {
