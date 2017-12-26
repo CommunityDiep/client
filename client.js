@@ -1087,6 +1087,13 @@ function drawBar(obj) {
 		ctx.fillStyle = obj.fillColor;
 		ctx.fillRect(obj.x - (obj.width / 2) + 1, (obj.y - (obj.height / 2)) + 1,
 			obj.filled * (obj.width - 2), obj.height - 2);
+
+		drawText({
+			text: obj.label,
+			x: obj.x,
+			y: obj.y + 3,
+			font: `${obj.height - 5}px Ubuntu`
+		})
 	}
 }
 var drawScoreboard = function () {
