@@ -1151,16 +1151,6 @@ document.onkeyup = function (event) {
 				inputId: 'up',
 				state: false
 			});
-		else if (event.keyCode == 187) // =
-			socket.emit('keyPress', {
-				inputId: 'inc',
-				state: false
-			});
-		else if (event.keyCode == 189) // -
-			socket.emit('keyPress', {
-				inputId: 'dec',
-				state: false
-			});
 		else if (event.keyCode == 32) // spacebar
 			socket.emit('keyPress', {
 				inputId: 'attack',
