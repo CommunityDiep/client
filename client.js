@@ -1040,6 +1040,7 @@ function drawKills() {
 
 function drawHotbar() {
 	ctx.fillStyle = 'white';
+
 	drawText({
 		text: Player.list[selfId].name,
 		x: width / 2,
@@ -1047,15 +1048,15 @@ function drawHotbar() {
 		opacity: '0.8',
 		font: 'bold 30px Ubuntu'
 	});
-	// Will soon be replaced by score bar, which uses drawBar's native label property
-	drawText({
-		text: `Score: ${Player.list[selfId].score}`,
-		x: width / 2,
-		y: height - 30,
-		font: '10px Ubuntu'
+	drawBar({
+		x: canvas.width / 2 + 150,
+		y: height - 25,
+		label: `Score: ${Player.list[selfId].score}`,
+		filled: 1,
+		width: 300,
+		height: 15,
+		renderOnFull: true
 	});
-	// How bout we don't try that score bar
-	// drawBar({})
 }
 // obj.width: total width of bar (in pixels)
 // obj.height: total height of bar (in pixels)
