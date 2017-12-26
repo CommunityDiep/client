@@ -324,17 +324,7 @@ var chatText = document.getElementById('chat-text');
 var chatInput = document.getElementById('chat-input');
 var chatForm = document.getElementById('chat-form');
 socket.on('addToChat', function (data) {
-	var usertype = data.dev ? 'developer' : data.trusted ? 'trusted user' :
-		'normal user';
-	if (data.server) {
-		return
-	} else if (data.dev) {
-		chatText.innerHTML += `<div style="color:#EF5058;">${ data.text }</div>`;
-	} else if (data.trusted) {
-		chatText.innerHTML += `<div style="color:#7790F9;">${ data.text }</div>`;
-	} else {
-		chatText.innerHTML += `<div>${ data.text }</div>`;
-	}
+	chatText.innerHTML += `<div>${ data.text }</div>`;
 	chatText.scrollTop = chatText.scrollHeight;
 });
 chatForm.onsubmit = function (e) {
