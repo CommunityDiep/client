@@ -1131,39 +1131,51 @@ document.onkeydown = function (event) {
 };
 document.onkeyup = function (event) {
 	if (!(document.activeElement == document.getElementById('chat-input'))) {
-		if (event.keyCode == 68 || event.keyCode == 39) { // d or right
-			socket.emit('keyPress', {
-				inputId: 'right',
-				state: false
-			});
-		} else if (event.keyCode == 83 || event.keyCode == 40) // s or down
-			socket.emit('keyPress', {
-				inputId: 'down',
-				state: false
-			});
-		else if (event.keyCode == 65 || event.keyCode == 37) // a or left
-			socket.emit('keyPress', {
-				inputId: 'left',
-				state: false
-			});
-		else if (event.keyCode == 87 || event.keyCode == 38) // w or up
-			socket.emit('keyPress', {
-				inputId: 'up',
-				state: false
-			});
-		else if (event.keyCode == 32) // spacebar
-			socket.emit('keyPress', {
-				inputId: 'attack',
-				state: false
-			});
-		else if (event.keyCode == 16) // shift
-			socket.emit('keyPress', {
-				inputId: 'repel',
-				state: false
-			});
+		switch (event.keyCode) {
+			case 68:
+			case 39:
+				socket.emit('keyPress', {
+					inputId: 'right',
+					state: false
+				});
+				break;
+			case 83:
+			case 40:
+				socket.emit('keyPress', {
+					inputId: 'down',
+					state: false
+				});
+				break;
+			case 65:
+			case 37:
+				socket.emit('keyPress', {
+					inputId: 'left',
+					state: false
+				});
+				break;
+			case 87:
+			case 38:
+				socket.emit('keyPress', {
+					inputId: 'up',
+					state: false
+				});
+				break;
+			case 32:
+				socket.emit('keyPress', {
+					inputId: 'attack',
+					state: false
+				});
+				break;
+			case 16:
+				socket.emit('keyPress', {
+					inputId: 'repel',
+					state: false
+				});
+				break;
+		}
 	}
 };
-// window.onscroll = function () { window.scrollTo(0, 0); };
+
 document.onmousedown = function (event) {
 	if (inGame) {
 		socket.emit('keyPress', {
