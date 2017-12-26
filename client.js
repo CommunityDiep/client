@@ -327,7 +327,7 @@ socket.on('addToChat', function (data) {
 	chatText.innerHTML += `<div>${ data.text }</div>`;
 	chatText.scrollTop = chatText.scrollHeight;
 });
-chatForm.addEvenetListener('submit', function (e) {
+chatForm.addEventListener('submit', function (e) {
 	e.preventDefault();
 	socket.emit('sendMsgToServer', {
 		words: chatInput.value,
