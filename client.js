@@ -1018,7 +1018,7 @@ function drawHotbar() {
 	drawBar({
 		x: canvas.width / 2 + (350 / 2),
 		y: height - 15.5,
-		label: `Lvl 1 Tank`,
+		label: `Lvl 1 ${tanktree[Player.list[selfId].tank].localized}`,
 		filled: 1,
 		width: 350,
 		height: 20,
