@@ -884,6 +884,11 @@ socket.on('update', function (data) {
 	}
 	actual_leaders.innerHTML = addToLeaderboard;
 });
+
+socket.on('scoreboard', (data) => {
+	var scoreboardData = data;
+})
+
 // remove
 socket.on('remove', function (data) {
 	for (var i = 0; i < data.player.length; i++) {
