@@ -464,6 +464,8 @@ var Player = function (initPack) {
 	self.hp = initPack.hp,
 		self.hpMax = initPack.hpMax,
 		self.score = initPack.score,
+		self.level = initPack.level,
+		self.tier = initPack.tier,
 		self.name = initPack.name,
 		self.mouseAngle = initPack.mouseAngle;
 	self.invisible = initPack.invisible;
@@ -820,6 +822,8 @@ socket.on('update', function (data) {
 			if (pack.y !== undefined) p.y = pack.y;
 			if (pack.hp !== undefined) p.hp = pack.hp;
 			if (pack.score !== undefined) p.score = pack.score;
+			p.level = pack.level;
+			p.tier = pack.tier;
 		}
 	}
 	for (var i = 0; i < data.player.length; i++) {
@@ -1018,7 +1022,7 @@ function drawHotbar() {
 	drawBar({
 		x: canvas.width / 2 + (350 / 2),
 		y: height - 15.5,
-		label: `Lvl 1 ${tanktree[Player.list[selfId].tank].localized}`,
+		label: `Lvl ${Player.list[selfId].level} ${tanktree[Player.list[selfId].tank].localized}`,
 		filled: 1,
 		width: 350,
 		height: 20,
