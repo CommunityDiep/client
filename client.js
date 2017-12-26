@@ -519,7 +519,7 @@ var Player = function (initPack) {
 			}
 			if (score > 3) {
 				var score = 3;
-			} // What are we doing? you do shapes, i do team hey can't target each other also for teas ok
+			}
 			var angle;
 			var tcolor = {
 				'red': '#F14E54',
