@@ -288,7 +288,6 @@ function tryJoin() {
 			width: width,
 			height: height
 		});
-		/* global localStorage*/
 		localStorage.username = document.getElementById('textInput').value || '';
 		ga('send', {
 			hitType: 'event',
@@ -321,7 +320,6 @@ socket.on('killNotification', function (data) {
 	}
 });
 // chat
-/* global ga */
 var chatText = document.getElementById('chat-text');
 var chatInput = document.getElementById('chat-input');
 var chatForm = document.getElementById('chat-form');
@@ -447,35 +445,15 @@ var Shape = function (initPack) {
 		} else {
 			if (self.name === 'triangle') {
 				drawPolygon(x, y, self.angle, 9, self.color, 3);
-				/* ga('send', {hitType: 'event',
-								eventCategory: 'Render',
-								eventAction: 'polygon-render',
-								eventLabel: `Rendered a ${self.colorname} triangle at x ${self.x} and y ${self.y} (relative to player, x ${x} and y ${y}) with angle ${angle} and size ${9}.`
-							});*/
 			} else {
 				if (self.name === 'alphapentagon') {
 					drawPolygon(x, y, self.angle, 50, self.color, 5);
-					/* ga('send', {hitType: 'event',
-									eventCategory: 'Render',
-									eventAction: 'polygon-render',
-									eventLabel: `Rendered a ${self.colorname} alpha pentagon at x ${self.x} and y ${self.y} (relative to player, x ${x} and y ${y}) with angle ${angle} and size ${50}.`
-								});*/
 				} else {
 					if (self.name === 'pentagon') {
 						drawPolygon(x, y, self.angle, 17, self.color, 5);
-						/* ga('send', {hitType: 'event',
-				eventCategory: 'Render',
-				eventAction: 'polygon-render',
-				eventLabel: `Rendered a ${self.colorname} pentagon at x ${self.x} and y ${self.y} (relative to player, x ${x} and y ${y}) with angle ${angle} and size ${17}.`
-			});*/
 					} else {
 						if (self.name === 'square') {
 							drawTank(x, y, self.angle, 18.5, self.color, [], 1, false);
-							/* ga('send', {hitType: 'event',
-								eventCategory: 'Render',
-								eventAction: 'polygon-render',
-								eventLabel: `Rendered a ${self.colorname} square at x ${self.x} and y ${self.y} (relative to player, x ${x} and y ${y}) with angle ${angle} and size ${18.5}.`
-							});*/
 						}
 					}
 				}
@@ -977,8 +955,6 @@ setInterval(function () {
 			spin_angle = 0;
 		}
 		if (!selfId) return;
-		/* if (!(pastx == Player.list[selfId].x) || !(pasty == Player.list[selfId].y)){
-		}*/
 		ctx.clearRect(0, 0, width, height);
 		ctx.fillStyle = '#b9b9b9';
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
