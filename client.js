@@ -45,11 +45,11 @@ for (var i = 0; i < 8; i++) {
 	(function(id) {
 		var e = document.getElementsByClassName('upgradedetect')[id];
 		e.style.display = 'none'; // Hide all the upgrade detectors
-		e.onclick = function () {
+		e.addEventListener('click', function () {
 			socket.emit('upgrade', {
 				pos: id
 			});
-		};
+		});
 	})(i);
 }
 
@@ -106,13 +106,13 @@ socket.on('disconnect', function (err) {
 		})
 	};
 });
-document.getElementById('server').onchange = function () {
+document.getElementById('server').addEventListneer('change', function () {
 	if (!(document.getElementById('server').value == 'select')) {
 		window.open(
 			`${location.origin}${location.pathname}?s=${document.getElementById('server').value}`,
 			'_self');
 	}
-};
+});
 
 function calculateBarrelPos(angle) {
 	var xPos = Math.cos(angle / 180 * Math.PI) * 15;
@@ -267,14 +267,15 @@ var height = window.innerHeight;
 // var chooseTank = document.getElementById('choose-tank');
 var gameDiv = document.getElementById('gameDiv');
 var input = document.getElementById('textInput');
-document.getElementById('textInput').onchange = function () {
+document.getElementById('textInput').addEventListener('change', function () {
 	ga('send', {
 		hitType: 'event',
 		eventCategory: 'Title Screen',
 		eventAction: 'name-change',
 		eventLabel: `Changed name to '${document.getElementById('textInput').value}'.`
 	});
-}
+});
+
 var spin_angle = 0;
 
 function tryJoin() {
@@ -299,9 +300,10 @@ function tryJoin() {
 	}
 }
 
-window.onload = function () {
+window.addEvenetListener('load', function () {
 	document.getElementById('textInput').value = localStorage.username || '';
-};
+});
+
 socket.on('signInResponse', function (data) {
 	if (data.success) {
 		gameDiv.style.display = 'inline-block';
@@ -325,14 +327,15 @@ socket.on('addToChat', function (data) {
 	chatText.innerHTML += `<div>${ data.text }</div>`;
 	chatText.scrollTop = chatText.scrollHeight;
 });
-chatForm.onsubmit = function (e) {
+chatForm.addEvenetListener('submit', function (e) {
 	e.preventDefault();
 	socket.emit('sendMsgToServer', {
 		words: chatInput.value,
 		name: input.value,
 	});
 	chatInput.value = '';
-}
+});
+
 // game
 var sorted = [];
 var changed_indexes = [];
@@ -1073,7 +1076,8 @@ var drawScoreboard = function () {
 		});
 	}
 }
-document.onkeydown = function (event) {
+
+document.addEventListener('keydown', function (event) {
 	if (!(document.activeElement == document.getElementById('chat-input'))) {
 		if (event.keyCode == 69) // e
 			socket.emit('keyPress', {
@@ -1128,8 +1132,9 @@ document.onkeydown = function (event) {
 	if (document.activeElement == document.getElementById("textInput") && event.keyCode == 13) {
 		tryJoin();
 	}
-};
-document.onkeyup = function (event) {
+});
+
+document.addEventListener('keyup', function (event) {
 	if (!(document.activeElement == document.getElementById('chat-input'))) {
 		switch (event.keyCode) {
 			case 68:
@@ -1174,19 +1179,20 @@ document.onkeyup = function (event) {
 				break;
 		}
 	}
-};
+});
 
-document.onmousedown = function (event) {
+document.addEventListener('mousedown', function (event) {
 	if (inGame) {
 		socket.emit('keyPress', {
 			inputId: event.button == 0 ? 'attack' : 'repel',
 			state: true
 		});
 	}
-}
-document.onmouseup = function (event) {
+});
+
+document.addEventListener('mouseup', function (event) {
 	socket.emit('keyPress', {
 		inputId: event.button == 0 ? 'attack' : 'repel',
 		state: false
 	});
-}
+});
