@@ -336,22 +336,17 @@ chatForm.onsubmit = function (e) {
 	chatInput.value = '';
 }
 // game
-var scoreboardContent = document.getElementById('scoreboard-content');
-scoreboardContent.style.left = width - 200;
-var actual_leaders = document.getElementById('actual-leaders');
 var sorted = [];
 var changed_indexes = [];
 var original_indexes = [];
 var points = [];
 var nicknames = [];
-var scoreboardList = {};
 var selfId = null;
 var sortedScores = {};
 var ctx = document.getElementById('ctx').getContext('2d');
 var canvas = document.getElementById('ctx');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-scoreboardContent.style.opacity = 0;
 chatForm.style.opacity = 0;
 chatInput.style.opacity = 0;
 chatText.style.opacity = 0;
@@ -825,7 +820,6 @@ socket.on('update', function (data) {
 		player_id = Number(String(player_id).replace('0.', ''));
 		points.push(data.player[i].score + '.' + player_id);
 		if (p) {
-			scoreboardList[player_id] = Player.list[p.id].name;
 			if (pack.tank) {
 				p.tank = pack.tank;
 			}
@@ -861,28 +855,6 @@ socket.on('update', function (data) {
 			if (pack.y !== undefined) b.y = pack.y;
 		}
 	}
-	var toShow;
-	if (sorted.length > 3) {
-		toShow = 3;
-	} else {
-		toShow = sorted.length;
-	}
-	sorted = points.sort(function (a, b) {
-		return b - a
-	});
-	var addToLeaderboard = '';
-	for (var i = 0; i < toShow; i++) {
-		var sortedPos = sorted[i];
-		var sortedPosAsString = String(sortedPos);
-		var split = sortedPosAsString.split('.');
-		var currentScore = split[0];
-		var currentName = scoreboardList[Number(split[1])];
-		addToLeaderboard += currentName + ' - ' + currentScore +
-			'<br/><br/><br/><br/>';
-		// for new leaderboard
-		sortedScores[currentName] = currentScore;
-	}
-	actual_leaders.innerHTML = addToLeaderboard;
 });
 
 socket.on('scoreboard', (data) => {
@@ -911,7 +883,6 @@ setInterval(function () {
 	height = window.innerHeight;
 	if (inGame) {
 		if (Player.list[selfId]) {
-			scoreboardContent.style.opacity = 0;
 			textInput.style.display = 'none';
 			chatForm.style.opacity = 1;
 			chatInput.style.opacity = 1;
