@@ -498,16 +498,9 @@ var Player = function (initPack) {
 			'purple': '#BE83F2',
 			'green': '#24DF73'
 		};
-		// console.log('mouse loc: ' + self.mouseAngle);
-		// var x_loc = calculateBarrelX(self.mouseAngle);
-		// var y_loc = calculateBarrelY(self.mouseAngle);
-		// console.log(x_loc);
-		// console.log(y_loc);
 		ctx.fillStyle = 'black';
 		var hpWidth = 30 * self.hp / self.hpMax;
 		ctx.font = '30px Ubuntu';
-		// ctx.save();
-		// ctx.rotate();
 		if (!self.invisible) {
 			var size = 25; // + parseInt(self.score)*1.25;
 			var score = self.score + 3
