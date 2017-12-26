@@ -1098,9 +1098,16 @@ var drawScoreboard = function () {
 		font: 'bold 30px Ubuntu'
 	});
 
-	console.log(scoreboardData);
 	for (let s of scoreboardData) {
-
+		drawBar({
+			x: 30,
+			y: 30,
+			label: scoreboardData[s][0],
+			filled: scoreboardData[s][1],
+			width: 38,
+			height: 7,
+			renderOnFull: true
+		});
 	}
 }
 document.onkeydown = function (event) {
