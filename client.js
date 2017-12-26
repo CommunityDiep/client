@@ -5,7 +5,7 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 }
 // for soft stroking
 // Source: https://stackoverflow.com/a/13542669/5513988
-function shadeColor2(color, percent) {
+function shadeColor(color, percent) {
 	var f = parseInt(color.slice(1), 16),
 		t = percent < 0 ? 0 : 255,
 		p = percent < 0 ? percent * -1 : percent,
@@ -132,7 +132,7 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 	ctx.rotate(degToRad(angle));
 	ctx.scale(radius / 48, radius / 48);
 	ctx.lineJoin = 'round';
-	ctx.strokeStyle = softStroke ? shadeColor2('#999999', -0.25) : '#555555';
+	ctx.strokeStyle = softStroke ? shadeColor('#999999', -0.25) : '#555555';
 	ctx.fillStyle = '#999999';
 	ctx.lineWidth = 4 / (radius / 48);
 	for (var i = 0; i < barrels.length; i++) {
@@ -167,14 +167,14 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 		ctx.beginPath();
 		ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
 		ctx.fillStyle = color;
-		ctx.strokeStyle = softStroke ? shadeColor2(color, -0.25) : '#555555';
+		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
 		ctx.fillStyle = '#000000';
 	} else if (bodyType == 1) {
 		ctx.fillStyle = color;
-		ctx.strokeStyle = softStroke ? shadeColor2(color, -0.25) : '#555555';
+		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 		ctx.fillRect(-1 * radius * 2, -1 * radius * 2, radius * 4, radius * 4);
 		ctx.strokeRect(-1 * radius * 2, -1 * radius * 2, radius * 4, radius * 4);
 	} else if (bodyType == 2) {
@@ -197,7 +197,7 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 		ctx.beginPath();
 		ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
 		ctx.fillStyle = color;
-		ctx.strokeStyle = softStroke ? shadeColor2(color, -0.25) : '#555555';
+		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
@@ -246,7 +246,7 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 		ctx.beginPath();
 		ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
 		ctx.fillStyle = color;
-		ctx.strokeStyle = softStroke ? shadeColor2(color, -0.25) : '#555555';
+		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
@@ -336,22 +336,22 @@ chatForm.onsubmit = function (e) {
 	chatInput.value = '';
 }
 // game
-var scoreboard_content = document.getElementById('scoreboard-content');
-scoreboard_content.style.left = width - 200;
+var scoreboardContent = document.getElementById('scoreboard-content');
+scoreboardContent.style.left = width - 200;
 var actual_leaders = document.getElementById('actual-leaders');
 var sorted = [];
 var changed_indexes = [];
 var original_indexes = [];
 var points = [];
 var nicknames = [];
-var scoreboard_list = {};
+var scoreboardList = {};
 var selfId = null;
 var sortedScores = {};
 var ctx = document.getElementById('ctx').getContext('2d');
 var canvas = document.getElementById('ctx');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-scoreboard_content.style.opacity = 0;
+scoreboardContent.style.opacity = 0;
 chatForm.style.opacity = 0;
 chatInput.style.opacity = 0;
 chatText.style.opacity = 0;
@@ -392,7 +392,7 @@ function degToRad(deg) {
 function drawPolygon(x, y, angle, radius, color, sides) {
 	ctx.save();
 	ctx.fillStyle = color;
-	ctx.strokeStyle = softStroke ? shadeColor2(color, -0.25) : '#555555';
+	ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 	ctx.lineJoin = 'round';
 	ctx.beginPath();
 	var step = ((Math.PI * 2) / sides);
@@ -720,7 +720,7 @@ function drawCircle(x, y, radius, color, trap) {
 		var radius = 0;
 		ctx.save();
 		ctx.lineWidth = 4;
-		ctx.strokeStyle = softStroke ? shadeColor2(color, -0.25) : '#555555';
+		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 		ctx.fillStyle = color;
 		ctx.translate(x, y)
 		ctx.beginPath();
@@ -743,7 +743,7 @@ function drawCircle(x, y, radius, color, trap) {
 		ctx.arc(x, y, radius, 0, 2 * Math.PI);
 		ctx.fillStyle = color;
 		ctx.fill();
-		ctx.strokeStyle = softStroke ? shadeColor2(color, -0.25) : '#555555';
+		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 		ctx.stroke();
 		ctx.closePath();
 		ctx.restore();
@@ -825,7 +825,7 @@ socket.on('update', function (data) {
 		player_id = Number(String(player_id).replace('0.', ''));
 		points.push(data.player[i].score + '.' + player_id);
 		if (p) {
-			scoreboard_list[player_id] = Player.list[p.id].name;
+			scoreboardList[player_id] = Player.list[p.id].name;
 			if (pack.tank) {
 				p.tank = pack.tank;
 			}
@@ -872,15 +872,15 @@ socket.on('update', function (data) {
 	});
 	var addToLeaderboard = '';
 	for (var i = 0; i < toShow; i++) {
-		var current_score = sorted[i];
-		var current_score_string = String(current_score);
-		var split = current_score_string.split('.');
-		var score_current = split[0];
-		var currentName = scoreboard_list[Number(split[1])];
-		addToLeaderboard += currentName + ' - ' + score_current +
+		var sortedPos = sorted[i];
+		var sortedPosAsString = String(sortedPos);
+		var split = sortedPosAsString.split('.');
+		var currentScore = split[0];
+		var currentName = scoreboardList[Number(split[1])];
+		addToLeaderboard += currentName + ' - ' + currentScore +
 			'<br/><br/><br/><br/>';
 		// for new leaderboard
-		sortedScores[currentName] = score_current;
+		sortedScores[currentName] = currentScore;
 	}
 	actual_leaders.innerHTML = addToLeaderboard;
 });
@@ -906,7 +906,7 @@ setInterval(function () {
 	height = window.innerHeight;
 	if (inGame) {
 		if (Player.list[selfId]) {
-			scoreboard_content.style.opacity = 0;
+			scoreboardContent.style.opacity = 0;
 			textInput.style.display = 'none';
 			chatForm.style.opacity = 1;
 			chatInput.style.opacity = 1;
