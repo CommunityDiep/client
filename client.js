@@ -1022,7 +1022,7 @@ function drawHotbar() {
 		filled: 1,
 		width: 325,
 		height: 20,
-		color: '#f0d96c'
+		color: '#f0d96c',
 		renderOnFull: true
 	});
 }
