@@ -742,7 +742,6 @@ function drawCircle(x, y, radius, color, trap) {
 		ctx.restore();
 	}
 };
-/* global tcolor */
 var Bullet = function (initPack) {
 	var self = {};
 	self.id = initPack.id;
@@ -793,26 +792,16 @@ socket.on('init', function (data) {
 	for (var i = 0; i < data.bullet.length; i++) {
 		new Bullet(data.bullet[i]);
 	}
-	// console.log(data.shape.length);
 	for (var i = 0; i < data.shape.length; i++) {
-		// console.log('adding shape');
 		new Shape(data.shape[i]);
-		// console.log('LIST LEN:' + Object.keys(Shape.list).length);
 	}
 });
-// update
-/* socket.on('death',function(data){
-	if (selfId === data.id) {
-			gameDiv.style.display = 'none';
-	}
-})*/
 socket.on('update', function (data) {
 	points = [];
 	nicknames = [];
 	for (var i = 0; i < data.player.length; i++) {
 		var player_id = data.player[i].id;
 		var pack = data.player[i];
-		// console.log(pack);
 		var p = Player.list[pack.id]
 		player_id = Number(String(player_id).replace('0.', ''));
 		points.push(data.player[i].score + '.' + player_id);
@@ -834,8 +823,6 @@ socket.on('update', function (data) {
 		if (data.player[i].id == selfId) {
 			var pack = data.shape[data.player[i].id];
 			for (var i = 0; i < pack.length; i++) {
-				// console.log(pack[i].id);
-				// console.log(Shape.list);
 				var s = Shape.list[pack[i].id];
 				if (s) {
 					if (pack[i].x !== undefined) s.x = pack[i].x;
