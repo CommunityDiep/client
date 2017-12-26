@@ -1100,12 +1100,12 @@ var drawScoreboard = function () {
 
 	for (let s of scoreboardData) {
 		drawBar({
-			x: 30,
-			y: 30,
+			x: width - 200,
+			y: 100,
 			label: s[0],
 			filled: s[1],
-			width: 38,
-			height: 7,
+			width: 200,
+			height: 15,
 			renderOnFull: true
 		});
 	}
