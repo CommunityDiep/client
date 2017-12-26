@@ -1016,11 +1016,11 @@ function drawHotbar() {
 		renderOnFull: true
 	});
 	drawBar({
-		x: canvas.width / 2 + (325 / 2),
+		x: canvas.width / 2 + (350 / 2),
 		y: height - 15.5,
 		label: `Lvl 1 Tank`,
 		filled: 1,
-		width: 325,
+		width: 350,
 		height: 20,
 		fillColor: '#f0d96c',
 		renderOnFull: true
