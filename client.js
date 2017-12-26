@@ -266,7 +266,6 @@ var height = window.innerHeight;
 // sigin
 // var chooseTank = document.getElementById('choose-tank');
 var gameDiv = document.getElementById('gameDiv');
-var signDiv = document.getElementById('signDiv');
 var input = document.getElementById('textInput');
 document.getElementById('textInput').onchange = function () {
 	ga('send', {
@@ -305,7 +304,6 @@ window.onload = function () {
 };
 socket.on('signInResponse', function (data) {
 	if (data.success) {
-		signDiv.style.display = 'none';
 		gameDiv.style.display = 'inline-block';
 
 		inGame = true;
@@ -805,7 +803,6 @@ socket.on('init', function (data) {
 // update
 /* socket.on('death',function(data){
 	if (selfId === data.id) {
-			signDiv.style.display = 'inline-block';
 			gameDiv.style.display = 'none';
 	}
 })*/
@@ -1191,7 +1188,7 @@ document.onkeyup = function (event) {
 };
 // window.onscroll = function () { window.scrollTo(0, 0); };
 document.onmousedown = function (event) {
-	if (signDiv.style.display == 'none') {
+	if (inGame) {
 		socket.emit('keyPress', {
 			inputId: event.button == 0 ? 'attack' : 'repel',
 			state: true
