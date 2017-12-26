@@ -308,16 +308,11 @@ socket.on('signInResponse', function (data) {
 	if (data.success) {
 		signDiv.style.display = 'none';
 		gameDiv.style.display = 'inline-block';
-		
+
 		inGame = true;
 	} else alert('Unable to join. Please try again later.');
 });
-socket.on('signUpResponse', function (data) {
-	if (data.success) {
-		alert('Sign up successful!');
-	} else alert('Sign up unsuccessful!');
-});
-socket.on('alert', function (data) {});
+
 socket.on('killNotification', function (data) {
 	if (selfId) {
 		Player.list[data.killer].notif_timer = 0;
