@@ -886,7 +886,7 @@ socket.on('update', function (data) {
 });
 
 socket.on('scoreboard', (data) => {
-	var scoreboardData = data;
+	scoreboardData = data;
 })
 
 // remove
@@ -1097,7 +1097,7 @@ var drawScoreboard = function () {
 		opacity: '0.8',
 		font: 'bold 30px Ubuntu'
 	});
-	
+
 	console.log(scoreboardData);
 	for (let s of scoreboardData) {
 
