@@ -1097,9 +1097,6 @@ var drawScoreboard = function () {
 		opacity: '0.8',
 		font: 'bold 30px Ubuntu'
 	});
-	// console.log(sortedScores)
-	// Change back to default font
-	ctx.font = 'bold 30px Ubuntu';
 }
 document.onkeydown = function (event) {
 	if (!(document.activeElement == document.getElementById('chat-input'))) {
