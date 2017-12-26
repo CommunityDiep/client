@@ -1102,8 +1102,8 @@ var drawScoreboard = function () {
 		drawBar({
 			x: 30,
 			y: 30,
-			label: scoreboardData[s][0],
-			filled: scoreboardData[s][1],
+			label: s[0],
+			filled: s[1],
 			width: 38,
 			height: 7,
 			renderOnFull: true
