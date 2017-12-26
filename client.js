@@ -1007,11 +1007,20 @@ function drawHotbar() {
 		font: 'bold 30px Ubuntu'
 	});
 	drawBar({
-		x: canvas.width / 2 + 150,
+		x: canvas.width / 2 + (275 / 2),
 		y: height - 25,
 		label: `Score: ${Player.list[selfId].score}`,
 		filled: 1,
-		width: 300,
+		width: 275,
+		height: 15,
+		renderOnFull: true
+	});
+	drawBar({
+		x: canvas.width / 2 + (325 / 2),
+		y: height - 5,
+		label: `Lvl 1 Tank`,
+		filled: 1,
+		width: 325,
 		height: 15,
 		renderOnFull: true
 	});
