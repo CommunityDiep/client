@@ -1098,12 +1098,12 @@ var drawScoreboard = function () {
 		font: 'bold 30px Ubuntu'
 	});
 
-	for (let s of scoreboardData) {
+	for (let s in scoreboardData) {
 		drawBar({
 			x: width - 200,
-			y: 100,
-			label: s[0],
-			filled: s[1],
+			y: 80 + (s * 20),
+			label: scoreboardData[s][0],
+			filled: scoreboardData[s][1],
 			width: 200,
 			height: 15,
 			renderOnFull: true
