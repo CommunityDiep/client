@@ -288,7 +288,6 @@ function tryJoin() {
 			width: width,
 			height: height
 		});
-		inGame = true;
 		/* global localStorage*/
 		localStorage.username = document.getElementById('textInput').value || '';
 		ga('send', {
@@ -309,6 +308,8 @@ socket.on('signInResponse', function (data) {
 	if (data.success) {
 		signDiv.style.display = 'none';
 		gameDiv.style.display = 'inline-block';
+		
+		inGame = true;
 	} else alert('Unable to join. Please try again later.');
 });
 socket.on('signUpResponse', function (data) {
