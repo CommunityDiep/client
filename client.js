@@ -106,7 +106,7 @@ socket.on('disconnect', function (err) {
 		})
 	};
 });
-document.getElementById('server').addEventListneer('change', function () {
+document.getElementById('server').addEventListener('change', function () {
 	if (!(document.getElementById('server').value == 'select')) {
 		window.open(
 			`${location.origin}${location.pathname}?s=${document.getElementById('server').value}`,
