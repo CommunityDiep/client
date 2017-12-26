@@ -300,7 +300,7 @@ function tryJoin() {
 	}
 }
 
-window.addEvenetListener('load', function () {
+window.addEventListener('load', function () {
 	document.getElementById('textInput').value = localStorage.username || '';
 });
 
