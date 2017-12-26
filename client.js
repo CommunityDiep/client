@@ -1100,8 +1100,8 @@ var drawScoreboard = function () {
 
 	for (let s in scoreboardData) {
 		drawBar({
-			x: width - 200,
-			y: 80 + (s * 20),
+			x: width - 100,
+			y: 70 + (s * 20),
 			label: scoreboardData[s][0],
 			filled: scoreboardData[s][1],
 			width: 200,
