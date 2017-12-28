@@ -16,7 +16,7 @@ function shadeColor(color, percent) {
     (t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(
     1)}`;
 }
-const softStroke = true;
+let softStroke = true;
 let inGame = false;
 
 let scoreboardData = [];
