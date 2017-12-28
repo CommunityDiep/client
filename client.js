@@ -1,3 +1,5 @@
+"use strict";
+
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 	alert(
 		'It looks likes you\'re on mobile. For the best experience, play on your PC.'
@@ -6,31 +8,31 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 // for soft stroking
 // Source: https://stackoverflow.com/a/13542669/5513988
 function shadeColor(color, percent) {
-    const f = parseInt(color.slice(1), 16);
-    const t = percent < 0 ? 0 : 255;
-    const p = percent < 0 ? percent * -1 : percent;
-    const R = f >> 16;
-    const G = f >> 8 & 0x00FF;
-    const B = f & 0x0000FF;
-    return `#${(0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round(
-    (t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(
-    1)}`;
+	var f = parseInt(color.slice(1), 16),
+		t = percent < 0 ? 0 : 255,
+		p = percent < 0 ? percent * -1 : percent,
+		R = f >> 16,
+		G = f >> 8 & 0x00FF,
+		B = f & 0x0000FF;
+	return '#' + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round(
+		(t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(
+		1);
 }
 let softStroke = true;
 let inGame = false;
 
 let scoreboardData = [];
 
-const bgImage = new Image();
+var bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
 
-const date = new Date();
+var date = new Date();
 
-const hatImage = new Image();
+var hatImage = new Image();
 hatImage.src = 'http://www.officialpsds.com/images/thumbs/Santa-Hat-psd89867.png';
 
 // Prevent scrolling
-window.addEventListener('scroll', event => {
+window.addEventListener('scroll', function (event) {
 	event.preventDefault();
 	window.scrollTo(0, 0);
 });
@@ -43,16 +45,16 @@ document.addEventListener('touchstart', this.handleTouchStart, {
 document.addEventListener('touchmove', this.handleTouchMove, {
 	passive: false
 })
-for (let i = 0; i < 8; i++) {
-	((id => {
-		const e = document.getElementsByClassName('upgradedetect')[id];
+for (var i = 0; i < 8; i++) {
+	(function(id) {
+		var e = document.getElementsByClassName('upgradedetect')[id];
 		e.style.display = 'none'; // Hide all the upgrade detectors
-		e.addEventListener('click', () => {
+		e.addEventListener('click', function () {
 			socket.emit('upgrade', {
 				pos: id
 			});
 		});
-	}))(i);
+	})(i);
 }
 
 function randInt(min, max) {
@@ -62,12 +64,13 @@ function randInt(min, max) {
 }
 
 function param(name) {
-	return decodeURIComponent((new RegExp(`[?|&]${name}=([^&;]+?)(&|#|;|$)`).exec(location.search) || [null, ''])[1].replace(
+	return decodeURIComponent((new RegExp('[?|&]' + name + '=' +
+		'([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(
 		/\+/g, '%20')) || null;
 }
-const par = param('s') == undefined ? 'ffa' : param('s');
+var par = param('s') == undefined ? 'ffa' : param('s');
 document.getElementById('server').value = par;
-const servers = {
+var servers = {
 	ffa: {
 		name: 'Free For All',
 		servers: ['localhost:8080'] // ['https://cdiep-serv-nylr.c9users.io/','https://cdiep-serv-nylr.c9users.io/']
@@ -88,24 +91,26 @@ const servers = {
 		servers: []
 	}
 };
-let resulter;
-const servernum = randInt(1, servers[par].servers.length);
-const servername = par + 1; // randInt(0,servers[param('s')].servers.length-1)]
+var resulter;
+var servernum = randInt(1, servers[par].servers.length);
+var servername = par + 1; // randInt(0,servers[param('s')].servers.length-1)]
 var socket = io.connect(param('ip') == undefined ? servers[par].servers[
 	servernum - 1] : param('ip'), {
 	reconnect: false
 });
-let tanktree = {};
-socket.on('tanks_update', data => {
+var tanktree = {};
+socket.on('tanks_update', function (data) {
 	tanktree = data;
 })
-socket.on('disconnect', err => {
+socket.on('disconnect', function (err) {
 	console.log(err)
-	const socket = () => io.connect(servers[par].servers[servernum - 1], {
-        reconnect: false
-    });
+	var socket = function () {
+		return io.connect(servers[par].servers[servernum - 1], {
+			reconnect: false
+		})
+	};
 });
-document.getElementById('server').addEventListener('change', () => {
+document.getElementById('server').addEventListener('change', function () {
 	if (!(document.getElementById('server').value == 'select')) {
 		window.open(
 			`${location.origin}${location.pathname}?s=${document.getElementById('server').value}`,
@@ -114,25 +119,27 @@ document.getElementById('server').addEventListener('change', () => {
 });
 
 function calculateBarrelPos(angle) {
-	const xPos = Math.cos(angle / 180 * Math.PI) * 15;
-	const yPos = Math.sin(angle / 180 * Math.PI) * 15;
+	var xPos = Math.cos(angle / 180 * Math.PI) * 15;
+	var yPos = Math.sin(angle / 180 * Math.PI) * 15;
 	return {
 		x: xPos,
 		y: yPos,
 	};
 }
 
-function drawTank(x, y, angle, radius, color, barrels, bodyType, hat=true) {
-    const animationTime = new Date().getTime();
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(degToRad(angle));
-    ctx.scale(radius / 48, radius / 48);
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = softStroke ? shadeColor('#999999', -0.25) : '#555555';
-    ctx.fillStyle = '#999999';
-    ctx.lineWidth = 4 / (radius / 48);
-    for (let i = 0; i < barrels.length; i++) {
+function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
+	hat = hat == undefined ? true : hat;
+
+	var animationTime = new Date().getTime()
+	ctx.save();
+	ctx.translate(x, y);
+	ctx.rotate(degToRad(angle));
+	ctx.scale(radius / 48, radius / 48);
+	ctx.lineJoin = 'round';
+	ctx.strokeStyle = softStroke ? shadeColor('#999999', -0.25) : '#555555';
+	ctx.fillStyle = '#999999';
+	ctx.lineWidth = 4 / (radius / 48);
+	for (var i = 0; i < barrels.length; i++) {
 		if (barrels[i].barrelType == 0) {
 			ctx.save();
 			ctx.rotate(degToRad(barrels[i].angle));
@@ -157,10 +164,10 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat=true) {
 			ctx.closePath();
 			ctx.restore();
 		};
-	}
-    ctx.rotate(0);
-    ctx.lineWidth = 4 / (radius / 48);
-    if (bodyType == 0) {
+	};
+	ctx.rotate(0);
+	ctx.lineWidth = 4 / (radius / 48);
+	if (bodyType == 0) {
 		ctx.beginPath();
 		ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
 		ctx.fillStyle = color;
@@ -248,23 +255,23 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat=true) {
 		ctx.stroke();
 		ctx.closePath();
 		ctx.fillStyle = '#000000';
-	}
+	};
 
-    if (hat && date.getMonth() == 11 && date.getDate() == 25) {
+	if (hat && date.getMonth() == 11 && date.getDate() == 25) {
 		ctx.rotate(5.6);
 		ctx.drawImage(hatImage, -5 - radius, -105 - radius, radius * 5, radius * 5);
 		ctx.rotate(-5.6);
 	}
 
-    ctx.restore();
-}
-let width = window.innerWidth;
-let height = window.innerHeight;
+	ctx.restore();
+};
+var width = window.innerWidth;
+var height = window.innerHeight;
 // sigin
 // var chooseTank = document.getElementById('choose-tank');
-const gameDiv = document.getElementById('gameDiv');
-const input = document.getElementById('textInput');
-document.getElementById('textInput').addEventListener('change', () => {
+var gameDiv = document.getElementById('gameDiv');
+var input = document.getElementById('textInput');
+document.getElementById('textInput').addEventListener('change', function () {
 	ga('send', {
 		hitType: 'event',
 		eventCategory: 'Title Screen',
@@ -273,17 +280,17 @@ document.getElementById('textInput').addEventListener('change', () => {
 	});
 });
 
-let spin_angle = 0;
+var spin_angle = 0;
 
 function tryJoin() {
 	if (input.value != '') {
-		const ip = 104024 * Math.random();
+		var ip = 104024 * Math.random();
 		socket.emit('signIn', {
 			name: input.value,
 			address: ip,
 			tank: 'basic',
-			width,
-			height
+			width: width,
+			height: height
 		});
 		localStorage.username = document.getElementById('textInput').value || '';
 		ga('send', {
@@ -297,11 +304,11 @@ function tryJoin() {
 	}
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('load', function () {
 	document.getElementById('textInput').value = localStorage.username || '';
 });
 
-socket.on('signInResponse', data => {
+socket.on('signInResponse', function (data) {
 	if (data.success) {
 		gameDiv.style.display = 'inline-block';
 
@@ -309,21 +316,22 @@ socket.on('signInResponse', data => {
 	} else alert('Unable to join. Please try again later.');
 });
 
-socket.on('killNotification', data => {
+socket.on('killNotification', function (data) {
 	if (selfId) {
 		Player.list[data.killer].notif_timer = 0;
-		Player.list[data.killer].killtext = `You've killed ${data.killed}.`;
+		Player.list[data.killer].killtext = 'You\'ve killed ' + data.killed +
+			'.';
 	}
 });
 // chat
-const chatText = document.getElementById('chat-text');
-const chatInput = document.getElementById('chat-input');
-const chatForm = document.getElementById('chat-form');
-socket.on('addToChat', data => {
+var chatText = document.getElementById('chat-text');
+var chatInput = document.getElementById('chat-input');
+var chatForm = document.getElementById('chat-form');
+socket.on('addToChat', function (data) {
 	chatText.innerHTML += `<div>${ data.text }</div>`;
 	chatText.scrollTop = chatText.scrollHeight;
 });
-chatForm.addEventListener('submit', e => {
+chatForm.addEventListener('submit', function (e) {
 	e.preventDefault();
 	socket.emit('sendMsgToServer', {
 		words: chatInput.value,
@@ -333,15 +341,15 @@ chatForm.addEventListener('submit', e => {
 });
 
 // game
-const sorted = [];
-const changed_indexes = [];
-const original_indexes = [];
-let points = [];
-let nicknames = [];
+var sorted = [];
+var changed_indexes = [];
+var original_indexes = [];
+var points = [];
+var nicknames = [];
 var selfId = null;
-const sortedScores = {};
+var sortedScores = {};
 var ctx = document.getElementById('ctx').getContext('2d');
-const canvas = document.getElementById('ctx');
+var canvas = document.getElementById('ctx');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 chatForm.style.opacity = 0;
@@ -375,7 +383,7 @@ function drawText(obj) {
 	ctx.fillStyle = obj.color == undefined ? 'white' : obj.color;
 	ctx.fillText(obj.text, 0, 0, obj.maxSize);
 	ctx.restore();
-}
+};
 
 function degToRad(deg) {
 	return deg * (Math.PI / 180);
@@ -387,11 +395,11 @@ function drawPolygon(x, y, angle, radius, color, sides) {
 	ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 	ctx.lineJoin = 'round';
 	ctx.beginPath();
-	const step = ((Math.PI * 2) / sides);
+	var step = ((Math.PI * 2) / sides);
 	ctx.translate(x, y);
 	ctx.rotate(degToRad(angle));
 	ctx.moveTo(radius * 2, 0);
-	for (let i = 1; i < sides + 2; i++) {
+	for (var i = 1; i < sides + 2; i++) {
 		ctx.lineTo(2 * radius * Math.cos(step * i), 2 * radius * Math.sin(step * i));
 	}
 	ctx.lineWidth = 4;
@@ -399,9 +407,9 @@ function drawPolygon(x, y, angle, radius, color, sides) {
 	ctx.stroke();
 	ctx.closePath();
 	ctx.restore();
-}
-const Shape = initPack => {
-	const self = {};
+};
+var Shape = function (initPack) {
+	var self = {}
 	self.id = initPack.id;
 	self.x = initPack.x;
 	self.y = initPack.y;
@@ -411,13 +419,13 @@ const Shape = initPack => {
 	self.colorname = initPack.colorname;
 	self.hp = initPack.hp;
 	self.hpPercent = initPack.hpPercent;
-	self.draw = () => {
+	self.draw = function () {
 		if (Math.abs(Player.list[selfId].x - self.x) > width / 2 + 50 || Math.abs(
 				Player.list[selfId].y - self.y) > height / 2 + 50) {
 			return;
 		}
-		const x = self.x - Player.list[selfId].x + width / 2;
-		const y = self.y - Player.list[selfId].y + height / 2;
+		var x = self.x - Player.list[selfId].x + width / 2;
+		var y = self.y - Player.list[selfId].y + height / 2;
 		if (self.name === 'secret-shape1') {
 			drawPolygon(x, y, self.angle, 17, self.color, 10);
 			drawPolygon(x, y, self.angle, 15, self.color, 9);
@@ -444,10 +452,10 @@ const Shape = initPack => {
 	}
 	Shape.list[self.id] = self;
 	return self;
-};
+}
 Shape.list = {};
-var Player = initPack => {
-	const self = {};
+var Player = function (initPack) {
+	var self = {};
 	self.canUpgrade = false;
 	self.hasUpgraded = false;
 	self.notif_timer = 0;
@@ -468,14 +476,14 @@ var Player = initPack => {
 	self.team = initPack.team;
 	self.autospin = initPack.autospin;
 	self.angle = self.mouseAngle;
-	self.draw = (angle, isPlayer) => {
+	self.draw = function (angle, isPlayer) {
 		if (isPlayer) {
 			self.angle = angle;
 		} else {
 			self.angle = self.mouseAngle;
 		}
-		const x = self.x - Player.list[selfId].x + width / 2;
-		const y = self.y - Player.list[selfId].y + height / 2;
+		var x = self.x - Player.list[selfId].x + width / 2;
+		var y = self.y - Player.list[selfId].y + height / 2;
 		var tcolor = {
 			'red': '#F14E54',
 			'blue': '#1DB2DF',
@@ -483,7 +491,7 @@ var Player = initPack => {
 			'green': '#24DF73'
 		};
 		ctx.fillStyle = 'black';
-		const hpWidth = 30 * self.hp / self.hpMax;
+		var hpWidth = 30 * self.hp / self.hpMax;
 		ctx.font = '30px Ubuntu';
 		if (!self.invisible) {
 			var size = 25; // + parseInt(self.score)*1.25;
@@ -575,28 +583,28 @@ var Player = initPack => {
 	Player.list[self.id] = self;
 	return self;
 }
-let angle = 0;
-let angle_pure = 0;
-let mouseX;
-let mouseY;
-$(document).mousemove(e => {
+var angle = 0;
+var angle_pure = 0;
+var mouseX;
+var mouseY;
+$(document).mousemove(function (e) {
 	if (!selfId || Player.list[selfId].autospin) return;
-	const x = -width + e.pageX - 8;
-	const y = -height + e.pageY - 8;
+	var x = -width + e.pageX - 8;
+	var y = -height + e.pageY - 8;
 	angle = Math.atan2(y, x) / (Math.PI * 180);
-	const boxCenter = [(width / 2) + 25 / 2, (height / 2) + 25 / 2];
+	var boxCenter = [(width / 2) + 25 / 2, (height / 2) + 25 / 2];
 	angle = Math.atan2(e.pageX - boxCenter[0], -(e.pageY - boxCenter[1])) * (
 		180 / Math.PI);
 	angle_pure = Math.atan2(e.pageX - boxCenter[0], -(e.pageY - boxCenter[1]) *
 		(180 / Math.PI));
 	angle = angle - 90;
 	if (Player.list[selfId].autospin) {
-		const mgpower = setInterval(() => {
+		var mgpower = setInterval(function () {
 			if (!Player.list[selfId].autospin) {
 				clearInterval(mgpower);
 			}
 			angle++
-		});
+		})
 	}
 	socket.emit('keyPress', {
 		inputId: 'mouseAngle',
@@ -613,7 +621,7 @@ function drawGrid(x, y, width, height, slotSize, lineColor, xOffset, yOffset) {
 	ctx.beginPath();
 	ctx.strokeColor = lineColor;
 	ctx.lineWidth = 1;
-	for (let i = 0; i < width || i < height; i += slotSize) {
+	for (var i = 0; i < width || i < height; i += slotSize) {
 		ctx.moveTo(0, i);
 		ctx.lineTo(width, i);
 		ctx.moveTo(i + (xOffset % slotSize), 0);
@@ -656,7 +664,7 @@ function drawUpgrades() {
 	};
 
 	function nfup(pos) {
-		const uptank = tanktree[Object.keys(tanktree[Player.list[selfId].tank].upgrades)[
+		var uptank = tanktree[Object.keys(tanktree[Player.list[selfId].tank].upgrades)[
 			pos]];
 		if (uptank == undefined) {
 			return undefined;
@@ -706,10 +714,11 @@ function drawUpgrades() {
 			font: 'bold 30px Ubuntu'
 		});
 	}
-}
+};
 
-function drawCircle(x, y, radius, color='#1DB2DF', trap) {
-    if (trap == 'trap') {
+function drawCircle(x, y, radius, color, trap) {
+	color = color == undefined ? '#1DB2DF' : color;
+	if (trap == 'trap') {
 		var radius = 0;
 		ctx.save();
 		ctx.lineWidth = 4;
@@ -718,7 +727,7 @@ function drawCircle(x, y, radius, color='#1DB2DF', trap) {
 		ctx.translate(x, y)
 		ctx.beginPath();
 		ctx.lineJoin = 'round';
-		const hA = ((Math.PI * 2) / 3);
+		var hA = ((Math.PI * 2) / 3);
 		ctx.moveTo(Math.cos(hA * hI) * radius, Math.sin(hA * hI) * radius);
 		for (var hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos(hA * hI) * radius, Math.sin(hA * hI) * radius);
@@ -741,9 +750,9 @@ function drawCircle(x, y, radius, color='#1DB2DF', trap) {
 		ctx.closePath();
 		ctx.restore();
 	}
-}
-const Bullet = initPack => {
-	const self = {};
+};
+var Bullet = function (initPack) {
+	var self = {};
 	self.id = initPack.id;
 	self.pid = initPack.parent_id;
 	self.x = initPack.x;
@@ -752,11 +761,11 @@ const Bullet = initPack => {
 		self.parent_tank = Player.list[self.pid].tank;
 	}
 	self.type = initPack.type;
-	const color = self.parent_tank == 'Arena Closer' ? '#FEE769' : self.pid ===
+	var color = self.parent_tank == 'Arena Closer' ? '#FEE769' : self.pid ===
 		selfId ? '#1DB2DF' : '#F14E54';
-	self.draw = () => {
-		const x = self.x - Player.list[selfId].x + width / 2;
-		const y = self.y - Player.list[selfId].y + height / 2;
+	self.draw = function () {
+		var x = self.x - Player.list[selfId].x + width / 2;
+		var y = self.y - Player.list[selfId].y + height / 2;
 		if (self.parent_tank == 'destroyer' || self.parent_tank ==
 			'destroyerflank' || self.parent_tank == 'Hybrid') {
 			ctx.fillStyle = color;
@@ -779,9 +788,9 @@ const Bullet = initPack => {
 	}
 	Bullet.list[self.id] = self;
 	return self;
-};
+}
 Bullet.list = {};
-socket.on('init', data => {
+socket.on('init', function (data) {
 	if (data.selfId) {
 		selfId = data.selfId;
 	}
@@ -796,15 +805,15 @@ socket.on('init', data => {
 		new Shape(data.shape[i]);
 	}
 });
-socket.on('update', data => {
+socket.on('update', function (data) {
 	points = [];
 	nicknames = [];
 	for (var i = 0; i < data.player.length; i++) {
-		let player_id = data.player[i].id;
+		var player_id = data.player[i].id;
 		var pack = data.player[i];
-		const p = Player.list[pack.id];
+		var p = Player.list[pack.id]
 		player_id = Number(String(player_id).replace('0.', ''));
-		points.push(`${data.player[i].score}.${player_id}`);
+		points.push(data.player[i].score + '.' + player_id);
 		if (p) {
 			if (pack.tank) {
 				p.tank = pack.tank;
@@ -825,7 +834,7 @@ socket.on('update', data => {
 		if (data.player[i].id == selfId) {
 			var pack = data.shape[data.player[i].id];
 			for (var i = 0; i < pack.length; i++) {
-				const s = Shape.list[pack[i].id];
+				var s = Shape.list[pack[i].id];
 				if (s) {
 					if (pack[i].x !== undefined) s.x = pack[i].x;
 					if (pack[i].y !== undefined) s.y = pack[i].y;
@@ -835,7 +844,7 @@ socket.on('update', data => {
 	}
 	for (var i = 0; i < data.bullet.length; i++) {
 		var pack = data.bullet[i];
-		const b = Bullet.list[data.bullet[i].id];
+		var b = Bullet.list[data.bullet[i].id];
 		if (b) {
 			if (pack.x !== undefined) b.x = pack.x;
 			if (pack.y !== undefined) b.y = pack.y;
@@ -848,7 +857,7 @@ socket.on('scoreboard', (data) => {
 })
 
 // remove
-socket.on('remove', data => {
+socket.on('remove', function (data) {
 	for (var i = 0; i < data.player.length; i++) {
 		delete Player.list[data.player[i]];
 	}
@@ -860,9 +869,9 @@ socket.on('remove', data => {
 	}
 });
 // drawing
-let pastx;
-let pasty;
-setInterval(() => {
+var pastx;
+var pasty;
+setInterval(function () {
 	canvas.width = window.innerWidth;
 	width = window.innerWidth;
 	canvas.height = window.innerHeight;
@@ -931,8 +940,8 @@ setInterval(() => {
 		// SHOW TEXT INPUT
 		textInput.style.display = 'initial';
 		// TITLE SCREEN IMAGE
-		const canvasRatio = canvas.width / canvas.height;
-		const bgImageRatio = bgImage.width / bgImage.height;
+		var canvasRatio = canvas.width / canvas.height;
+		var bgImageRatio = bgImage.width / bgImage.height;
 		if (canvasRatio > bgImageRatio) {
 			ctx.drawImage(bgImage, 0, canvas.height / 2 - canvas.width /
 				bgImageRatio / 2, canvas.width, canvas.width / bgImageRatio);
@@ -957,10 +966,10 @@ setInterval(() => {
 		ctx.fillStyle = 'black';
 		ctx.strokeRect((canvas.width / 2) - 160, (canvas.height / 2) - 20, 320,
 			40);
-		document.getElementById('textInput').style.left = `${(canvas.width / 2) -
-    160}px`;
-		document.getElementById('textInput').style.top = `${(canvas.height / 2) -
-    20}px`;
+		document.getElementById('textInput').style.left = (canvas.width / 2) -
+			160 + 'px';
+		document.getElementById('textInput').style.top = (canvas.height / 2) -
+			20 + 'px';
 		drawText({
 			text: '(press enter to spawn)',
 			x: canvas.width / 2,
@@ -973,15 +982,15 @@ setInterval(() => {
 // The new function will include player count/server name,
 // but will look more like Diep.io's bottom-right corner text.
 function drawPlayerCount() {
-	const players = Object.keys(Player.list).length;
-	const plural = Object.keys(Player.list).length == 1 ? '' : 's';
+	var players = Object.keys(Player.list).length
+	var plural = Object.keys(Player.list).length == 1 ? '' : 's';
 	drawText({
 		text: `${Object.keys(Player.list).length} player${plural} on ${servername}`,
 		x: width - 190,
 		y: height - 50,
 		font: 'bold 30px Ubuntu'
 	});
-}
+};
 
 function drawKills() {
 	if (Player.list[selfId].notif_timer < 400) {
@@ -993,7 +1002,7 @@ function drawKills() {
 			font: 'bold 30px Ubuntu'
 		});
 	}
-}
+};
 
 function drawHotbar() {
 	ctx.fillStyle = 'white';
@@ -1034,18 +1043,20 @@ function drawHotbar() {
 // obj.label: label inside of bar
 // obj.x: X position of bar (centered)
 // obj.y: Y position of bar (centered)
-function drawBar(obj={}) {
-    // DEFAULTS
-    obj.width = obj.width == undefined ? 30 : obj.width;
-    obj.height = obj.height == undefined ? 6 : obj.height;
-    obj.color = obj.color == undefined ? '#555555' : obj.color;
-    obj.fillColor = obj.fillColor == undefined ? '#88e281' : obj.fillColor;
-    obj.filled = obj.filled == undefined ? 0.5 : obj.filled;
-    obj.renderOnFull = obj.renderOnFull == undefined ? true : obj.renderOnFull;
-    obj.label = obj.label == undefined ? '' : obj.label;
-    obj.x = obj.x == undefined ? 30 : obj.x - (obj.width / 2);
-    obj.y = obj.y == undefined ? 30 : obj.y - (obj.height / 2);
-    if (obj.filled < 1 || obj.renderOnFull) {
+function drawBar(obj) {
+	// CREATE OBJECT IF NOT SPECIFIED
+	obj = obj == undefined ? {} : obj;
+	// DEFAULTS
+	obj.width = obj.width == undefined ? 30 : obj.width;
+	obj.height = obj.height == undefined ? 6 : obj.height;
+	obj.color = obj.color == undefined ? '#555555' : obj.color;
+	obj.fillColor = obj.fillColor == undefined ? '#88e281' : obj.fillColor;
+	obj.filled = obj.filled == undefined ? 0.5 : obj.filled;
+	obj.renderOnFull = obj.renderOnFull == undefined ? true : obj.renderOnFull;
+	obj.label = obj.label == undefined ? '' : obj.label;
+	obj.x = obj.x == undefined ? 30 : obj.x - (obj.width / 2);
+	obj.y = obj.y == undefined ? 30 : obj.y - (obj.height / 2);
+	if (obj.filled < 1 || obj.renderOnFull) {
 		ctx.lineJoin = 'round';
 		ctx.fillStyle = obj.color;
 		ctx.fillRect(obj.x - (obj.width / 2), obj.y - (obj.height / 2), obj.width,
@@ -1062,7 +1073,7 @@ function drawBar(obj={}) {
 		})
 	}
 }
-var drawScoreboard = () => {
+var drawScoreboard = function () {
 	drawText({
 		text: 'Scoreboard',
 		x: width - 200,
@@ -1084,7 +1095,7 @@ var drawScoreboard = () => {
 	}
 }
 
-document.addEventListener('keydown', event => {
+document.addEventListener('keydown', function (event) {
 	if (!(document.activeElement == document.getElementById('chat-input'))) {
 		if (event.keyCode == 69) // e
 			socket.emit('keyPress', {
@@ -1141,7 +1152,7 @@ document.addEventListener('keydown', event => {
 	}
 });
 
-document.addEventListener('keyup', event => {
+document.addEventListener('keyup', function (event) {
 	if (!(document.activeElement == document.getElementById('chat-input'))) {
 		switch (event.keyCode) {
 			case 68:
@@ -1188,7 +1199,7 @@ document.addEventListener('keyup', event => {
 	}
 });
 
-document.addEventListener('mousedown', event => {
+document.addEventListener('mousedown', function (event) {
 	if (inGame) {
 		socket.emit('keyPress', {
 			inputId: event.button == 0 ? 'attack' : 'repel',
@@ -1197,7 +1208,7 @@ document.addEventListener('mousedown', event => {
 	}
 });
 
-document.addEventListener('mouseup', event => {
+document.addEventListener('mouseup', function (event) {
 	socket.emit('keyPress', {
 		inputId: event.button == 0 ? 'attack' : 'repel',
 		state: false
