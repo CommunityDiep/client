@@ -690,7 +690,7 @@ function drawUpgrades() {
 	if (selfPlayer.tier || [undefined, null, {}, []].contains(selfTankUpgrades)) {
 		for (let index = 0; index < Object.keys(selfTankUpgrades).length; index++) {
 			let slotX = 10 + 86.25 * (index % 2);
-			let slotY = 60 + 86.25 * index;
+			let slotY = index % 2 === 1 ? 60 + 86.25 * (index - 1) : 60 + 86.25 * index;
 
 			if (nfup(index) !== undefined && stfup(index)) {
 				drawUpgradeSlot(slotX, slotY, 80, 80, '#6cf1ec', nfup(index));
