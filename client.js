@@ -634,6 +634,9 @@ function drawGrid(x, y, width, height, slotSize, lineColor, xOffset, yOffset) {
 }
 
 function drawUpgrades() {
+	let selfPlayer = Player.list[selfId];
+	let selfTankUpgrades = tanktree[selfPlayer.tank].upgrades;
+
 	function drawUpgradeSlot(x, y, width, height, color, tankData) {
 		ctx.save();
 		ctx.globalAlpha = 0.9;
@@ -664,7 +667,7 @@ function drawUpgrades() {
 	};
 
 	function nfup(pos) {
-		var uptank = tanktree[Object.keys(tanktree[Player.list[selfId].tank].upgrades)[
+		var uptank = tanktree[Object.keys(tanktree[selfPlayer.tank].upgrades)[
 			pos]];
 		if (uptank == undefined) {
 			return undefined;
@@ -678,31 +681,39 @@ function drawUpgrades() {
 			return uptank;
 		}
 	}
-	if (Player.list[selfId].canUpgrade && tanktree[Player.list[selfId].tank].upgrades !==
-		undefined && Object.keys(tanktree[Player.list[selfId].tank].upgrades).length >
-		0) {
-		if (nfup(0) !== undefined) {
+
+	function stfup(pos) {
+		return Object.values(selfTankUpgrades)[pos] <= selfPlayer.tier;
+	}
+
+	if (selfPlayer.tier || [undefined, null, {}, []].contains(selfTankUpgrades)) {
+		for (let index = 0; index++; index < Object.keys(selfTankUpgrades).length) {
+			if (nfup(index) !== undefined && stfup(index)) {
+				drawUpgradeSlot(10, 60, 128, 128, '#6cf1ec', nfup(index));
+			}
+		}
+		if (nfup(0) !== undefined && stfup(0)) {
 			drawUpgradeSlot(10, 60, 128, 128, '#6cf1ec', nfup(0));
 		}
-		if (nfup(1) !== undefined) {
+		if (nfup(1) !== undefined && stfup(1)) {
 			drawUpgradeSlot(148, 60, 128, 128, '#98f06b', nfup(1));
 		}
-		if (nfup(2) !== undefined) {
+		if (nfup(2) !== undefined && stfup(2)) {
 			drawUpgradeSlot(10, 198, 128, 128, '#f06c6c', nfup(2));
 		}
-		if (nfup(3) !== undefined) {
+		if (nfup(3) !== undefined && stfup(3)) {
 			drawUpgradeSlot(148, 198, 128, 128, '#f0d96c', nfup(3));
 		}
-		if (nfup(4) !== undefined) {
+		if (nfup(4) !== undefined && stfup(4)) {
 			drawUpgradeSlot(10, 336, 128, 128, '#6c96f0', nfup(4));
 		}
-		if (nfup(5) !== undefined) {
+		if (nfup(5) !== undefined && stfup(5)) {
 			drawUpgradeSlot(148, 336, 128, 128, '#b894fa', nfup(5));
 		}
-		if (nfup(6) !== undefined) {
+		if (nfup(6) !== undefined && stfup(6)) {
 			drawUpgradeSlot(10, 476, 128, 128, '#ec6bf1', nfup(6));
 		}
-		if (nfup(7) !== undefined) {
+		if (nfup(7) !== undefined && stfup(7)) {
 			drawUpgradeSlot(148, 476, 128, 128, '#eeb790', nfup(7));
 		}
 		drawUpgradeSlot(98, 626, 100, 30, '#b0b0b0', 'Ignore');
