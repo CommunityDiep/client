@@ -21,6 +21,8 @@ function shadeColor(color, percent) {
 var softStroke = true;
 var inGame = false;
 
+let scoreboardData = [];
+
 var bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
 
