@@ -654,13 +654,14 @@ function drawUpgrades() {
 		ctx.strokeRect(x, y, width, height);
 		if (typeof tankData !== 'string') {
 			ctx.globalAlpha = 1;
-			drawTank(x + (width / 2), y + (height / 2), spin_angle, 20, '#1DB2DF',
+			drawTank(x + (width / 2), y + (height / 2), spin_angle, width / 5, '#1DB2DF',
 				tankData.barrels, tankData.body);
 		}
 		drawText({
 			text: typeof tankData == 'string' ? tankData : tankData.localized,
 			x: x + (width / 2),
-			y: y + height - 10,
+			y: y + height - 8,
+			font: `${width / 7}px Ubuntu`,
 			maxSize: width - 3
 		});
 		ctx.restore();
@@ -687,12 +688,12 @@ function drawUpgrades() {
 	}
 
 	if (selfPlayer.tier || [undefined, null, {}, []].contains(selfTankUpgrades)) {
-		for (let index = 0; index++; index < Object.keys(selfTankUpgrades).length) {
+		for (let index = 0; index < Object.keys(selfTankUpgrades).length; index++) {
 			if (nfup(index) !== undefined && stfup(index)) {
-				drawUpgradeSlot(10, 60, 128, 128, '#6cf1ec', nfup(index));
+				drawUpgradeSlot(10 + 86.25 * index, 60 + 86.25 * index, 80, 80, '#6cf1ec', nfup(index));
 			}
 		}
-		if (nfup(0) !== undefined && stfup(0)) {
+		/*if (nfup(0) !== undefined && stfup(0)) {
 			drawUpgradeSlot(10, 60, 128, 128, '#6cf1ec', nfup(0));
 		}
 		if (nfup(1) !== undefined && stfup(1)) {
@@ -715,14 +716,14 @@ function drawUpgrades() {
 		}
 		if (nfup(7) !== undefined && stfup(7)) {
 			drawUpgradeSlot(148, 476, 128, 128, '#eeb790', nfup(7));
-		}
+		}*/
 		drawUpgradeSlot(98, 626, 100, 30, '#b0b0b0', 'Ignore');
 		drawText({
 			text: 'Upgrades',
 			x: 138,
 			y: 40,
 			opacity: '1',
-			font: 'bold 30px Ubuntu'
+			font: 'bold 20px Ubuntu'
 		});
 	}
 };
