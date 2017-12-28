@@ -1,3 +1,5 @@
+"use strict";
+
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 	alert(
 		'It looks likes you\'re on mobile. For the best experience, play on your PC.'
