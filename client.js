@@ -707,30 +707,6 @@ function drawUpgrades() {
 				drawUpgradeSlot(slotX, slotY, 80, 80, uiColors[index], nfup(index));
 			}
 		}
-		/*if (nfup(0) !== undefined && stfup(0)) {
-			drawUpgradeSlot(10, 60, 128, 128, '#6cf1ec', nfup(0));
-		}
-		if (nfup(1) !== undefined && stfup(1)) {
-			drawUpgradeSlot(148, 60, 128, 128, '#98f06b', nfup(1));
-		}
-		if (nfup(2) !== undefined && stfup(2)) {
-			drawUpgradeSlot(10, 198, 128, 128, '#f06c6c', nfup(2));
-		}
-		if (nfup(3) !== undefined && stfup(3)) {
-			drawUpgradeSlot(148, 198, 128, 128, '#f0d96c', nfup(3));
-		}
-		if (nfup(4) !== undefined && stfup(4)) {
-			drawUpgradeSlot(10, 336, 128, 128, '#6c96f0', nfup(4));
-		}
-		if (nfup(5) !== undefined && stfup(5)) {
-			drawUpgradeSlot(148, 336, 128, 128, '#b894fa', nfup(5));
-		}
-		if (nfup(6) !== undefined && stfup(6)) {
-			drawUpgradeSlot(10, 476, 128, 128, '#ec6bf1', nfup(6));
-		}
-		if (nfup(7) !== undefined && stfup(7)) {
-			drawUpgradeSlot(148, 476, 128, 128, '#eeb790', nfup(7));
-		}*/
 		drawUpgradeSlot(98, 626, 100, 30, '#b0b0b0', 'Ignore');
 		drawText({
 			text: 'Upgrades',
