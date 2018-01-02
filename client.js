@@ -23,6 +23,17 @@ let inGame = false;
 
 let scoreboardData = [];
 
+const uiColors = [
+	"#6cf1ec",
+	"#98f06b",
+	"#f06c6c",
+	"#f0d96c",
+	"#6c96f0",
+	"#b894fa",
+	"#ec6bf1",
+	"#eeb790"
+];
+
 var bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
 
