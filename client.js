@@ -704,7 +704,7 @@ function drawUpgrades() {
 			let slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
 
 			if (nfup(index) !== undefined && stfup(index)) {
-				drawUpgradeSlot(slotX, slotY, 80, 80, '#6cf1ec', nfup(index));
+				drawUpgradeSlot(slotX, slotY, 80, 80, uiColors[index], nfup(index));
 			}
 		}
 		/*if (nfup(0) !== undefined && stfup(0)) {
