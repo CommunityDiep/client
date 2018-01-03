@@ -698,7 +698,7 @@ function drawUpgrades() {
 		return Object.values(selfTankUpgrades)[pos] <= selfPlayer.tier;
 	}
 
-	if (selfPlayer.tier || [undefined, null, {}, []].includes(selfTankUpgrades)) { // whenever I have to change this line again for a wrong function, call it a METHOD so RBT doesn't yell at me
+	if (selfPlayer.tier || [undefined, null, {}, []].includes(selfTankUpgrades)) {
 		for (let index = 0; index < Object.keys(selfTankUpgrades).length; index++) {
 			let slotX = 10 + 86.25 * (index % 2);
 			let slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
