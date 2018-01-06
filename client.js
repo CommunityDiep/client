@@ -665,7 +665,7 @@ function drawUpgradeSlot(obj) {
 			obj.tankData.barrels, obj.tankData.body);
 	}
 	drawText({
-		text: typeof obj.tankData == 'string' ? obj.tankData : tankData.localized,
+		text: typeof obj.tankData == 'string' ? obj.tankData : obj.tankData.localized,
 		x: obj.x + (obj.width / 2),
 		y: obj.y + obj.height - 8,
 		font: `${obj.width / 7}px Ubuntu`,
