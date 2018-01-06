@@ -644,7 +644,7 @@ function drawGrid(x, y, width, height, slotSize, lineColor, xOffset, yOffset) {
 	ctx.restore();
 }
 
-function drawUpgradeSlot(obj) {
+function drawClickArea(obj) {
 	ctx.save();
 	ctx.globalAlpha = 0.9;
 	ctx.font = 'bold 20px Ubuntu';
@@ -704,7 +704,7 @@ function drawUpgrades() {
 			let slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
 
 			if (nfup(index) !== undefined && stfup(index)) {
-				drawUpgradeSlot({
+				drawClickArea({
 					x: slotX,
 					y: slotY,
 					width: 80,
@@ -714,7 +714,7 @@ function drawUpgrades() {
 				});
 			}
 		}
-		drawUpgradeSlot({
+		drawClickArea({
 			x: 98,
 			y: 626,
 			width: 100,
