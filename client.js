@@ -921,6 +921,14 @@ setInterval(function () {
 			y: (canvas.height / 2) + 32,
 			font: 'bold 10px Ubuntu'
 		});
+
+		drawClickArea({
+			x: canvas.width / 2 - 50,
+			y: 15,
+			width: 100,
+			height: 30,
+			tankData: 'Select server'
+		})
 	}
 }, 10);
 
