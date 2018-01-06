@@ -644,39 +644,39 @@ function drawGrid(x, y, width, height, slotSize, lineColor, xOffset, yOffset) {
 	ctx.restore();
 }
 
+function drawUpgradeSlot(x, y, width, height, color, tankData) {
+	ctx.save();
+	ctx.globalAlpha = 0.9;
+	ctx.font = 'bold 20px Ubuntu';
+	ctx.lineWidth = 5;
+	ctx.textAlign = 'center';
+	ctx.strokeStyle = '#555555';
+	ctx.lineJoin = 'round';
+	ctx.fillStyle = color;
+	ctx.fillRect(x, y, width, height);
+	ctx.fillStyle = '#000000';
+	ctx.globalAlpha = 0.2;
+	ctx.fillRect(x, y + (height / 2), width, height / 2);
+	ctx.globalAlpha = 1;
+	ctx.strokeRect(x, y, width, height);
+	if (typeof tankData !== 'string') {
+		ctx.globalAlpha = 1;
+		drawTank(x + (width / 2), y + (height / 2), spin_angle, width / 5, '#1DB2DF',
+			tankData.barrels, tankData.body);
+	}
+	drawText({
+		text: typeof tankData == 'string' ? tankData : tankData.localized,
+		x: x + (width / 2),
+		y: y + height - 8,
+		font: `${width / 7}px Ubuntu`,
+		maxSize: width - 3
+	});
+	ctx.restore();
+};
+
 function drawUpgrades() {
 	let selfPlayer = Player.list[selfId];
 	let selfTankUpgrades = tanktree[selfPlayer.tank].upgrades;
-
-	function drawUpgradeSlot(x, y, width, height, color, tankData) {
-		ctx.save();
-		ctx.globalAlpha = 0.9;
-		ctx.font = 'bold 20px Ubuntu';
-		ctx.lineWidth = 5;
-		ctx.textAlign = 'center';
-		ctx.strokeStyle = '#555555';
-		ctx.lineJoin = 'round';
-		ctx.fillStyle = color;
-		ctx.fillRect(x, y, width, height);
-		ctx.fillStyle = '#000000';
-		ctx.globalAlpha = 0.2;
-		ctx.fillRect(x, y + (height / 2), width, height / 2);
-		ctx.globalAlpha = 1;
-		ctx.strokeRect(x, y, width, height);
-		if (typeof tankData !== 'string') {
-			ctx.globalAlpha = 1;
-			drawTank(x + (width / 2), y + (height / 2), spin_angle, width / 5, '#1DB2DF',
-				tankData.barrels, tankData.body);
-		}
-		drawText({
-			text: typeof tankData == 'string' ? tankData : tankData.localized,
-			x: x + (width / 2),
-			y: y + height - 8,
-			font: `${width / 7}px Ubuntu`,
-			maxSize: width - 3
-		});
-		ctx.restore();
-	};
 
 	function nfup(pos) {
 		var uptank = tanktree[Object.keys(tanktree[selfPlayer.tank].upgrades)[
