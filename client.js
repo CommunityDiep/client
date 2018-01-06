@@ -824,26 +824,6 @@ setInterval(function () {
 	if (inGame) {
 		if (Player.list[selfId]) {
 			textInput.style.display = 'none';
-			if (Player.list[selfId].score > 20 && Player.list[selfId].hasUpgraded ==
-				false) {
-				Player.list[selfId].canUpgrade = true;
-				document.getElementsByClassName('upgradedetect')[0].style.display =
-					'inline';
-				document.getElementsByClassName('upgradedetect')[1].style.display =
-					'inline';
-				document.getElementsByClassName('upgradedetect')[2].style.display =
-					'inline';
-				document.getElementsByClassName('upgradedetect')[3].style.display =
-					'inline';
-				document.getElementsByClassName('upgradedetect')[4].style.display =
-					'inline';
-				document.getElementsByClassName('upgradedetect')[5].style.display =
-					'inline';
-				document.getElementsByClassName('upgradedetect')[6].style.display =
-					'inline';
-				document.getElementsByClassName('upgradedetect')[7].style.display =
-					'inline';
-			}
 		}
 		if (spin_angle < 360) {
 			spin_angle += 0.25;
@@ -1154,7 +1134,7 @@ document.addEventListener('mousedown', function (event) {
 				beforeMaxY = event.clientY <= item.y + item.height;
 
 		if (pastMinX && pastMinY && beforeMaxX && beforeMaxY) {
-			
+
 		}
 	}
 });
