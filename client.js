@@ -626,8 +626,9 @@ function drawUpgrades() {
 	function stfup(pos) {
 		return Object.values(selfTankUpgrades)[pos] <= selfPlayer.tier;
 	}
-
 	if (selfPlayer.tier || [undefined, null, {}, []].includes(selfTankUpgrades)) {
+		hitRegions = [];
+
 		for (let index = 0; index < Object.keys(selfTankUpgrades).length; index++) {
 			let slotX = 10 + 86.25 * (index % 2);
 			let slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
@@ -641,6 +642,18 @@ function drawUpgrades() {
 					color: uiColors[index],
 					tankData: nfup(index)
 				});
+
+				hitRegions.push({
+					x: slotX,
+					y: slotY,
+					width: 80,
+					height: 80,
+					activate: function(pos) {
+						socket.emit('upgrade', {
+							pos: pos
+						});
+					}
+				})
 			}
 		}
 		drawClickArea({
