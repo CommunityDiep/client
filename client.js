@@ -603,6 +603,8 @@ function drawClickArea(obj) {
 	ctx.restore();
 };
 
+let upgradeHitRegions = [];
+
 function drawUpgrades() {
 	let selfPlayer = Player.list[selfId];
 	let selfTankUpgrades = tanktree[selfPlayer.tank].upgrades;
@@ -623,12 +625,11 @@ function drawUpgrades() {
 		}
 	}
 
+
 	function stfup(pos) {
 		return Object.values(selfTankUpgrades)[pos] <= selfPlayer.tier;
 	}
 	if (selfPlayer.tier || [undefined, null, {}, []].includes(selfTankUpgrades)) {
-		hitRegions = [];
-
 		for (let index = 0; index < Object.keys(selfTankUpgrades).length; index++) {
 			let slotX = 10 + 86.25 * (index % 2);
 			let slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
@@ -652,8 +653,16 @@ function drawUpgrades() {
 						socket.emit('upgrade', {
 							pos: pos
 						});
+
+						for (item of upgradeHitRegions) {
+							hitRegions.splice(item, 1);
+						}
+
+						upgradeHitRegions = [];
 					}
-				})
+				});
+
+				upgradeHitRegions.push(hitRegions.length - 1);
 			}
 		}
 		drawClickArea({
