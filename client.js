@@ -138,6 +138,10 @@ function calculateBarrelPos(angle) {
 	};
 }
 
+function drawTank2(obj) {
+	drawTank(obj.x, obj.y, obj.angle, obj.radius, obj.bodyColor, obj.barrels, obj.bodyType, obj.showHatSecret);
+}
+
 function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 	hat = hat == undefined ? true : hat;
 
@@ -442,7 +446,16 @@ var Shape = function (initPack) {
 						drawPolygon(x, y, self.angle, 17, self.color, 5);
 					} else {
 						if (self.name === 'square') {
-							drawTank(x, y, self.angle, 18.5, self.color, [], 1, false);
+							drawTank2({
+								x: x,
+								y: y,
+								angle: self.angle,
+								radius: 18.5,
+								bodyColor: self.color,
+								barrels: [],
+								bodyType: 1,
+								showHatSecret: false
+							});
 						}
 					}
 				}
