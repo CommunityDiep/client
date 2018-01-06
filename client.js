@@ -37,6 +37,18 @@ const uiColors = [
 let hitRegions = [];
 let upgradeHitRegions = [];
 
+hitRegions.push({
+	x: canvas.width / 2 - 50,
+	y: canvas.width / 2 - 15,
+	width: 100,
+	height: 30,
+	activate: function() {
+		if (!inGame) {
+			console.log('server selector button clicked')
+		}
+	}
+});
+
 var bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
 
