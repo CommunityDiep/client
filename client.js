@@ -925,21 +925,22 @@ setInterval(function () {
 		});
 
 		drawClickArea({
-			x: canvas.width / 2 - 50,
+			x: canvas.width / 2 - 55,
 			y: 15,
-			width: 100,
-			height: 30,
+			width: 120,
+			height: 25,
 			color: '#b0b0b0',
+			strokeWidth: 4.5,
 			tankData: 'Select server'
 		});
 	}
 }, 10);
 
 hitRegions.push({
-	x: canvas.width / 2 - 50,
+	x: canvas.width / 2 - 55,
 	y: 15,
-	width: 100,
-	height: 30,
+	width: 120,
+	height: 25,
 	activate: function() {
 		if (!inGame) {
 			console.log('server selector button clicked')
