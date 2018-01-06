@@ -56,17 +56,6 @@ document.addEventListener('touchstart', this.handleTouchStart, {
 document.addEventListener('touchmove', this.handleTouchMove, {
 	passive: false
 })
-for (var i = 0; i < 8; i++) {
-	(function(id) {
-		var e = document.getElementsByClassName('upgradedetect')[id];
-		e.style.display = 'none'; // Hide all the upgrade detectors
-		e.addEventListener('click', function () {
-			socket.emit('upgrade', {
-				pos: id
-			});
-		});
-	})(i);
-}
 
 function randInt(min, max) {
 	min = Math.ceil(min);
@@ -1148,12 +1137,23 @@ document.addEventListener('keyup', function (event) {
 	}
 });
 
+let hitRegions = [];
+
 document.addEventListener('mousedown', function (event) {
 	if (inGame) {
 		socket.emit('keyPress', {
 			inputId: event.button == 0 ? 'attack' : 'repel',
 			state: true
 		});
+	}
+
+	for (let item of hitRegions) {
+		let pastMinX = event.clientX >= item.x,
+				pastMinY = event.clientY >= item.y,
+				beforeMaxX = event.clientX <= item.x + item.width,
+				beforeMaxY = event.clientY <= item.y + item.height;
+
+		if (above && )
 	}
 });
 
