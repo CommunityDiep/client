@@ -4,17 +4,6 @@ html {
 img {
     display: none;
 }
-#chat {
-    position: absolute;
-    display: inline-block;
-    margin-top: -160px;
-    width: 500px;
-    opacity: 0.8;
-}
-#chat-input {
-    height: 35px;
-    margin-top: -15;
-}
 .upgradedetect {
     width: 128px;
     height: 128px;

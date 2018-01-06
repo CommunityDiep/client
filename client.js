@@ -326,22 +326,6 @@ socket.on('killNotification', function (data) {
 			'.';
 	}
 });
-// chat
-var chatText = document.getElementById('chat-text');
-var chatInput = document.getElementById('chat-input');
-var chatForm = document.getElementById('chat-form');
-socket.on('addToChat', function (data) {
-	chatText.innerHTML += `<div>${ data.text }</div>`;
-	chatText.scrollTop = chatText.scrollHeight;
-});
-chatForm.addEventListener('submit', function (e) {
-	e.preventDefault();
-	socket.emit('sendMsgToServer', {
-		words: chatInput.value,
-		name: input.value,
-	});
-	chatInput.value = '';
-});
 
 // game
 var sorted = [];
@@ -355,9 +339,6 @@ var ctx = document.getElementById('ctx').getContext('2d');
 var canvas = document.getElementById('ctx');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-chatForm.style.opacity = 0;
-chatInput.style.opacity = 0;
-chatText.style.opacity = 0;
 ctx.lineJoin = 'round';
 // init
 /**
@@ -854,9 +835,6 @@ setInterval(function () {
 	if (inGame) {
 		if (Player.list[selfId]) {
 			textInput.style.display = 'none';
-			chatForm.style.opacity = 1;
-			chatInput.style.opacity = 1;
-			chatText.style.opacity = 1;
 			if (Player.list[selfId].score > 20 && Player.list[selfId].hasUpgraded ==
 				false) {
 				Player.list[selfId].canUpgrade = true;
@@ -1071,56 +1049,54 @@ var drawScoreboard = function () {
 }
 
 document.addEventListener('keydown', function (event) {
-	if (!(document.activeElement == document.getElementById('chat-input'))) {
-		if (event.keyCode == 69) // e
-			socket.emit('keyPress', {
-				inputId: 'auto',
-				state: true
-			});
-		if (event.keyCode == 67) // c
-			socket.emit('keyPress', {
-				inputId: 'spin',
-				state: true
-			});
-		if (event.keyCode == 68 || event.keyCode == 39) { // d or right
-			socket.emit('keyPress', {
-				inputId: 'right',
-				state: true
-			});
-			// Player.list[i].x +=1;
-		} else if (event.keyCode == 83 || event.keyCode == 40) // s or down
-			socket.emit('keyPress', {
-				inputId: 'down',
-				state: true
-			});
-		else if (event.keyCode == 65 || event.keyCode == 37) { // a or left
-			socket.emit('keyPress', {
-				inputId: 'left',
-				state: true
-			});
-			// Player.list[i].x -= 1;
-		} else if (event.keyCode == 87 || event.keyCode == 38) // w or up
-			socket.emit('keyPress', {
-				inputId: 'up',
-				state: true
-			});
-		else if (event.keyCode == 32) // spacebar
-			socket.emit('keyPress', {
-				inputId: 'attack',
-				state: true
-			});
-		else if (event.keyCode == 16) // shift
-			socket.emit('keyPress', {
-				inputId: 'repel',
-				state: true
-			});
-		else if (event.keyCode == 123) // f11
-			if (!document.fullscreenElement) {
-				document.getElementById('ctx').webkitRequestFullscreen();
-			} else {
-				document.exitFullscreen();
-			}
-	}
+	if (event.keyCode == 69) // e
+		socket.emit('keyPress', {
+			inputId: 'auto',
+			state: true
+		});
+	if (event.keyCode == 67) // c
+		socket.emit('keyPress', {
+			inputId: 'spin',
+			state: true
+		});
+	if (event.keyCode == 68 || event.keyCode == 39) { // d or right
+		socket.emit('keyPress', {
+			inputId: 'right',
+			state: true
+		});
+		// Player.list[i].x +=1;
+	} else if (event.keyCode == 83 || event.keyCode == 40) // s or down
+		socket.emit('keyPress', {
+			inputId: 'down',
+			state: true
+		});
+	else if (event.keyCode == 65 || event.keyCode == 37) { // a or left
+		socket.emit('keyPress', {
+			inputId: 'left',
+			state: true
+		});
+		// Player.list[i].x -= 1;
+	} else if (event.keyCode == 87 || event.keyCode == 38) // w or up
+		socket.emit('keyPress', {
+			inputId: 'up',
+			state: true
+		});
+	else if (event.keyCode == 32) // spacebar
+		socket.emit('keyPress', {
+			inputId: 'attack',
+			state: true
+		});
+	else if (event.keyCode == 16) // shift
+		socket.emit('keyPress', {
+			inputId: 'repel',
+			state: true
+		});
+	else if (event.keyCode == 123) // f11
+		if (!document.fullscreenElement) {
+			document.getElementById('ctx').webkitRequestFullscreen();
+		} else {
+			document.exitFullscreen();
+		}
 
 	if (document.activeElement == document.getElementById("textInput") && event.keyCode == 13) {
 		tryJoin();
@@ -1128,49 +1104,47 @@ document.addEventListener('keydown', function (event) {
 });
 
 document.addEventListener('keyup', function (event) {
-	if (!(document.activeElement == document.getElementById('chat-input'))) {
-		switch (event.keyCode) {
-			case 68:
-			case 39:
-				socket.emit('keyPress', {
-					inputId: 'right',
-					state: false
-				});
-				break;
-			case 83:
-			case 40:
-				socket.emit('keyPress', {
-					inputId: 'down',
-					state: false
-				});
-				break;
-			case 65:
-			case 37:
-				socket.emit('keyPress', {
-					inputId: 'left',
-					state: false
-				});
-				break;
-			case 87:
-			case 38:
-				socket.emit('keyPress', {
-					inputId: 'up',
-					state: false
-				});
-				break;
-			case 32:
-				socket.emit('keyPress', {
-					inputId: 'attack',
-					state: false
-				});
-				break;
-			case 16:
-				socket.emit('keyPress', {
-					inputId: 'repel',
-					state: false
-				});
-				break;
-		}
+	switch (event.keyCode) {
+		case 68:
+		case 39:
+			socket.emit('keyPress', {
+				inputId: 'right',
+				state: false
+			});
+			break;
+		case 83:
+		case 40:
+			socket.emit('keyPress', {
+				inputId: 'down',
+				state: false
+			});
+			break;
+		case 65:
+		case 37:
+			socket.emit('keyPress', {
+				inputId: 'left',
+				state: false
+			});
+			break;
+		case 87:
+		case 38:
+			socket.emit('keyPress', {
+				inputId: 'up',
+				state: false
+			});
+			break;
+		case 32:
+			socket.emit('keyPress', {
+				inputId: 'attack',
+				state: false
+			});
+			break;
+		case 16:
+			socket.emit('keyPress', {
+				inputId: 'repel',
+				state: false
+			});
+			break;
 	}
 });
 
