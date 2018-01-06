@@ -582,7 +582,7 @@ function drawClickArea(obj) {
 	ctx.globalAlpha = 0.9;
 	ctx.lineJoin = 'round';
 
-	ctx.lineWidth = 2.5;
+	ctx.lineWidth = obj.strokeWidth === undefined ? 2.5 : obj.strokeWidth;
 	ctx.strokeStyle = obj.strokeColor === undefined ? '#333333' : obj.strokeColor;
 
 	ctx.fillStyle = obj.color;
