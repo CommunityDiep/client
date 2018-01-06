@@ -1140,14 +1140,14 @@ document.addEventListener('mousedown', function (event) {
 		});
 	}
 
-	for (let item of hitRegions) {
-		let pastMinX = event.clientX >= item.x,
-				pastMinY = event.clientY >= item.y,
-				beforeMaxX = event.clientX <= item.x + item.width,
-				beforeMaxY = event.clientY <= item.y + item.height;
+	for (let pos = 0; pos < hitRegions.length; pos++) {
+		let pastMinX = event.clientX >= hitRegions[pos].x,
+				pastMinY = event.clientY >= hitRegions[pos].y,
+				beforeMaxX = event.clientX <= hitRegions[pos].x + hitRegions[pos].width,
+				beforeMaxY = event.clientY <= hitRegions[pos].y + hitRegions[pos].height;
 
 		if (pastMinX && pastMinY && beforeMaxX && beforeMaxY) {
-			item.activate(item);
+			hitRegions[pos].activate(pos);
 		}
 	}
 });
