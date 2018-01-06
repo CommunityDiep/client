@@ -34,6 +34,9 @@ const uiColors = [
 	"#eeb790"
 ];
 
+let hitRegions = [];
+let upgradeHitRegions = [];
+
 var bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
 
@@ -603,8 +606,6 @@ function drawClickArea(obj) {
 	ctx.restore();
 };
 
-let upgradeHitRegions = [];
-
 function drawUpgrades() {
 	let selfPlayer = Player.list[selfId];
 	let selfTankUpgrades = tanktree[selfPlayer.tank].upgrades;
@@ -1138,8 +1139,6 @@ document.addEventListener('keyup', function (event) {
 			break;
 	}
 });
-
-let hitRegions = [];
 
 document.addEventListener('mousedown', function (event) {
 	if (inGame) {
