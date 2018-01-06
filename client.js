@@ -662,10 +662,10 @@ function drawUpgradeSlot(obj) {
 	if (typeof obj.tankData !== 'string') {
 		ctx.globalAlpha = 1;
 		drawTank(obj.x + (obj.width / 2), obj.y + (obj.height / 2), spin_angle, obj.width / 5, '#1DB2DF',
-			tankData.barrels, tankData.body);
+			obj.tankData.barrels, obj.tankData.body);
 	}
 	drawText({
-		text: typeof tankData == 'string' ? obj.tankData : tankData.localized,
+		text: typeof obj.tankData == 'string' ? obj.tankData : tankData.localized,
 		x: obj.x + (obj.width / 2),
 		y: obj.y + obj.height - 8,
 		font: `${obj.width / 7}px Ubuntu`,
