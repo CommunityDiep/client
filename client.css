@@ -19,3 +19,6 @@ html {
 #server {
   display: none;
 }
+*:focus {
+  outline: none;
+}
