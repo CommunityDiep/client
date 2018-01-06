@@ -654,7 +654,7 @@ function drawUpgrades() {
 							pos: pos
 						});
 
-						for (item of upgradeHitRegions) {
+						for (let item of upgradeHitRegions) {
 							hitRegions.splice(item, 1);
 						}
 
