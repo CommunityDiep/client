@@ -578,13 +578,15 @@ function drawGrid(x, y, width, height, slotSize, lineColor, xOffset, yOffset) {
 
 function drawClickArea(obj) {
 	ctx.save();
+
 	ctx.globalAlpha = 0.9;
-	ctx.font = 'bold 20px Ubuntu';
-	ctx.lineWidth = 5;
-	ctx.textAlign = 'center';
-	ctx.strokeStyle = '#555555';
 	ctx.lineJoin = 'round';
+
+	ctx.lineWidth = 2.5;
+	ctx.strokeStyle = obj.strokeColor === undefined ? '#333333' : obj.strokeColor;
+
 	ctx.fillStyle = obj.color;
+
 	ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
 	ctx.fillStyle = '#000000';
 	ctx.globalAlpha = 0.2;
