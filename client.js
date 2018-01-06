@@ -518,48 +518,6 @@ var Player = function (initPack) {
 			};
 			drawTank(x, y, self.angle, 24 + (self.level / 3), color, tanktree[self.tank].barrels,
 				tanktree[self.tank].body);
-			/* if (self.tank === 'destroyer'){
-				drawTank(x+28, y+28, self.angle, size, color, , 0);
-			} else {
-			if (self.tank === 'destroyerflank'){
-				drawTank(x+28, y+28, self.angle, size, color, , 0);
-			} else {
-			if (self.tank === 'Hybrid'){
-				drawTank(x+28, y+28, self.angle, size, color, [{barrelType:0,width:39,length:48,angle:0,offsetX:0},{barrelType:1,width:39,length:37,angle:180,offsetX:0}], 0);
-			} else {
-				if (self.tank === 'sniper'){
-					drawTank(x+28, y+28, self.angle, size, color, , 0);
-			} else {
-				if (self.tank === 'MachineGun'){
-					drawTank(x+28, y+28, self.angle, size, color, , 0);
-				} else {
-					if (self.tank === 'streamliner'){
-						drawTank(x+28, y+28,	self.angle, size, color, [{barrelType:0,width:19,length:51,angle:0,offsetX:0},{barrelType:0,width:19,length:46,angle:0,offsetX:0},{barrelType:0,width:19,length:41,angle:0,offsetX:0},{barrelType:0,width:19,length:36,angle:0,offsetX:0},{barrelType:0,width:19,length:31,angle:0,offsetX:0}], 0);
-					} else {
-							if (self.tank === 'Twin Flank'){
-								drawTank(x+28, y+28,	self.angle, size, color, [{barrelType:0,width:19,length:48,angle:0,offsetX:25},{barrelType:0,width:19,length:48,angle:0,offsetX:-25},{barrelType:0,width:19,length:48,angle:180,offsetX:25},{barrelType:0,width:19,length:48,angle:180,offsetX:-25}], 0);
-							} else {*/
-			/*
-											if (self.tank === 'Octo Tank'){
-												drawTank(x+28, y+28, self.angle, size, color, [{barrelType:0,width:19,length:48,angle:0,offsetX:0},{barrelType:0,width:19,length:48,angle:90,offsetX:0},{barrelType:0,width:19,length:48,angle:180,offsetX:0},{barrelType:0,width:19,length:48,angle:270,offsetX:0},{barrelType:0,width:19,length:48,angle:45,offsetX:0},{barrelType:0,width:19,length:48,angle:135,offsetX:0},{barrelType:0,width:19,length:48,angle:225,offsetX:0},{barrelType:0,width:19,length:48,angle:315,offsetX:0}], 0);
-											} else {
-												if (self.tank === 'Arena Closer'){
-										drawTank(x+28, y+28,	self.angle, 60, '#FEE769', [{barrelType:0,width:16,length:37,angle:0,offsetX:0}], 0);
-												} else {
-													if (self.tank === 'Latoonia Tank'){
-													drawTank(x+28, y+28,	self.angle, size, color, [{barrelType:0,width:19,length:300,angle:0,offsetX:0}], 0);
-													} else {
-														if (self.tank == 'basic'){
-									drawTank(x+28, y+28,	self.angle, size, color, [{barrelType:0,width:19,length:48,angle:0,offsetX:0}], 0);
-								} else {
-									drawTank(x+28, y+28, self.angle, size, color, tanktree[self.tank].barrels)
-								}
-							}}}}}}}}}}}}}}}};*/
-			//		ctx.drawImage(Img.player,x,y,55,55);
-			// ctx.restore();
-			// ctx.fillStyle = 'gray';
-			// ctx.fillRect(x+x_loc+27.5/2,y+y_loc+27.5,30,4);
-			// DRAW HEALTH BAR
 			drawBar({
 				x: x + size,
 				y: (y + size) + 15,
