@@ -644,7 +644,7 @@ function drawGrid(x, y, width, height, slotSize, lineColor, xOffset, yOffset) {
 	ctx.restore();
 }
 
-function drawUpgradeSlot(x, y, width, height, color, tankData) {
+function drawUpgradeSlot(obj) {
 	ctx.save();
 	ctx.globalAlpha = 0.9;
 	ctx.font = 'bold 20px Ubuntu';
@@ -652,24 +652,24 @@ function drawUpgradeSlot(x, y, width, height, color, tankData) {
 	ctx.textAlign = 'center';
 	ctx.strokeStyle = '#555555';
 	ctx.lineJoin = 'round';
-	ctx.fillStyle = color;
-	ctx.fillRect(x, y, width, height);
+	ctx.fillStyle = obj.color;
+	ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
 	ctx.fillStyle = '#000000';
 	ctx.globalAlpha = 0.2;
-	ctx.fillRect(x, y + (height / 2), width, height / 2);
+	ctx.fillRect(obj.x, obj.y + (obj.height / 2), obj.width, obj.height / 2);
 	ctx.globalAlpha = 1;
-	ctx.strokeRect(x, y, width, height);
-	if (typeof tankData !== 'string') {
+	ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
+	if (typeof obj.tankData !== 'string') {
 		ctx.globalAlpha = 1;
-		drawTank(x + (width / 2), y + (height / 2), spin_angle, width / 5, '#1DB2DF',
+		drawTank(obj.x + (obj.width / 2), obj.y + (obj.height / 2), spin_angle, obj.width / 5, '#1DB2DF',
 			tankData.barrels, tankData.body);
 	}
 	drawText({
-		text: typeof tankData == 'string' ? tankData : tankData.localized,
-		x: x + (width / 2),
-		y: y + height - 8,
-		font: `${width / 7}px Ubuntu`,
-		maxSize: width - 3
+		text: typeof tankData == 'string' ? obj.tankData : tankData.localized,
+		x: obj.x + (obj.width / 2),
+		y: obj.y + obj.height - 8,
+		font: `${obj.width / 7}px Ubuntu`,
+		maxSize: obj.width - 3
 	});
 	ctx.restore();
 };
@@ -704,10 +704,24 @@ function drawUpgrades() {
 			let slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
 
 			if (nfup(index) !== undefined && stfup(index)) {
-				drawUpgradeSlot(slotX, slotY, 80, 80, uiColors[index], nfup(index));
+				drawUpgradeSlot({
+					x: slotX,
+					y: slotY,
+					width: 80,
+					height: 80,
+					color: uiColors[index],
+					tankData: nfup(index)
+				});
 			}
 		}
-		drawUpgradeSlot(98, 626, 100, 30, '#b0b0b0', 'Ignore');
+		drawUpgradeSlot({
+			x: 98,
+			y: 626,
+			width: 100,
+			height: 30,
+			color: '#b0b0b0',
+			tankData: 'Ignore'
+		});
 		drawText({
 			text: 'Upgrades',
 			x: 138,
