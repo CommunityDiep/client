@@ -1147,7 +1147,7 @@ document.addEventListener('mousedown', function (event) {
 				beforeMaxY = event.clientY <= item.y + item.height;
 
 		if (pastMinX && pastMinY && beforeMaxX && beforeMaxY) {
-
+			item.activate(item);
 		}
 	}
 });
