@@ -1153,7 +1153,9 @@ document.addEventListener('mousedown', function (event) {
 				beforeMaxX = event.clientX <= item.x + item.width,
 				beforeMaxY = event.clientY <= item.y + item.height;
 
-		if (above && )
+		if (pastMinX && pastMinY && beforeMaxX && beforeMaxY) {
+			
+		}
 	}
 });
 
