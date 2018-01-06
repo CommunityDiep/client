@@ -466,9 +466,8 @@ var Shape = function (initPack) {
 	return self;
 }
 Shape.list = {};
-
-const Player = initPack => {
-	const self = {};
+var Player = function (initPack) {
+	var self = {};
 	self.canUpgrade = false;
 	self.hasUpgraded = false;
 	self.notif_timer = 0;
@@ -489,14 +488,14 @@ const Player = initPack => {
 	self.team = initPack.team;
 	self.autospin = initPack.autospin;
 	self.angle = self.mouseAngle;
-	self.draw = (angle, isPlayer) => {
+	self.draw = function (angle, isPlayer) {
 		if (isPlayer) {
 			self.angle = angle;
 		} else {
 			self.angle = self.mouseAngle;
 		}
-		const x = self.x - Player.list[selfId].x + width / 2;
-		const y = self.y - Player.list[selfId].y + height / 2;
+		var x = self.x - Player.list[selfId].x + width / 2;
+		var y = self.y - Player.list[selfId].y + height / 2;
 		var tcolor = {
 			'red': '#F14E54',
 			'blue': '#1DB2DF',
@@ -504,7 +503,7 @@ const Player = initPack => {
 			'green': '#24DF73'
 		};
 		ctx.fillStyle = 'black';
-		const hpWidth = 30 * self.hp / self.hpMax;
+		var hpWidth = 30 * self.hp / self.hpMax;
 		ctx.font = '30px Ubuntu';
 		if (!self.invisible) {
 			var size = 25; // + parseInt(self.score)*1.25;
@@ -553,8 +552,7 @@ const Player = initPack => {
 	};
 	Player.list[self.id] = self;
 	return self;
-};
-
+}
 var angle = 0;
 var angle_pure = 0;
 var mouseX;
