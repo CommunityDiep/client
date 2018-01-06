@@ -283,12 +283,6 @@ var height = window.innerHeight;
 var gameDiv = document.getElementById('gameDiv');
 var input = document.getElementById('textInput');
 document.getElementById('textInput').addEventListener('change', function () {
-	ga('send', {
-		hitType: 'event',
-		eventCategory: 'Title Screen',
-		eventAction: 'name-change',
-		eventLabel: `Changed name to '${document.getElementById('textInput').value}'.`
-	});
 });
 
 var spin_angle = 0;
@@ -304,12 +298,6 @@ function tryJoin() {
 			height: height
 		});
 		localStorage.username = document.getElementById('textInput').value || '';
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Title Screen',
-			eventAction: 'play',
-			eventLabel: 'Pressed enter on the title screen and joined game.'
-		});
 	} else {
 		alert('Please enter a name.');
 	}
