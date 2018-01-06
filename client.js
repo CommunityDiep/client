@@ -927,8 +927,9 @@ setInterval(function () {
 			y: 15,
 			width: 100,
 			height: 30,
+			color: '#b0b0b0',
 			tankData: 'Select server'
-		})
+		});
 	}
 }, 10);
 
