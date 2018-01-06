@@ -931,7 +931,7 @@ setInterval(function () {
 			height: 25,
 			color: '#b0b0b0',
 			strokeWidth: 4.5,
-			tankData: 'Select server'
+			tankData: 'Server Finder'
 		});
 	}
 }, 10);
