@@ -582,7 +582,7 @@ function drawGrid(x, y, width, height, slotSize, lineColor, xOffset, yOffset) {
 function drawClickArea(obj) {
 	ctx.save();
 
-	ctx.globalAlpha = 0.9;
+	ctx.globalAlpha = obj.opacity === undefined ? 0.9 : obj.opacity;
 	ctx.lineJoin = 'round';
 
 	ctx.lineWidth = obj.strokeWidth === undefined ? 2.5 : obj.strokeWidth;
