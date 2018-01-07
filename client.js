@@ -19,7 +19,9 @@ function shadeColor(color, percent) {
 		1);
 }
 let softStroke = true;
+
 let inGame = false;
+let showServerSelector = false;
 
 let scoreboardData = [];
 
@@ -308,6 +310,7 @@ socket.on('signInResponse', function (data) {
 		gameDiv.style.display = 'inline-block';
 
 		inGame = true;
+		showServerSelector = false;
 	} else alert('Unable to join. Please try again later.');
 });
 
@@ -944,12 +947,13 @@ hitRegions.push({
 	activate: function() {
 		if (!inGame) {
 			console.log('server selector button clicked')
+			showServerSelector = !showServerSelector;
 		}
 	}
 });
 
 function drawServerSelectorUI () {
-	
+
 }
 
 // Replace this with drawStats soon.
