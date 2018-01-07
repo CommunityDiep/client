@@ -952,7 +952,6 @@ hitRegions.push({
 	height: 25,
 	activate: function() {
 		if (!inGame) {
-			console.log('server selector button clicked')
 			showServerSelector = !showServerSelector;
 		}
 	}
