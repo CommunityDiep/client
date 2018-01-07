@@ -936,6 +936,10 @@ setInterval(function () {
 			strokeWidth: 4.5,
 			tankData: 'Server Finder'
 		});
+
+		if (showServerSelector) {
+			drawServerSelectorUI();
+		}
 	}
 }, 10);
 
