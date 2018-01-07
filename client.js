@@ -887,8 +887,6 @@ setInterval(function () {
 		drawPlayerCount();
 		drawScoreboard();
 	} else {
-		// SHOW TEXT INPUT
-		textInput.style.display = 'initial';
 		// TITLE SCREEN IMAGE
 		var canvasRatio = canvas.width / canvas.height;
 		var bgImageRatio = bgImage.width / bgImage.height;
@@ -939,6 +937,10 @@ setInterval(function () {
 
 		if (showServerSelector) {
 			drawServerSelectorUI();
+			textInput.style.display = 'none';
+		} else {
+			// SHOW TEXT INPUT
+			textInput.style.display = 'initial';
 		}
 	}
 }, 10);
@@ -957,7 +959,8 @@ hitRegions.push({
 });
 
 function drawServerSelectorUI () {
-
+	ctx.fillStyle = 'white';
+	ctx.fillRect(canvas.width / 2 - 50, canvas.height / 2 - 50, 100, 100);
 }
 
 // Replace this with drawStats soon.
