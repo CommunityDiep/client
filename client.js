@@ -960,7 +960,7 @@ hitRegions.push({
 
 function drawServerSelectorUI () {
 	ctx.fillStyle = 'white';
-	ctx.fillRect(canvas.width / 2 - 50, canvas.height / 2 - 50, 100, 100);
+	ctx.fillRect(canvas.width / 2 - 300, canvas.height / 2 - 200, 600, 400);
 }
 
 // Replace this with drawStats soon.
