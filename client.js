@@ -948,6 +948,10 @@ hitRegions.push({
 	}
 });
 
+function drawServerSelectorUI () {
+	
+}
+
 // Replace this with drawStats soon.
 // The new function will include player count/server name,
 // but will look more like Diep.io's bottom-right corner text.
