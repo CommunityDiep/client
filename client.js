@@ -966,6 +966,7 @@ function drawServerSelectorUI () {
 		width: 600,
 		height: 400,
 		tankData: "",
+		opacity: 1
 	})
 }
 
