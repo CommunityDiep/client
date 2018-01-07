@@ -960,7 +960,13 @@ hitRegions.push({
 
 function drawServerSelectorUI () {
 	ctx.fillStyle = 'white';
-	ctx.fillRect(canvas.width / 2 - 300, canvas.height / 2 - 200, 600, 400);
+	drawClickArea({
+		x: canvas.width / 2 - 300,
+		y: canvas.height / 2 - 200,
+		width: 600,
+		height: 400,
+		tankData: "",
+	})
 }
 
 // Replace this with drawStats soon.
