@@ -296,8 +296,6 @@ function tryJoin() {
 			height: height
 		});
 		localStorage.username = document.getElementById('textInput').value || '';
-	} else {
-		alert('Please enter a name.');
 	}
 }
 
