@@ -303,6 +303,9 @@ function tryJoin() {
 
 window.addEventListener('load', function () {
 	document.getElementById('textInput').value = localStorage.username || '';
+
+	document.getElementById("ctx").style.display = "initial";
+	document.getElementById("loading").style.display = "none";
 });
 
 socket.on('signInResponse', function (data) {
