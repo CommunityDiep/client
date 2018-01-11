@@ -538,7 +538,7 @@ $(document).mousemove(function (e) {
 	var x = -width + e.pageX - 8;
 	var y = -height + e.pageY - 8;
 	angle = Math.atan2(y, x) / (Math.PI * 180);
-	var boxCenter = [(width / 2) + 25 / 2, (height / 2) + 25 / 2];
+	var boxCenter = [width / 2, height / 2];
 	angle = Math.atan2(e.pageX - boxCenter[0], -(e.pageY - boxCenter[1])) * (
 		180 / Math.PI);
 	angle_pure = Math.atan2(e.pageX - boxCenter[0], -(e.pageY - boxCenter[1]) *
