@@ -829,6 +829,17 @@ socket.on('scoreboard', (data) => {
 	scoreboardData = data;
 })
 
+let serverMessages = [];
+
+socket.on("serverMessage", data => {
+	let index = serverMessages.length - 1;
+	serverMessages[index] = data;
+
+	setTimeout(function() {
+		delete serverMessages[index];
+	});
+});
+
 // remove
 socket.on('remove', function (data) {
 	for (var i = 0; i < data.player.length; i++) {
