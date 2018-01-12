@@ -725,7 +725,6 @@ function drawCircle(x, y, radius, color, trap) {
 };
 class Bullet {
 	constructor (initPack) {
-		console.log('hi')
 		this.id = initPack.id;
 		this.pid = initPack.parent_id;
 		this.x = initPack.x;
