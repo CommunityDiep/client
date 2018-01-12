@@ -784,7 +784,6 @@ socket.on('update', function (data) {
 		var player_id = data.player[i].id;
 		var pack = data.player[i];
 		var p = Player.list[pack.id]
-		player_id = Number(String(player_id).replace('0.', ''));
 		points.push(data.player[i].score + '.' + player_id);
 		if (p) {
 			if (pack.tank) {
