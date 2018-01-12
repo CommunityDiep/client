@@ -901,16 +901,17 @@ setInterval(function () {
 		drawScoreboard();
 
 		for (let item of statusMessages) {
-			ctx.globalAlpha = 0.7;
-			console.log(item)
+			if (item !== undefined) {
+				ctx.globalAlpha = 0.7;
 
-			drawText({
-				opacity: 1,
-				text: item.message,
-				x: canvas.width / 2,
-				y: 20,
-				font: "10px Ubuntu"
-			})
+				drawText({
+					opacity: 1,
+					text: item.message,
+					x: canvas.width / 2,
+					y: 20,
+					font: "10px Ubuntu"
+				})
+			};
 		};
 	} else {
 		// TITLE SCREEN IMAGE
