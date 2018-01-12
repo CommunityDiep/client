@@ -837,7 +837,7 @@ socket.on("serverMessage", data => {
 
 	setTimeout(function() {
 		delete serverMessages[index];
-	});
+	}, 5000);
 });
 
 // remove
