@@ -832,7 +832,7 @@ socket.on('scoreboard', (data) => {
 let statusMessages = [];
 
 socket.on("statusMessage", data => {
-	let index = statusMessages.length - 1;
+	let index = statusMessages.length;
 	statusMessages[index] = data;
 
 	setTimeout(function() {
@@ -902,6 +902,7 @@ setInterval(function () {
 
 		for (let item of statusMessages) {
 			ctx.globalAlpha = 0.7;
+			console.log(item)
 
 			drawText({
 				opacity: 1,
