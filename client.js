@@ -445,8 +445,6 @@ var Shape = function (initPack) {
 Shape.list = {};
 var Player = function (initPack) {
 	var self = {};
-	self.canUpgrade = false;
-	self.hasUpgraded = false;
 	self.notif_timer = 0;
 	self.killtext = '';
 	self.id = initPack.id;
@@ -795,7 +793,6 @@ socket.on('update', function (data) {
 			if (pack.mouseAngle !== undefined) {
 				p.mouseAngle = pack.mouseAngle;
 			}
-			if (pack.upgraded != undefined) p.hasUpgraded = pack.upgraded;
 			if (pack.x !== undefined) p.x = pack.x;
 			if (pack.y !== undefined) p.y = pack.y;
 			if (pack.hp !== undefined) p.hp = pack.hp;
