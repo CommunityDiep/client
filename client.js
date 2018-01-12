@@ -899,20 +899,7 @@ setInterval(function () {
 		// minimap would render here
 		drawHotbar();
 		drawUpgrades();
-
-		for (let item of statusMessages) {
-			if (item !== undefined) {
-				ctx.globalAlpha = 0.7;
-
-				drawText({
-					opacity: 1,
-					text: item.message,
-					x: canvas.width / 2,
-					y: 20,
-					font: "10px Ubuntu"
-				})
-			};
-		};
+		drawStatusMessages();
 	} else {
 		// TITLE SCREEN IMAGE
 		var canvasRatio = canvas.width / canvas.height;
@@ -994,6 +981,22 @@ function drawServerSelectorUI () {
 		tankData: "",
 		opacity: 1
 	})
+}
+
+function drawStatusMessages() {
+	for (let item of statusMessages) {
+		if (item !== undefined) {
+			ctx.globalAlpha = 0.7;
+
+			drawText({
+				opacity: 1,
+				text: item.message,
+				x: canvas.width / 2,
+				y: 20,
+				font: "10px Ubuntu"
+			})
+		};
+	};
 }
 
 // Replace this with drawStats soon.
