@@ -829,14 +829,14 @@ socket.on('scoreboard', (data) => {
 	scoreboardData = data;
 })
 
-let serverMessages = [];
+let statusMessages = [];
 
-socket.on("serverMessage", data => {
-	let index = serverMessages.length - 1;
-	serverMessages[index] = data;
+socket.on("statusMessage", data => {
+	let index = statusMessages.length - 1;
+	statusMessages[index] = data;
 
 	setTimeout(function() {
-		delete serverMessages[index];
+		delete statusMessages[index];
 	}, 5000);
 });
 
@@ -900,7 +900,7 @@ setInterval(function () {
 		drawPlayerCount();
 		drawScoreboard();
 
-		for (let item of serverMessages) {
+		for (let item of statusMessages) {
 			ctx.globalAlpha = 0.7;
 
 			drawText({
