@@ -898,8 +898,8 @@ setInterval(function () {
 		drawScoreboard();
 		// minimap would render here
 		drawHotbar();
-		drawUpgrades();
 		drawStatusMessages();
+		drawUpgrades();
 	} else {
 		// TITLE SCREEN IMAGE
 		var canvasRatio = canvas.width / canvas.height;
