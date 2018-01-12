@@ -831,14 +831,16 @@ socket.on('scoreboard', (data) => {
 
 let statusMessages = [];
 
-socket.on("statusMessage", data => {
+socket.on("statusMessage", data => addStatusMessage);
+
+function addStatusMessage(data) {
 	let index = statusMessages.length;
 	statusMessages[index] = data;
 
 	setTimeout(function() {
 		delete statusMessages[index];
 	}, 5000);
-});
+}
 
 // remove
 socket.on('remove', function (data) {
