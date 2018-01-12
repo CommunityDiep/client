@@ -748,13 +748,13 @@ class Bullet {
 			drawCircle(x, y, 20, this.color, this.type)
 		} else if (this.parent_tank == 'Arena Closer') {
 			ctx.fillStyle = this.parent_tankcolor;
-			drawCircle(x, y, 19, color, this.type)
+			drawCircle(x, y, 19, self.color, this.type)
 		} else if (this.parent_tank == 'streamliner') {
-			ctx.fillStyle = color;
-			drawCircle(x, y, 8, color, this.type)
+			ctx.fillStyle = self.color;
+			drawCircle(x, y, 8, self.color, this.type)
 			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,15,15);
 		} else {
-			ctx.fillStyle = color;
+			ctx.fillStyle = self.color;
 			drawCircle(x, y, 10, {
 				'red': 'F14E54',
 				'blue': '#1DB2DF'
