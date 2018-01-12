@@ -839,7 +839,7 @@ function addStatusMessage(data) {
 
 	setTimeout(function() {
 		delete statusMessages[index];
-	}, 5000);
+	}, 2200);
 }
 
 // remove
