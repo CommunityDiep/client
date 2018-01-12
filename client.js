@@ -1119,7 +1119,7 @@ var drawScoreboard = function () {
 }
 
 document.addEventListener('keydown', function (event) {
-	if (event.keyCode == 69) // e
+	if (event.keyCode == 69) { // e
 		socket.emit('keyPress', {
 			inputId: 'auto',
 			state: true
@@ -1128,8 +1128,8 @@ document.addEventListener('keydown', function (event) {
 		addStatusMessage({
 			message: `Auto Fire toggled`,
 			color: "indigo"
-		});
-	if (event.keyCode == 67) // c
+		});}
+	if (event.keyCode == 67) { // c
 		socket.emit('keyPress', {
 			inputId: 'spin',
 			state: true
@@ -1138,7 +1138,7 @@ document.addEventListener('keydown', function (event) {
 		addStatusMessage({
 			message: `Auto Spin toggled`,
 			color: "indigo"
-		});
+		});}
 	if (event.keyCode == 68 || event.keyCode == 39) { // d or right
 		socket.emit('keyPress', {
 			inputId: 'right',
