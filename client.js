@@ -1122,10 +1122,20 @@ document.addEventListener('keydown', function (event) {
 			inputId: 'auto',
 			state: true
 		});
+
+		addStatusMessage({
+			message: `Auto Fire toggled`,
+			color: "indigo"
+		});
 	if (event.keyCode == 67) // c
 		socket.emit('keyPress', {
 			inputId: 'spin',
 			state: true
+		});
+
+		addStatusMessage({
+			message: `Auto Spin toggled`,
+			color: "indigo"
 		});
 	if (event.keyCode == 68 || event.keyCode == 39) { // d or right
 		socket.emit('keyPress', {
