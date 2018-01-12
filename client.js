@@ -733,7 +733,7 @@ class Bullet {
 			this.parent_tank = Player.list[this.pid].tank;
 		}
 		this.type = initPack.type;
-		var color = this.parent_tank == 'Arena Closer' ? '#FEE769' : this.pid ===
+		this.color = this.parent_tank == 'Arena Closer' ? '#FEE769' : this.pid ===
 			selfId ? '#1DB2DF' : '#F14E54';
 
 		Bullet.list[this.id] = this;
