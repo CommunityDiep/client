@@ -740,26 +740,26 @@ class Bullet {
 	}
 
 	draw () {
-		var x = self.x - Player.list[selfId].x + width / 2;
-		var y = self.y - Player.list[selfId].y + height / 2;
-		if (self.parent_tank == 'destroyer' || self.parent_tank ==
-			'destroyerflank' || self.parent_tank == 'Hybrid') {
+		var x = this.x - Player.list[selfId].x + width / 2;
+		var y = this.y - Player.list[selfId].y + height / 2;
+		if (this.parent_tank == 'destroyer' || this.parent_tank ==
+			'destroyerflank' || this.parent_tank == 'Hybrid') {
+			ctx.fillStyle = this.color;
+			drawCircle(x, y, 20, this.color, this.type)
+		} else if (this.parent_tank == 'Arena Closer') {
+			ctx.fillStyle = this.parent_tankcolor;
+			drawCircle(x, y, 19, color, this.type)
+		} else if (this.parent_tank == 'streamliner') {
 			ctx.fillStyle = color;
-			drawCircle(x, y, 20, color, self.type)
-		} else if (self.parent_tank == 'Arena Closer') {
-			ctx.fillStyle = color;
-			drawCircle(x, y, 19, color, self.type)
-		} else if (self.parent_tank == 'streamliner') {
-			ctx.fillStyle = color;
-			drawCircle(x, y, 8, color, self.type)
-			// ctx.drawImage(Img.bullet,self.x-5,self.y-5,15,15);
+			drawCircle(x, y, 8, color, this.type)
+			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,15,15);
 		} else {
 			ctx.fillStyle = color;
 			drawCircle(x, y, 10, {
 				'red': 'F14E54',
 				'blue': '#1DB2DF'
-			}.team, self.type)
-			// ctx.drawImage(Img.bullet,self.x-5,self.y-5,20,20);
+			}.team, this.type)
+			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,20,20);
 		}
 	}
 }
