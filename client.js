@@ -892,6 +892,8 @@ setInterval(function () {
 			}
 			Player.list[i].notif_timer += 1;
 		}
+
+		// DRAW USER INTERFACE
 		drawUpgrades();
 		drawHotbar();
 		drawKills();
