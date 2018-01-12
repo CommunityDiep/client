@@ -723,19 +723,24 @@ function drawCircle(x, y, radius, color, trap) {
 		ctx.restore();
 	}
 };
-var Bullet = function (initPack) {
-	var self = {};
-	self.id = initPack.id;
-	self.pid = initPack.parent_id;
-	self.x = initPack.x;
-	self.y = initPack.y;
-	if (Player.list[self.pid]) {
-		self.parent_tank = Player.list[self.pid].tank;
+class Bullet {
+	constructor (initPack) {
+		console.log('hi')
+		this.id = initPack.id;
+		this.pid = initPack.parent_id;
+		this.x = initPack.x;
+		this.y = initPack.y;
+		if (Player.list[this.pid]) {
+			this.parent_tank = Player.list[this.pid].tank;
+		}
+		this.type = initPack.type;
+		var color = this.parent_tank == 'Arena Closer' ? '#FEE769' : this.pid ===
+			selfId ? '#1DB2DF' : '#F14E54';
+
+		Bullet.list[self.id] = self;
 	}
-	self.type = initPack.type;
-	var color = self.parent_tank == 'Arena Closer' ? '#FEE769' : self.pid ===
-		selfId ? '#1DB2DF' : '#F14E54';
-	self.draw = function () {
+
+	draw () {
 		var x = self.x - Player.list[selfId].x + width / 2;
 		var y = self.y - Player.list[selfId].y + height / 2;
 		if (self.parent_tank == 'destroyer' || self.parent_tank ==
@@ -758,9 +763,8 @@ var Bullet = function (initPack) {
 			// ctx.drawImage(Img.bullet,self.x-5,self.y-5,20,20);
 		}
 	}
-	Bullet.list[self.id] = self;
-	return self;
 }
+
 Bullet.list = {};
 socket.on('init', function (data) {
 	if (data.selfId) {
