@@ -999,7 +999,7 @@ function drawStatusMessages() {
 	};
 }
 
-// Replace this with drawStats soon.
+// Replace this with drawServerInfo soon.
 // The new function will include player count/server name,
 // but will look more like Diep.io's bottom-right corner text.
 function drawPlayerCount() {
