@@ -899,6 +899,18 @@ setInterval(function () {
 		drawKills();
 		drawPlayerCount();
 		drawScoreboard();
+
+		for (let item of serverMessages) {
+			ctx.globalAlpha = 0.7;
+
+			drawText({
+				opacity: 1,
+				text: item.message,
+				x: canvas.width / 2,
+				y: 20,
+				font: "10px Ubuntu"
+			})
+		};
 	} else {
 		// TITLE SCREEN IMAGE
 		var canvasRatio = canvas.width / canvas.height;
