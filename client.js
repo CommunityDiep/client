@@ -350,7 +350,7 @@ ctx.lineJoin = 'round';
  * @param {string} [obj.font] - The font to draw the text in.
  */
 function drawText(obj) {
-	ctx.globalOpacity = obj.opacity == undefined ? 1 : obj.opacity;
+	ctx.globalAlpha = obj.opacity == undefined ? 1 : obj.opacity;
 	ctx.font = obj.font == undefined ? ctx.font == undefined ? '20px Ubuntu' :
 		ctx.font : obj.font;
 	obj.maxSize = obj.maxSize == undefined ? 200 : obj.maxSize;
