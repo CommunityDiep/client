@@ -1034,7 +1034,7 @@ function drawHotbar() {
 		text: Player.list[selfId].name,
 		x: width / 2,
 		y: height - 57.5,
-		opacity: '0.8',
+		opacity: 0.58,
 		font: 'bold 30px Ubuntu'
 	});
 	drawBar({
@@ -1044,7 +1044,8 @@ function drawHotbar() {
 		filled: 1,
 		width: 275,
 		height: 15,
-		renderOnFull: true
+		renderOnFull: true,
+		opacity: 0.5
 	});
 	drawBar({
 		x: canvas.width / 2 + (350 / 2),
@@ -1054,7 +1055,8 @@ function drawHotbar() {
 		width: 350,
 		height: 20,
 		fillColor: '#f0d96c',
-		renderOnFull: true
+		renderOnFull: true,
+		opacity: 0.5
 	});
 }
 // obj.width: total width of bar (in pixels)
