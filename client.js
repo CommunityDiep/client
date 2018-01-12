@@ -894,11 +894,11 @@ setInterval(function () {
 		}
 
 		// DRAW USER INTERFACE
-		drawUpgrades();
-		drawHotbar();
-		drawKills();
 		drawPlayerCount();
 		drawScoreboard();
+		// minimap would render here
+		drawHotbar();
+		drawUpgrades();
 
 		for (let item of statusMessages) {
 			if (item !== undefined) {
