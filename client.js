@@ -737,7 +737,7 @@ class Bullet {
 		var color = this.parent_tank == 'Arena Closer' ? '#FEE769' : this.pid ===
 			selfId ? '#1DB2DF' : '#F14E54';
 
-		Bullet.list[self.id] = self;
+		Bullet.list[this.id] = this;
 	}
 
 	draw () {
