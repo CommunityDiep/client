@@ -37,7 +37,6 @@ const uiColors = [
 ];
 
 let hitRegions = [];
-let upgradeHitRegions = [];
 
 var bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
@@ -658,16 +657,8 @@ function drawUpgrades() {
 						socket.emit('upgrade', {
 							pos: pos
 						});
-
-						for (let item of upgradeHitRegions) {
-							hitRegions.splice(item, 1);
-						}
-
-						upgradeHitRegions = [];
 					}
 				});
-
-				upgradeHitRegions.push(hitRegions.length - 1);
 			}
 		}
 		drawClickArea({
@@ -862,6 +853,9 @@ setInterval(function () {
 	width = window.innerWidth;
 	canvas.height = window.innerHeight;
 	height = window.innerHeight;
+
+	hitRegions = [];
+
 	if (inGame) {
 		if (Player.list[selfId]) {
 			textInput.style.display = 'none';
