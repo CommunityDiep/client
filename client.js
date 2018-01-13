@@ -945,6 +945,18 @@ setInterval(function () {
 			tankData: 'Server Finder'
 		});
 
+		hitRegions.push({
+			x: canvas.width / 2 - 55,
+			y: 15,
+			width: 120,
+			height: 25,
+			activate: function() {
+				if (!inGame) {
+					showServerSelector = !showServerSelector;
+				}
+			}
+		});
+
 		if (showServerSelector) {
 			drawServerSelectorUI();
 			textInput.style.display = 'none';
@@ -954,18 +966,6 @@ setInterval(function () {
 		}
 	}
 }, 10);
-
-hitRegions.push({
-	x: canvas.width / 2 - 55,
-	y: 15,
-	width: 120,
-	height: 25,
-	activate: function() {
-		if (!inGame) {
-			showServerSelector = !showServerSelector;
-		}
-	}
-});
 
 function drawServerSelectorUI () {
 	ctx.fillStyle = 'white';
