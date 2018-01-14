@@ -557,8 +557,8 @@ $(document).mousemove(function (e) {
 });
 Player.list = {};
 
-function drawGrid(x, y, width, height, slotSize, lineColor, xOffset, yOffset) {
-	ctx.fillStyle = '#cdcdcd';
+function drawGrid(x, y, width, height, slotSize, fillColor, lineColor, xOffset, yOffset) {
+	ctx.fillStyle = fillColor === undefined ? '#cdcdcd' : fillColor;
 	ctx.fillRect(x, y, width, height);
 	ctx.save();
 	ctx.translate(x, y);
@@ -869,9 +869,8 @@ setInterval(function () {
 		ctx.clearRect(0, 0, width, height);
 		ctx.fillStyle = '#b9b9b9';
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		ctx.fillStyle = '#cdcdcd';
 		drawGrid(width / 2 - Player.list[selfId].x, height / 2 - Player.list[
-			selfId].y, 1500, 1500, 24, '#C6C6C6', 0, 0);
+			selfId].y, 1500, 1500, 24, '#cdcdcd', '#C6C6C6', 0, 0);
 		pastx = Player.list[selfId].x;
 		pasty = Player.list[selfId].y;
 		for (var i in Shape.list) {
