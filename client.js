@@ -22,6 +22,7 @@ let softStroke = true;
 
 let inGame = false;
 let showServerSelector = false;
+let showAdvancedConnectionOptions = false;
 
 let scoreboardData = [];
 
@@ -311,6 +312,7 @@ socket.on('signInResponse', function (data) {
 
 		inGame = true;
 		showServerSelector = false;
+		showAdvancedConnectionOptions = false;
 	} else alert('Unable to join. Please try again later.');
 });
 
@@ -956,7 +958,7 @@ setInterval(function () {
 			}
 		});
 
-		if (showServerSelector) {
+		if (showServerSelector || showAdvancedConnectionOptions) {
 			drawServerSelectorUI();
 			textInput.style.display = 'none';
 		} else {
