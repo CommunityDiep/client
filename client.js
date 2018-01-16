@@ -616,7 +616,7 @@ function drawUpgrades() {
 	let selfTankUpgrades = tanktree[selfPlayer.tank].upgrades;
 
 	function nfup(pos) {
-		var uptank = tanktree[Object.keys(tanktree[selfPlayer.tank].upgrades)[
+		let uptank = tanktree[Object.keys(tanktree[selfPlayer.tank].upgrades)[
 			pos]];
 		if (uptank == undefined) {
 			return undefined;
@@ -684,7 +684,7 @@ function drawUpgrades() {
 function drawCircle(x, y, radius, color, trap) {
 	color = color == undefined ? '#1DB2DF' : color;
 	if (trap == 'trap') {
-		var radius = 0;
+		let radius = 0; // for some reason it's 0?
 		ctx.save();
 		ctx.lineWidth = 4;
 		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
@@ -692,9 +692,9 @@ function drawCircle(x, y, radius, color, trap) {
 		ctx.translate(x, y)
 		ctx.beginPath();
 		ctx.lineJoin = 'round';
-		var hA = ((Math.PI * 2) / 3);
+		let hA = ((Math.PI * 2) / 3);
 		ctx.moveTo(Math.cos(hA * hI) * radius, Math.sin(hA * hI) * radius);
-		for (var hI = 1; hI < 5; hI++) {
+		for (let hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos(hA * hI) * radius, Math.sin(hA * hI) * radius);
 			ctx.lineTo(Math.cos((hA * hI) + (hA / 2)) * (radius / 3.5), Math.sin((hA *
 				hI) + (hA / 2)) * (radius / 3.5));
@@ -733,8 +733,8 @@ class Bullet {
 	}
 
 	draw () {
-		var x = this.x - Player.list[selfId].x + width / 2;
-		var y = this.y - Player.list[selfId].y + height / 2;
+		let x = this.x - Player.list[selfId].x + width / 2;
+		let y = this.y - Player.list[selfId].y + height / 2;
 		if (this.parent_tank == 'destroyer' || this.parent_tank ==
 			'destroyerflank' || this.parent_tank == 'Hybrid') {
 			ctx.fillStyle = this.color;
@@ -763,13 +763,13 @@ socket.on('init', function (data) {
 		selfId = data.selfId;
 	}
 	// console.log(data.player.length);
-	for (var i = 0; i < data.player.length; i++) {
+	for (let i = 0; i < data.player.length; i++) {
 		new Player(data.player[i]);
 	}
-	for (var i = 0; i < data.bullet.length; i++) {
+	for (let i = 0; i < data.bullet.length; i++) {
 		new Bullet(data.bullet[i]);
 	}
-	for (var i = 0; i < data.shape.length; i++) {
+	for (let i = 0; i < data.shape.length; i++) {
 		new Shape(data.shape[i]);
 	}
 });
