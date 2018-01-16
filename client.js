@@ -763,14 +763,14 @@ socket.on('init', function (data) {
 		selfId = data.selfId;
 	}
 	// console.log(data.player.length);
-	for (let i = 0; i < data.player.length; i++) {
-		new Player(data.player[i]);
+	for (let item of data.player) {
+		new Player(item);
 	}
-	for (let i = 0; i < data.bullet.length; i++) {
-		new Bullet(data.bullet[i]);
+	for (let item of data.bullet) {
+		new Bullet(item);
 	}
-	for (let i = 0; i < data.shape.length; i++) {
-		new Shape(data.shape[i]);
+	for (let item of data.shape) {
+		new Shape(item);
 	}
 });
 socket.on('update', function (data) {
