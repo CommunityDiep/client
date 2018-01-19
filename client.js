@@ -465,8 +465,8 @@ class Player {
 			} else {
 				this.angle = this.mouseAngle;
 			}
-			var x = this.x - Player.list[thisId].x + width / 2;
-			var y = this.y - Player.list[thisId].y + height / 2;
+			var x = this.x - Player.list[selfId].x + width / 2;
+			var y = this.y - Player.list[selfId].y + height / 2;
 			var tcolor = {
 				'red': '#F14E54',
 				'blue': '#1DB2DF',
@@ -496,7 +496,7 @@ class Player {
 					'green': '#24DF73'
 				};
 				if (this.team === 'none') {
-					var color = this.id === thisId ? '#1DB2DF' : '#F14E54';
+					var color = this.id === selfId ? '#1DB2DF' : '#F14E54';
 				} else {
 					var color = tcolor[this.team];
 				};
@@ -511,7 +511,7 @@ class Player {
 					renderOnFull: false
 				});
 				// DRAW NAMES
-				if (this.id !== thisId) {
+				if (this.id !== selfId) {
 					drawText({
 						text: this.name,
 						x: x + (size / 2),
