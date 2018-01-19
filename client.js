@@ -37,7 +37,7 @@ const uiColors = [
 	"#eeb790"
 ];
 
-var tcolor = {
+const tcolor = {
 	'red': '#F14E54',
 	'blue': '#1DB2DF',
 	'purple': '#BE83F2',
