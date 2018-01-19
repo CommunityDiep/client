@@ -1227,6 +1227,15 @@ document.addEventListener('keyup', function (event) {
 	}
 });
 
+document.getElementById("input").addEventListener("click", function (event) {
+	if (event.detail > 3) {
+		addStatusMessage({
+			message: "Control change mode activated",
+			color: "indigo"
+		});
+	}
+});
+
 document.addEventListener('mousedown', function (event) {
 	if (inGame) {
 		socket.emit('keyPress', {
