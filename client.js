@@ -68,6 +68,10 @@ function randInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function defaults(thing, default) {
+	return thing === undefined ? default : thing;
+}
+
 function param(name) {
 	return decodeURIComponent((new RegExp('[?|&]' + name + '=' +
 		'([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(
