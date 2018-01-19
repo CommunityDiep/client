@@ -489,7 +489,6 @@ class Player {
 				if (score > 3) {
 					var score = 3;
 				}
-				var angle;
 				if (this.team === 'none') {
 					var color = this.id === selfId ? '#1DB2DF' : '#F14E54';
 				} else {
