@@ -316,14 +316,6 @@ socket.on('signInResponse', function (data) {
 	} else alert('Unable to join. Please try again later.');
 });
 
-socket.on('killNotification', function (data) {
-	if (selfId) {
-		Player.list[data.killer].notif_timer = 0;
-		Player.list[data.killer].killtext = 'You\'ve killed ' + data.killed +
-			'.';
-	}
-});
-
 // game
 var sorted = [];
 var changed_indexes = [];
@@ -446,8 +438,6 @@ var Shape = function (initPack) {
 Shape.list = {};
 var Player = function (initPack) {
 	var self = {};
-	self.notif_timer = 0;
-	self.killtext = '';
 	self.id = initPack.id;
 	self.number = initPack.number;
 	self.x = initPack.x;
@@ -887,7 +877,6 @@ setInterval(function () {
 			} else {
 				Player.list[i].draw(angle, false);
 			}
-			Player.list[i].notif_timer += 1;
 		}
 
 		// DRAW USER INTERFACE
@@ -1010,18 +999,6 @@ function drawPlayerCount() {
 		y: height - 50,
 		font: 'bold 30px Ubuntu'
 	});
-};
-
-function drawKills() {
-	if (Player.list[selfId].notif_timer < 400) {
-		ctx.fillStyle = 'white';
-		drawText({
-			text: Player.list[selfId].killtext,
-			x: (width / 2) - 120,
-			y: 30,
-			font: 'bold 30px Ubuntu'
-		});
-	}
 };
 
 function drawHotbar() {
