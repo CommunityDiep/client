@@ -965,6 +965,8 @@ setInterval(function () {
 			// SHOW TEXT INPUT
 			textInput.style.display = 'initial';
 		}
+
+		drawStatusMessages();
 	}
 }, 10);
 
