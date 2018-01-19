@@ -489,12 +489,6 @@ class Player {
 					var score = 3;
 				}
 				var angle;
-				var tcolor = {
-					'red': '#F14E54',
-					'blue': '#1DB2DF',
-					'purple': '#BE83F2',
-					'green': '#24DF73'
-				};
 				if (this.team === 'none') {
 					var color = this.id === selfId ? '#1DB2DF' : '#F14E54';
 				} else {
