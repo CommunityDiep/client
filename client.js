@@ -436,89 +436,92 @@ var Shape = function (initPack) {
 	return self;
 }
 Shape.list = {};
-var Player = function (initPack) {
-	var self = {};
-	self.id = initPack.id;
-	self.number = initPack.number;
-	self.x = initPack.x;
-	self.y = initPack.y;
-	self.tank = initPack.tank;
-	self.hp = initPack.hp,
-		self.hpMax = initPack.hpMax,
-		self.score = initPack.score,
-		self.level = initPack.level,
-		self.tier = initPack.tier,
-		self.name = initPack.name,
-		self.mouseAngle = initPack.mouseAngle;
-	self.invisible = initPack.invisible;
-	self.team = initPack.team;
-	self.autospin = initPack.autospin;
-	self.angle = self.mouseAngle;
-	self.draw = function (angle, isPlayer) {
-		if (isPlayer) {
-			self.angle = angle;
-		} else {
-			self.angle = self.mouseAngle;
-		}
-		var x = self.x - Player.list[selfId].x + width / 2;
-		var y = self.y - Player.list[selfId].y + height / 2;
-		var tcolor = {
-			'red': '#F14E54',
-			'blue': '#1DB2DF',
-			'purple': '#BE83F2',
-			'green': '#24DF73'
-		};
-		ctx.fillStyle = 'black';
-		var hpWidth = 30 * self.hp / self.hpMax;
-		ctx.font = '30px Ubuntu';
-		if (!self.invisible) {
-			var size = 25; // + parseInt(self.score)*1.25;
-			var score = self.score + 3
-			if (size > 32) {
-				var size = 32;
+class Player {
+	constructor(initPack) {
+		this.id = initPack.id;
+		this.number = initPack.number;
+		this.x = initPack.x;
+		this.y = initPack.y;
+		this.tank = initPack.tank;
+		this.hp = initPack.hp,
+		this.hpMax = initPack.hpMax,
+		this.score = initPack.score,
+		this.level = initPack.level,
+		this.tier = initPack.tier,
+		this.name = initPack.name,
+		this.mouseAngle = initPack.mouseAngle;
+		this.invisible = initPack.invisible;
+		this.team = initPack.team;
+		this.autospin = initPack.autospin;
+		this.angle = this.mouseAngle;
+		
+		this.draw = function (angle, isPlayer) {
+			if (isPlayer) {
+				this.angle = angle;
+			} else {
+				this.angle = this.mouseAngle;
 			}
-			if (size < 25) {
-				var size = 25;
-			}
-			if (score > 3) {
-				var score = 3;
-			}
-			var angle;
+			var x = this.x - Player.list[thisId].x + width / 2;
+			var y = this.y - Player.list[thisId].y + height / 2;
 			var tcolor = {
 				'red': '#F14E54',
 				'blue': '#1DB2DF',
 				'purple': '#BE83F2',
 				'green': '#24DF73'
 			};
-			if (self.team === 'none') {
-				var color = self.id === selfId ? '#1DB2DF' : '#F14E54';
-			} else {
-				var color = tcolor[self.team];
-			};
-			drawTank(x, y, self.angle, 24 + (self.level / 3), color, tanktree[self.tank].barrels,
-				tanktree[self.tank].body);
-			drawBar({
-				x: x + size,
-				y: (y + size) + 15,
-				filled: self.hp / self.hpMax,
-				width: 38,
-				height: 7,
-				renderOnFull: false
-			});
-			// DRAW NAMES
-			if (self.id !== selfId) {
-				drawText({
-					text: self.name,
-					x: x + (size / 2),
-					y: y - size + 16,
-					font: '17px Ubuntu'
+			ctx.fillStyle = 'black';
+			var hpWidth = 30 * this.hp / this.hpMax;
+			ctx.font = '30px Ubuntu';
+			if (!this.invisible) {
+				var size = 25; // + parseInt(this.score)*1.25;
+				var score = this.score + 3
+				if (size > 32) {
+					var size = 32;
+				}
+				if (size < 25) {
+					var size = 25;
+				}
+				if (score > 3) {
+					var score = 3;
+				}
+				var angle;
+				var tcolor = {
+					'red': '#F14E54',
+					'blue': '#1DB2DF',
+					'purple': '#BE83F2',
+					'green': '#24DF73'
+				};
+				if (this.team === 'none') {
+					var color = this.id === thisId ? '#1DB2DF' : '#F14E54';
+				} else {
+					var color = tcolor[this.team];
+				};
+				drawTank(x, y, this.angle, 24 + (this.level / 3), color, tanktree[this.tank].barrels,
+					tanktree[this.tank].body);
+				drawBar({
+					x: x + size,
+					y: (y + size) + 15,
+					filled: this.hp / this.hpMax,
+					width: 38,
+					height: 7,
+					renderOnFull: false
 				});
+				// DRAW NAMES
+				if (this.id !== thisId) {
+					drawText({
+						text: this.name,
+						x: x + (size / 2),
+						y: y - size + 16,
+						font: '17px Ubuntu'
+					});
+				}
 			}
-		}
-	};
-	Player.list[self.id] = self;
-	return self;
+		};
+
+		Player.list[this.id] = this;
+	}
 }
+
 var angle = 0;
 var angle_pure = 0;
 var mouseX;
