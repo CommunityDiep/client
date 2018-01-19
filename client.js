@@ -446,19 +446,19 @@ class Player {
 		this.number = initPack.number;
 		this.x = initPack.x;
 		this.y = initPack.y;
-		this.tank = initPack.tank;
+		this.tank = defulats(initPack.tank, "basic");
 		this.hp = initPack.hp,
 		this.hpMax = initPack.hpMax,
-		this.score = initPack.score,
-		this.level = initPack.level,
-		this.tier = initPack.tier,
-		this.name = initPack.name,
+		this.score = defaults(initPack.score, 0),
+		this.level = defaults(initPack.level, 0),
+		this.tier = defaults(initPack.tier, 0),
+		this.name = defaults(initPack.name, ""),
 		this.mouseAngle = initPack.mouseAngle;
 		this.invisible = initPack.invisible;
 		this.team = initPack.team;
 		this.autospin = initPack.autospin;
-		this.angle = this.mouseAngle;
-		
+		this.angle = defaults(this.mouseAngle, 0);
+
 		this.draw = function (angle, isPlayer) {
 			if (isPlayer) {
 				this.angle = angle;
