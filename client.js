@@ -68,8 +68,8 @@ function randInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function defaults(thing, default) {
-	return thing === undefined ? default : thing;
+function defaults(thing, efault) {
+	return thing === undefined ? efault : thing;
 }
 
 function param(name) {
