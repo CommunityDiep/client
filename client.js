@@ -446,7 +446,7 @@ class Player {
 		this.number = initPack.number;
 		this.x = initPack.x;
 		this.y = initPack.y;
-		this.tank = defulats(initPack.tank, "basic");
+		this.tank = defaults(initPack.tank, "basic");
 		this.hp = initPack.hp,
 		this.hpMax = initPack.hpMax,
 		this.score = defaults(initPack.score, 0),
