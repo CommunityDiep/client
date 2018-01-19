@@ -37,6 +37,13 @@ const uiColors = [
 	"#eeb790"
 ];
 
+var tcolor = {
+	'red': '#F14E54',
+	'blue': '#1DB2DF',
+	'purple': '#BE83F2',
+	'green': '#24DF73'
+};
+
 let hitRegions = [];
 
 var bgImage = new Image();
@@ -467,12 +474,6 @@ class Player {
 			}
 			var x = this.x - Player.list[selfId].x + width / 2;
 			var y = this.y - Player.list[selfId].y + height / 2;
-			var tcolor = {
-				'red': '#F14E54',
-				'blue': '#1DB2DF',
-				'purple': '#BE83F2',
-				'green': '#24DF73'
-			};
 			ctx.fillStyle = 'black';
 			var hpWidth = 30 * this.hp / this.hpMax;
 			ctx.font = '30px Ubuntu';
