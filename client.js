@@ -37,7 +37,7 @@ const uiColors = [
 	"#eeb790"
 ];
 
-const tcolor = {
+const teamColors = {
 	'red': '#F14E54',
 	'blue': '#1DB2DF',
 	'purple': '#BE83F2',
@@ -493,7 +493,7 @@ class Player {
 				if (this.team === 'none') {
 					var color = this.id === selfId ? '#1DB2DF' : '#F14E54';
 				} else {
-					var color = tcolor[this.team];
+					var color = teamColors[this.team];
 				};
 				drawTank(x, y, this.angle, 24 + (this.level / 3), color, tanktree[this.tank].barrels,
 					tanktree[this.tank].body);
