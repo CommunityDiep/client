@@ -289,12 +289,12 @@ function tryJoin() {
 			width: width,
 			height: height
 		});
-		localStorage.username = document.getElementById('textInput').value || '';
+		localStorage.setItem("username", document.getElementById('textInput').value || "");
 	}
 }
 
 window.addEventListener('load', function () {
-	document.getElementById('textInput').value = localStorage.username || '';
+	document.getElementById('textInput').value = localStorage.getItem("username") || "";
 
 	document.getElementById("ctx").style.display = "initial";
 	document.getElementById("loading").style.display = "none";
