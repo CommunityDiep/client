@@ -996,7 +996,7 @@ function drawPlayerCount() {
 	let players = Object.keys(Player.list).length
 	let plural = Object.keys(Player.list).length == 1 ? '' : 's';
 	drawText({
-		text: `${Object.keys(Player.list).length} player${plural} on ${servername}`,
+		text: `${Object.keys(Player.list).length} player${plural} on this server`,
 		x: width - 190,
 		y: height - 50,
 		font: 'bold 30px Ubuntu'
