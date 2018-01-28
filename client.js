@@ -588,7 +588,7 @@ function drawClickArea(obj) {
 			y: obj.y + (obj.height / 2),
 			angle: spin_angle,
 			radius: obj.width / 5,
-			color: '#1DB2DF',
+			bodyColor: '#1DB2DF',
 			barrels: obj.tankData.barrels,
 			bodyType: obj.tankData.body
 		});
