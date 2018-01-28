@@ -1096,41 +1096,8 @@ let drawScoreboard = function () {
 	}
 }
 
-document.addEventListener('keydown', function (event) {
-
-	if (event.keyCode == 68 || event.keyCode == 39) { // d or right
-		socket.emit('keyPress', {
-			inputId: 'right',
-			state: true
-		});
-		// Player.list[i].x +=1;
-	} else if (event.keyCode == 83 || event.keyCode == 40) // s or down
-		socket.emit('keyPress', {
-			inputId: 'down',
-			state: true
-		});
-	else if (event.keyCode == 65 || event.keyCode == 37) { // a or left
-		socket.emit('keyPress', {
-			inputId: 'left',
-			state: true
-		});
-		// Player.list[i].x -= 1;
-	} else if (event.keyCode == 87 || event.keyCode == 38) // w or up
-		socket.emit('keyPress', {
-			inputId: 'up',
-			state: true
-		});
-	else if (event.keyCode == 32) // spacebar
-		socket.emit('keyPress', {
-			inputId: 'attack',
-			state: true
-		});
-	else if (event.keyCode == 16) // shift
-		socket.emit('keyPress', {
-			inputId: 'repel',
-			state: true
-		});
-
+document.addEventListener('keydown', event => {
+	inputHandler(event, true);
 });
 
 document.addEventListener('keyup', event => {
