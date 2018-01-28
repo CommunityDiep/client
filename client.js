@@ -85,31 +85,10 @@ function param(name) {
 		/\+/g, '%20')) || null;
 }
 var par = param('s') == undefined ? 'ffa' : param('s');
-document.getElementById('server').value = par;
-var servers = {
-	ffa: {
-		name: 'Free For All',
-		servers: ['localhost:8080'] // ['https://cdiep-serv-nylr.c9users.io/','https://cdiep-serv-nylr.c9users.io/']
-	},
-	tdm: {
-		name: '2 Teams Deathmatch'
-	},
-	ftdm: {
-		name: '4 Teams Deathmatch',
-		servers: []
-	},
-	tag: {
-		name: 'Tag',
-		servers: []
-	},
-	farm: {
-		name: 'Farming',
-		servers: []
-	}
-};
+
 var resulter;
 var servernum = randInt(1, servers[par].servers.length);
-var servername = par + 1; // randInt(0,servers[param('s')].servers.length-1)]
+var servername = par + 1;
 var socket = io.connect(param('ip') == undefined ? servers[par].servers[
 	servernum - 1] : param('ip'), {
 	reconnect: false
@@ -125,13 +104,6 @@ socket.on('disconnect', function (err) {
 			reconnect: false
 		})
 	};
-});
-document.getElementById('server').addEventListener('change', function () {
-	if (!(document.getElementById('server').value == 'select')) {
-		window.open(
-			`${location.origin}${location.pathname}?s=${document.getElementById('server').value}`,
-			'_self');
-	}
 });
 
 function calculateBarrelPos(angle) {

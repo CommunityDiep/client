@@ -16,9 +16,6 @@ html {
   font-family: "Ubuntu";
   color: black;
 }
-#server {
-  display: none;
-}
 *:focus {
   outline: none;
 }
