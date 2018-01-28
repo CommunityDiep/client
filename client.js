@@ -684,9 +684,9 @@ function drawCircle(x, y, radius, color, trap) {
 		ctx.translate(x, y)
 		ctx.beginPath();
 		ctx.lineJoin = 'round';
-		let hA = ((Math.PI * 2) / 3);
+		var hA = ((Math.PI * 2) / 3);
 		ctx.moveTo(Math.cos(hA * hI) * radius, Math.sin(hA * hI) * radius);
-		for (let hI = 1; hI < 5; hI++) {
+		for (var hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos(hA * hI) * radius, Math.sin(hA * hI) * radius);
 			ctx.lineTo(Math.cos((hA * hI) + (hA / 2)) * (radius / 3.5), Math.sin((hA *
 				hI) + (hA / 2)) * (radius / 3.5));
