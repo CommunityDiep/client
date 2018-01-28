@@ -84,25 +84,26 @@ function param(name) {
 		'([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(
 		/\+/g, '%20')) || null;
 }
-var par = param('s') == undefined ? 'ffa' : param('s');
 
 var resulter;
-var servernum = randInt(1, servers[par].servers.length);
-var servername = par + 1;
-var socket = io.connect(param('ip') == undefined ? servers[par].servers[
-	servernum - 1] : param('ip'), {
+
+let connectIP = defaults(param("ip"), "http://localhost:8080");
+
+var socket = io.connect(connectIP, {
 	reconnect: false
 });
+
 var tanktree = {};
 socket.on('tanks_update', function (data) {
 	tanktree = data;
 })
+
 socket.on('disconnect', function (err) {
 	console.log(err)
 	var socket = function () {
-		return io.connect(servers[par].servers[servernum - 1], {
+		return io.connect(connectIP, {
 			reconnect: false
-		})
+		});
 	};
 });
 
