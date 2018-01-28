@@ -104,7 +104,6 @@ socket.on('tanks_update', function (data) {
 })
 
 socket.on('disconnect', function (err) {
-	console.log(err)
 	addStatusMessage({
 		message: `Disconnected from server`,
 		color: "red"
@@ -785,7 +784,7 @@ socket.on('init', function (data) {
 	if (data.selfId) {
 		selfId = data.selfId;
 	}
-	// console.log(data.player.length);
+
 	for (let item of data.player) {
 		new Player(item);
 	}
@@ -1114,7 +1113,7 @@ let drawScoreboard = function () {
 		font: 'bold 30px Ubuntu'
 	});
 	scoreboardData.forEach((key, index) => {
-		console.log(key,index);drawBar({
+		drawBar({
 			x: width - 100,
 			y: 70 + (index * 20),
 			label: key[0],
