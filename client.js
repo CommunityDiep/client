@@ -1114,7 +1114,7 @@ let drawScoreboard = function () {
 		font: 'bold 30px Ubuntu'
 	});
 
-	for (let s in scoreboardData) {
+	for (let s = 0; s < Object.keys(scoreboardData).length; s++) {
 		drawBar({
 			x: width - 100,
 			y: 70 + (s * 20),
