@@ -274,7 +274,7 @@ let height = window.innerHeight;
 // let chooseTank = document.getElementById('choose-tank');
 let gameDiv = document.getElementById('gameDiv');
 let input = document.getElementById('textInput');
-document.getElementById('textInput').addEventListener('change', function () {
+input.addEventListener('change', function () {
 });
 
 let spin_angle = 0;
@@ -289,12 +289,12 @@ function tryJoin() {
 			width: width,
 			height: height
 		});
-		localStorage.setItem("username", document.getElementById('textInput').value || "");
+		localStorage.setItem("username", input.value || "");
 	}
 }
 
 window.addEventListener('load', function () {
-	document.getElementById('textInput').value = localStorage.getItem("username") || "";
+	input.value = localStorage.getItem("username") || "";
 
 	document.getElementById("ctx").style.display = "initial";
 	document.getElementById("loading").style.display = "none";
@@ -914,9 +914,9 @@ setInterval(function () {
 		ctx.fillStyle = 'black';
 		ctx.strokeRect((canvas.width / 2) - 160, (canvas.height / 2) - 20, 320,
 			40);
-		document.getElementById('textInput').style.left = (canvas.width / 2) -
+		input.style.left = (canvas.width / 2) -
 			160 + 'px';
-		document.getElementById('textInput').style.top = (canvas.height / 2) -
+		input.style.top = (canvas.height / 2) -
 			20 + 'px';
 		drawText({
 			text: '(press enter to spawn)',
