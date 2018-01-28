@@ -105,6 +105,11 @@ socket.on('tanks_update', function (data) {
 
 socket.on('disconnect', function (err) {
 	console.log(err)
+	addStatusMessage({
+		message: `Disconnected from server`,
+		color: "red"
+	});
+
 	socket = function () {
 		return io.connect(connectIP, {
 			reconnect: false
