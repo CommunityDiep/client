@@ -87,11 +87,11 @@ function param(name) {
 
 let connectIP = defaults(param("ip"), "http://localhost:8080");
 
-var socket = io.connect(connectIP, {
+let socket = io.connect(connectIP, {
 	reconnect: false
 });
 
-var tanktree = {};
+let tanktree = {};
 socket.on('tanks_update', function (data) {
 	tanktree = data;
 })
@@ -106,8 +106,8 @@ socket.on('disconnect', function (err) {
 });
 
 function calculateBarrelPos(angle) {
-	var xPos = Math.cos(angle / 180 * Math.PI) * 15;
-	var yPos = Math.sin(angle / 180 * Math.PI) * 15;
+	let xPos = Math.cos(angle / 180 * Math.PI) * 15;
+	let yPos = Math.sin(angle / 180 * Math.PI) * 15;
 	return {
 		x: xPos,
 		y: yPos,
@@ -121,7 +121,7 @@ function drawTank2(obj) {
 function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 	hat = hat == undefined ? true : hat;
 
-	var animationTime = new Date().getTime()
+	let animationTime = new Date().getTime()
 	ctx.save();
 	ctx.translate(x, y);
 	ctx.rotate(degToRad(angle));
@@ -130,7 +130,7 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 	ctx.strokeStyle = softStroke ? shadeColor('#999999', -0.25) : '#555555';
 	ctx.fillStyle = '#999999';
 	ctx.lineWidth = 4 / (radius / 48);
-	for (var i = 0; i < barrels.length; i++) {
+	for (let i = 0; i < barrels.length; i++) {
 		if (barrels[i].barrelType == 0) {
 			ctx.save();
 			ctx.rotate(degToRad(barrels[i].angle));
@@ -177,11 +177,11 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 		ctx.fillStyle = '#555555';
 		ctx.strokeStyle = '#555555';
 		ctx.lineJoin = 'round';
-		var hA = ((Math.PI * 2) / 6);
+		let hA = ((Math.PI * 2) / 6);
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 			6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
 			animationTime / 6) % 360)) * 58);
-		for (var hI = 1; hI < 8; hI++) {
+		for (let hI = 1; hI < 8; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 				6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
 				animationTime / 6) % 360)) * 58);
@@ -202,11 +202,11 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 		ctx.fillStyle = '#555555';
 		ctx.strokeStyle = '#555555';
 		ctx.lineJoin = 'round';
-		var hA = ((Math.PI * 2) / 3);
+		let hA = ((Math.PI * 2) / 3);
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 			3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
 			animationTime / 3) % 360)) * 64);
-		for (var hI = 1; hI < 5; hI++) {
+		for (let hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 				3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
 				animationTime / 3) % 360)) * 64);
@@ -214,7 +214,7 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
 			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 			90) + degToRad((animationTime / 3) % 360)) * 64);
-		for (var hI = 1; hI < 5; hI++) {
+		for (let hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
 				angle - 90) + degToRad((animationTime / 3) % 360)) * 64);
@@ -222,7 +222,7 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
 			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 			180) + degToRad((animationTime / 3) % 360)) * 64);
-		for (var hI = 1; hI < 5; hI++) {
+		for (let hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
 				angle - 180) + degToRad((animationTime / 3) % 360)) * 64);
@@ -230,7 +230,7 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
 			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 			270) + degToRad((animationTime / 3) % 360)) * 64);
-		for (var hI = 1; hI < 5; hI++) {
+		for (let hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
 				angle - 270) + degToRad((animationTime / 3) % 360)) * 64);
@@ -256,20 +256,20 @@ function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 
 	ctx.restore();
 };
-var width = window.innerWidth;
-var height = window.innerHeight;
+let width = window.innerWidth;
+let height = window.innerHeight;
 // sigin
-// var chooseTank = document.getElementById('choose-tank');
-var gameDiv = document.getElementById('gameDiv');
-var input = document.getElementById('textInput');
+// let chooseTank = document.getElementById('choose-tank');
+let gameDiv = document.getElementById('gameDiv');
+let input = document.getElementById('textInput');
 document.getElementById('textInput').addEventListener('change', function () {
 });
 
-var spin_angle = 0;
+let spin_angle = 0;
 
 function tryJoin() {
 	if (input.value != '') {
-		var ip = 104024 * Math.random();
+		let ip = 104024 * Math.random();
 		socket.emit('signIn', {
 			name: input.value,
 			address: ip,
@@ -299,15 +299,15 @@ socket.on('signInResponse', function (data) {
 });
 
 // game
-var sorted = [];
-var changed_indexes = [];
-var original_indexes = [];
-var points = [];
-var nicknames = [];
-var selfId = null;
-var sortedScores = {};
-var ctx = document.getElementById('ctx').getContext('2d');
-var canvas = document.getElementById('ctx');
+let sorted = [];
+let changed_indexes = [];
+let original_indexes = [];
+let points = [];
+let nicknames = [];
+let selfId = null;
+let sortedScores = {};
+let ctx = document.getElementById('ctx').getContext('2d');
+let canvas = document.getElementById('ctx');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 ctx.lineJoin = 'round';
@@ -350,11 +350,11 @@ function drawPolygon(x, y, angle, radius, color, sides) {
 	ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
 	ctx.lineJoin = 'round';
 	ctx.beginPath();
-	var step = ((Math.PI * 2) / sides);
+	let step = ((Math.PI * 2) / sides);
 	ctx.translate(x, y);
 	ctx.rotate(degToRad(angle));
 	ctx.moveTo(radius * 2, 0);
-	for (var i = 1; i < sides + 2; i++) {
+	for (let i = 1; i < sides + 2; i++) {
 		ctx.lineTo(2 * radius * Math.cos(step * i), 2 * radius * Math.sin(step * i));
 	}
 	ctx.lineWidth = 4;
@@ -363,8 +363,8 @@ function drawPolygon(x, y, angle, radius, color, sides) {
 	ctx.closePath();
 	ctx.restore();
 };
-var Shape = function (initPack) {
-	var self = {}
+let Shape = function (initPack) {
+	let self = {}
 	self.id = initPack.id;
 	self.x = initPack.x;
 	self.y = initPack.y;
@@ -379,8 +379,8 @@ var Shape = function (initPack) {
 				Player.list[selfId].y - self.y) > height / 2 + 50) {
 			return;
 		}
-		var x = self.x - Player.list[selfId].x + width / 2;
-		var y = self.y - Player.list[selfId].y + height / 2;
+		let x = self.x - Player.list[selfId].x + width / 2;
+		let y = self.y - Player.list[selfId].y + height / 2;
 		if (self.name === 'secret-shape1') {
 			drawPolygon(x, y, self.angle, 17, self.color, 10);
 			drawPolygon(x, y, self.angle, 15, self.color, 9);
@@ -443,27 +443,27 @@ class Player {
 			} else {
 				this.angle = this.mouseAngle;
 			}
-			var x = this.x - Player.list[selfId].x + width / 2;
-			var y = this.y - Player.list[selfId].y + height / 2;
+			let x = this.x - Player.list[selfId].x + width / 2;
+			let y = this.y - Player.list[selfId].y + height / 2;
 			ctx.fillStyle = 'black';
-			var hpWidth = 30 * this.hp / this.hpMax;
+			let hpWidth = 30 * this.hp / this.hpMax;
 			ctx.font = '30px Ubuntu';
 			if (!this.invisible) {
-				var size = 25; // + parseInt(this.score)*1.25;
-				var score = this.score + 3
+				let size = 25; // + parseInt(this.score)*1.25;
+				let score = this.score + 3
 				if (size > 32) {
-					var size = 32;
+					let size = 32;
 				}
 				if (size < 25) {
-					var size = 25;
+					let size = 25;
 				}
 				if (score > 3) {
-					var score = 3;
+					let score = 3;
 				}
 				if (this.team === 'none') {
-					var color = this.id === selfId ? '#1DB2DF' : '#F14E54';
+					let color = this.id === selfId ? '#1DB2DF' : '#F14E54';
 				} else {
-					var color = teamColors[this.team];
+					let color = teamColors[this.team];
 				};
 				drawTank(x, y, this.angle, 24 + (this.level / 3), color, tanktree[this.tank].barrels,
 					tanktree[this.tank].body);
@@ -491,23 +491,23 @@ class Player {
 	}
 }
 
-var angle = 0;
-var angle_pure = 0;
-var mouseX;
-var mouseY;
+let angle = 0;
+let angle_pure = 0;
+let mouseX;
+let mouseY;
 $(document).mousemove(function (e) {
 	if (!selfId || Player.list[selfId].autospin) return;
-	var x = -width + e.pageX - 8;
-	var y = -height + e.pageY - 8;
+	let x = -width + e.pageX - 8;
+	let y = -height + e.pageY - 8;
 	angle = Math.atan2(y, x) / (Math.PI * 180);
-	var boxCenter = [width / 2, height / 2];
+	let boxCenter = [width / 2, height / 2];
 	angle = Math.atan2(e.pageX - boxCenter[0], -(e.pageY - boxCenter[1])) * (
 		180 / Math.PI);
 	angle_pure = Math.atan2(e.pageX - boxCenter[0], -(e.pageY - boxCenter[1]) *
 		(180 / Math.PI));
 	angle = angle - 90;
 	if (Player.list[selfId].autospin) {
-		var mgpower = setInterval(function () {
+		let mgpower = setInterval(function () {
 			if (!Player.list[selfId].autospin) {
 				clearInterval(mgpower);
 			}
@@ -529,7 +529,7 @@ function drawGrid(x, y, width, height, slotSize, fillColor, lineColor, xOffset, 
 	ctx.beginPath();
 	ctx.strokeColor = lineColor;
 	ctx.lineWidth = 1;
-	for (var i = 0; i < width || i < height; i += slotSize) {
+	for (let i = 0; i < width || i < height; i += slotSize) {
 		ctx.moveTo(0, i);
 		ctx.lineTo(width, i);
 		ctx.moveTo(i + (xOffset % slotSize), 0);
@@ -738,10 +738,10 @@ socket.on('init', function (data) {
 socket.on('update', function (data) {
 	points = [];
 	nicknames = [];
-	for (var i = 0; i < data.player.length; i++) {
-		var player_id = data.player[i].id;
-		var pack = data.player[i];
-		var p = Player.list[pack.id]
+	for (let i = 0; i < data.player.length; i++) {
+		let player_id = data.player[i].id;
+		let pack = data.player[i];
+		let p = Player.list[pack.id]
 		points.push(data.player[i].score + '.' + player_id);
 		if (p) {
 			if (pack.tank) {
@@ -758,11 +758,11 @@ socket.on('update', function (data) {
 			p.tier = pack.tier;
 		}
 	}
-	for (var i = 0; i < data.player.length; i++) {
+	for (let i = 0; i < data.player.length; i++) {
 		if (data.player[i].id == selfId) {
-			var pack = data.shape[data.player[i].id];
-			for (var i = 0; i < pack.length; i++) {
-				var s = Shape.list[pack[i].id];
+			let pack = data.shape[data.player[i].id];
+			for (let i = 0; i < pack.length; i++) {
+				let s = Shape.list[pack[i].id];
 				if (s) {
 					if (pack[i].x !== undefined) s.x = pack[i].x;
 					if (pack[i].y !== undefined) s.y = pack[i].y;
@@ -770,9 +770,9 @@ socket.on('update', function (data) {
 			}
 		}
 	}
-	for (var i = 0; i < data.bullet.length; i++) {
-		var pack = data.bullet[i];
-		var b = Bullet.list[data.bullet[i].id];
+	for (let i = 0; i < data.bullet.length; i++) {
+		let pack = data.bullet[i];
+		let b = Bullet.list[data.bullet[i].id];
 		if (b) {
 			if (pack.x !== undefined) b.x = pack.x;
 			if (pack.y !== undefined) b.y = pack.y;
@@ -799,19 +799,19 @@ function addStatusMessage(data) {
 
 // remove
 socket.on('remove', function (data) {
-	for (var i = 0; i < data.player.length; i++) {
+	for (let i = 0; i < data.player.length; i++) {
 		delete Player.list[data.player[i]];
 	}
-	for (var i = 0; i < data.bullet.length; i++) {
+	for (let i = 0; i < data.bullet.length; i++) {
 		delete Bullet.list[data.bullet[i]];
 	}
-	for (var i = 0; i < data.shape.length; i++) {
+	for (let i = 0; i < data.shape.length; i++) {
 		delete Shape.list[data.shape[i]];
 	}
 });
 // drawing
-var pastx;
-var pasty;
+let pastx;
+let pasty;
 setInterval(function () {
 	canvas.width = window.innerWidth;
 	width = window.innerWidth;
@@ -837,13 +837,13 @@ setInterval(function () {
 			selfId].y, 1500, 1500, 24, '#cdcdcd', '#C6C6C6', 0, 0);
 		pastx = Player.list[selfId].x;
 		pasty = Player.list[selfId].y;
-		for (var i in Shape.list) {
+		for (let i in Shape.list) {
 			Shape.list[i].draw();
 		}
-		for (var i in Bullet.list) {
+		for (let i in Bullet.list) {
 			Bullet.list[i].draw();
 		}
-		for (var i in Player.list) {
+		for (let i in Player.list) {
 			if (Player.list[i].id == selfId) {
 				Player.list[i].draw(angle, true);
 			} else {
