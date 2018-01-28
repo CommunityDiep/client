@@ -1,6 +1,6 @@
 "use strict";
 
-if (typeof window.orientation == 'undefined') {
+if (typeof window.orientation !== 'undefined') {
 	alert(
 		"It looks like you're on mobile. For the best experience, use a computer to play this game."
 	);
