@@ -114,11 +114,16 @@ function calculateBarrelPos(angle) {
 	};
 }
 
-function drawTank2(obj) {
-	drawTank(obj.x, obj.y, obj.angle, obj.radius, obj.bodyColor, obj.barrels, obj.bodyType, obj.showHatSecret);
-}
+function drawTank(obj) {
+	let x = obj.x;
+	let y = obj.y;
+	let angle = obj.angle;
+	let radius = obj.radius;
+	let color = obj.color;
+	let barrels = obj.barrels;
+	let bodyType = obj.bodyType;
+	let hat = obj.showHatSecret;
 
-function drawTank(x, y, angle, radius, color, barrels, bodyType, hat) {
 	hat = hat == undefined ? true : hat;
 
 	let animationTime = new Date().getTime()
@@ -398,7 +403,7 @@ let Shape = function (initPack) {
 						drawPolygon(x, y, self.angle, 17, self.color, 5);
 					} else {
 						if (self.name === 'square') {
-							drawTank2({
+							drawTank({
 								x: x,
 								y: y,
 								angle: self.angle,
@@ -465,8 +470,16 @@ class Player {
 				} else {
 					let color = teamColors[this.team];
 				};
-				drawTank(x, y, this.angle, 24 + (this.level / 3), color, tanktree[this.tank].barrels,
-					tanktree[this.tank].body);
+				drawTank({
+					x: x,
+					y: y,
+					angle: this.angle,
+					radius: 24 + (this.level / 3),
+					bodyColor: color,
+					barrels: tanktree[this.tank].barrels,
+					bodyType: tanktree[this.tank].body,
+					showHatSecret: true
+				});
 				drawBar({
 					x: x + size,
 					y: (y + size) + 15,
@@ -560,8 +573,15 @@ function drawClickArea(obj) {
 	ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
 	if (typeof obj.tankData !== 'string') {
 		ctx.globalAlpha = 1;
-		drawTank(obj.x + (obj.width / 2), obj.y + (obj.height / 2), spin_angle, obj.width / 5, '#1DB2DF',
-			obj.tankData.barrels, obj.tankData.body);
+		drawTank({
+			x: obj.x + (obj.width / 2),
+			y: obj.y + (obj.height / 2),
+			angle: spin_angle,
+			radius: obj.width / 5,
+			color: '#1DB2DF',
+			barrels: obj.tankData.barrels,
+			bodyType: obj.tankData.body
+		});
 	}
 	drawText({
 		text: typeof obj.tankData == 'string' ? obj.tankData : obj.tankData.localized,
