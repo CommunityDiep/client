@@ -296,7 +296,7 @@ function tryJoin() {
 window.addEventListener('load', function () {
 	input.value = localStorage.getItem("username") || "";
 
-	document.getElementById("ctx").style.display = "initial";
+	canvas.style.display = "initial";
 	document.getElementById("loading").style.display = "none";
 });
 
@@ -1151,12 +1151,12 @@ document.addEventListener('keydown', function (event) {
 		});
 	else if (event.keyCode == 123) // f11
 		if (!document.fullscreenElement) {
-			document.getElementById('ctx').webkitRequestFullscreen();
+			canvas.webkitRequestFullscreen();
 		} else {
 			document.exitFullscreen();
 		}
 
-	if (document.activeElement == document.getElementById("textInput") && event.keyCode == 13) {
+	if (document.activeElement == input && event.keyCode == 13) {
 		tryJoin();
 	}
 });
@@ -1206,7 +1206,7 @@ document.addEventListener('keyup', function (event) {
 	}
 });
 
-document.getElementById("textInput").addEventListener("click", function (event) {
+input.addEventListener("click", function (event) {
 	if (event.detail >= 3) {
 		addStatusMessage({
 			message: "Control change mode activated",
