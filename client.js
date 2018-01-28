@@ -85,8 +85,6 @@ function param(name) {
 		/\+/g, '%20')) || null;
 }
 
-var resulter;
-
 let connectIP = defaults(param("ip"), "http://localhost:8080");
 
 var socket = io.connect(connectIP, {
