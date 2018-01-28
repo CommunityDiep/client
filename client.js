@@ -412,16 +412,7 @@ let Shape = function (initPack) {
 						drawPolygon(x, y, self.angle, 17, self.color, 5);
 					} else {
 						if (self.name === 'square') {
-							drawTank({
-								x: x,
-								y: y,
-								angle: self.angle,
-								radius: 18.5,
-								bodyColor: self.color,
-								barrels: [],
-								bodyType: 1,
-								showHatSecret: false
-							});
+							drawPolygon(x, y, self.angle + 45, 10, self.color, 4);
 						}
 					}
 				}
