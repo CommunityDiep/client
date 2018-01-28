@@ -465,6 +465,7 @@ class Player {
 				if (score > 3) {
 					let score = 3;
 				}
+				let color = teamColors["blue"];
 				if (this.team === 'none') {
 					let color = this.id === selfId ? '#1DB2DF' : '#F14E54';
 				} else {
