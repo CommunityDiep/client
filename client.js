@@ -1,9 +1,9 @@
 "use strict";
 
-if (typeof window.orientation !== 'undefined') {
+if (typeof window.orientation == 'undefined') {
 	alert(
-		'It looks likes you\'re on mobile. For the best experience, play on your PC.'
-	)
+		"It looks like you're on mobile. For the best experience, use a computer to play this game."
+	);
 }
 // for soft stroking
 // Source: https://stackoverflow.com/a/13542669/5513988
