@@ -38,8 +38,15 @@ const uiColors = [
 ];
 
 const teamColors = {
+	// FFA psuedoteams
+	'enemy': '#F14E54',
+	'self': '#1DB2DF',
+
+	// TDM teams
 	'red': '#F14E54',
 	'blue': '#1DB2DF',
+
+	// Extended set for 4-teamed TDM
 	'purple': '#BE83F2',
 	'green': '#24DF73'
 };
