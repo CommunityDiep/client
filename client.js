@@ -119,7 +119,7 @@ function drawTank(obj) {
 	let y = obj.y;
 	let angle = obj.angle;
 	let radius = obj.radius;
-	let color = obj.color;
+	let color = obj.bodyColor;
 	let barrels = obj.barrels;
 	let bodyType = obj.bodyType;
 	let hat = obj.showHatSecret;
