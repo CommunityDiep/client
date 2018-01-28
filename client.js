@@ -1113,18 +1113,17 @@ let drawScoreboard = function () {
 		opacity: '0.8',
 		font: 'bold 30px Ubuntu'
 	});
-
-	for (let s = 0; s < Object.keys(scoreboardData).length; s++) {
-		drawBar({
+	scoreboardData.forEach((key, index) => {
+		console.log(key,index);drawBar({
 			x: width - 100,
-			y: 70 + (s * 20),
-			label: scoreboardData[s][0],
-			filled: scoreboardData[s][1],
+			y: 70 + (index * 20),
+			label: key[0],
+			filled: key[1],
 			width: 200,
 			height: 15,
 			renderOnFull: true
 		});
-	}
+	});
 }
 
 document.addEventListener('keydown', event => {
