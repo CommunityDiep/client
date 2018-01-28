@@ -1161,50 +1161,55 @@ document.addEventListener('keydown', function (event) {
 	}
 });
 
-document.addEventListener('keyup', function (event) {
+document.addEventListener('keyup', event => {
+	inputHandler(event, false);
+});
+
+function inputHandler(event, isHeld) {
+	console.log(event, isHeld)
 	switch (event.keyCode) {
 		case 68:
 		case 39:
 			socket.emit('keyPress', {
 				inputId: 'right',
-				state: false
+				state: isHeld
 			});
 			break;
 		case 83:
 		case 40:
 			socket.emit('keyPress', {
 				inputId: 'down',
-				state: false
+				state: isHeld
 			});
 			break;
 		case 65:
 		case 37:
 			socket.emit('keyPress', {
 				inputId: 'left',
-				state: false
+				state: isHeld
 			});
 			break;
 		case 87:
 		case 38:
 			socket.emit('keyPress', {
 				inputId: 'up',
-				state: false
+				state: isHeld
 			});
 			break;
 		case 32:
 			socket.emit('keyPress', {
 				inputId: 'attack',
-				state: false
+				state: isHeld
 			});
 			break;
 		case 16:
 			socket.emit('keyPress', {
 				inputId: 'repel',
-				state: false
+				state: isHeld
 			});
 			break;
 	}
-});
+}
 
 input.addEventListener("click", function (event) {
 	if (event.detail >= 3) {
