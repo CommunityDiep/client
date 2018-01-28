@@ -401,11 +401,13 @@ let Shape = function (initPack) {
 		let x = self.x - Player.list[selfId].x + width / 2;
 		let y = self.y - Player.list[selfId].y + height / 2;
 		if (self.name === 'secret-shape1') {
-			drawPolygon(x, y, self.angle, 17, self.color, 10);
+			/*drawPolygon(x, y, self.angle, 17, self.color, 10);
 			drawPolygon(x, y, self.angle, 15, self.color, 9);
 			drawPolygon(x, y, self.angle, 13, self.color, 8);
 			drawPolygon(x, y, self.angle, 11, self.color, 7);
-			drawPolygon(x, y, self.angle, 9, self.color, 6);
+			drawPolygon(x, y, self.angle, 9, self.color, 6);*/
+
+			console.log("This shape is deprecated. hahah i'm so funny")
 		} else {
 			if (self.name === 'triangle') {
 				drawPolygon({
@@ -418,13 +420,34 @@ let Shape = function (initPack) {
 				});
 			} else {
 				if (self.name === 'alphapentagon') {
-					drawPolygon(x, y, self.angle, 50, self.color, 5);
+					drawPolygon({
+						x: x,
+						y: y,
+						angle: self.angle,
+						radius: 50,
+						color: self.color,
+						sides: 5
+					});
 				} else {
 					if (self.name === 'pentagon') {
-						drawPolygon(x, y, self.angle, 17, self.color, 5);
+						drawPolygon({
+							x: x,
+							y: y,
+							angle: self.angle,
+							radius: 17,
+							color: self.color,
+							sides: 5
+						});
 					} else {
 						if (self.name === 'square') {
-							drawPolygon(x, y, self.angle + 45, 10, self.color, 4);
+							drawPolygon({
+								x: x,
+								y: y,
+								angle: self.angle + 45,
+								radius: 10,
+								color: self.color,
+								sides: 4
+							});
 						}
 					}
 				}
