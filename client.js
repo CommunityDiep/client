@@ -76,7 +76,7 @@ function randInt(min, max) {
 }
 
 function defaults(thing, efault) {
-	return thing === undefined ? efault : thing;
+	return thing === undefined || thing === null ? efault : thing;
 }
 
 function param(name) {
