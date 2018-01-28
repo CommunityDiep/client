@@ -1097,26 +1097,7 @@ let drawScoreboard = function () {
 }
 
 document.addEventListener('keydown', function (event) {
-	if (event.keyCode == 69) { // e
-		socket.emit('keyPress', {
-			inputId: 'auto',
-			state: true
-		});
 
-		addStatusMessage({
-			message: `Auto Fire toggled`,
-			color: "indigo"
-		});}
-	if (event.keyCode == 67) { // c
-		socket.emit('keyPress', {
-			inputId: 'spin',
-			state: true
-		});
-
-		addStatusMessage({
-			message: `Auto Spin toggled`,
-			color: "indigo"
-		});}
 	if (event.keyCode == 68 || event.keyCode == 39) { // d or right
 		socket.emit('keyPress', {
 			inputId: 'right',
@@ -1149,16 +1130,7 @@ document.addEventListener('keydown', function (event) {
 			inputId: 'repel',
 			state: true
 		});
-	else if (event.keyCode == 123) // f11
-		if (!document.fullscreenElement) {
-			canvas.webkitRequestFullscreen();
-		} else {
-			document.exitFullscreen();
-		}
 
-	if (document.activeElement == input && event.keyCode == 13) {
-		tryJoin();
-	}
 });
 
 document.addEventListener('keyup', event => {
@@ -1166,7 +1138,32 @@ document.addEventListener('keyup', event => {
 });
 
 function inputHandler(event, isHeld) {
-	console.log(event, isHeld)
+	if (document.activeElement == input && event.keyCode == 13) {
+		tryJoin();
+	}
+
+	if (event.keyCode == 69 && isHeld) { // e
+		socket.emit('keyPress', {
+			inputId: 'auto',
+			state: true
+		});
+
+		addStatusMessage({
+			message: `Auto Fire toggled`,
+			color: "indigo"
+		});}
+	if (event.keyCode == 67 && isHeld) { // c
+		socket.emit('keyPress', {
+			inputId: 'spin',
+			state: true
+		});
+
+		addStatusMessage({
+			message: `Auto Spin toggled`,
+			color: "indigo"
+		});
+	}
+
 	switch (event.keyCode) {
 		case 68:
 		case 39:
@@ -1207,6 +1204,13 @@ function inputHandler(event, isHeld) {
 				inputId: 'repel',
 				state: isHeld
 			});
+			break;
+		case 123: // f11
+			if (!document.fullscreenElement && isHeld) {
+				canvas.webkitRequestFullscreen();
+			} else {
+				document.exitFullscreen();
+			}
 			break;
 	}
 }
