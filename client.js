@@ -8,7 +8,7 @@ if (typeof window.orientation !== 'undefined') {
 // for soft stroking
 // Source: https://stackoverflow.com/a/13542669/5513988
 function shadeColor(color, percent) {
-	var f = parseInt(color.slice(1), 16),
+	let f = parseInt(color.slice(1), 16),
 		t = percent < 0 ? 0 : 255,
 		p = percent < 0 ? percent * -1 : percent,
 		R = f >> 16,
@@ -46,12 +46,12 @@ const teamColors = {
 
 let hitRegions = [];
 
-var bgImage = new Image();
+let bgImage = new Image();
 bgImage.src = 'https://diep.io/title.png';
 
-var date = new Date();
+let date = new Date();
 
-var hatImage = new Image();
+let hatImage = new Image();
 hatImage.src = 'http://www.officialpsds.com/images/thumbs/Santa-Hat-psd89867.png';
 
 // Prevent scrolling
@@ -98,7 +98,7 @@ socket.on('tanks_update', function (data) {
 
 socket.on('disconnect', function (err) {
 	console.log(err)
-	var socket = function () {
+	socket = function () {
 		return io.connect(connectIP, {
 			reconnect: false
 		});
@@ -860,8 +860,8 @@ setInterval(function () {
 		drawUpgrades();
 	} else {
 		// TITLE SCREEN IMAGE
-		var canvasRatio = canvas.width / canvas.height;
-		var bgImageRatio = bgImage.width / bgImage.height;
+		let canvasRatio = canvas.width / canvas.height;
+		let bgImageRatio = bgImage.width / bgImage.height;
 		if (canvasRatio > bgImageRatio) {
 			ctx.drawImage(bgImage, 0, canvas.height / 2 - canvas.width /
 				bgImageRatio / 2, canvas.width, canvas.width / bgImageRatio);
@@ -963,8 +963,8 @@ function drawStatusMessages() {
 // The new function will include player count/server name,
 // but will look more like Diep.io's bottom-right corner text.
 function drawPlayerCount() {
-	var players = Object.keys(Player.list).length
-	var plural = Object.keys(Player.list).length == 1 ? '' : 's';
+	let players = Object.keys(Player.list).length
+	let plural = Object.keys(Player.list).length == 1 ? '' : 's';
 	drawText({
 		text: `${Object.keys(Player.list).length} player${plural} on ${servername}`,
 		x: width - 190,
@@ -1044,7 +1044,7 @@ function drawBar(obj) {
 		})
 	}
 }
-var drawScoreboard = function () {
+let drawScoreboard = function () {
 	drawText({
 		text: 'Scoreboard',
 		x: width - 200,
