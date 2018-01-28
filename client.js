@@ -363,18 +363,18 @@ function degToRad(deg) {
 	return deg * (Math.PI / 180);
 }
 
-function drawPolygon(x, y, angle, radius, color, sides) {
+function drawPolygon(obj) {
 	ctx.save();
-	ctx.fillStyle = color;
-	ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+	ctx.fillStyle = obj.color;
+	ctx.strokeStyle = softStroke ? shadeColor(obj.color, -0.25) : '#555555';
 	ctx.lineJoin = 'round';
 	ctx.beginPath();
-	let step = ((Math.PI * 2) / sides);
-	ctx.translate(x, y);
-	ctx.rotate(degToRad(angle));
-	ctx.moveTo(radius * 2, 0);
-	for (let i = 1; i < sides + 2; i++) {
-		ctx.lineTo(2 * radius * Math.cos(step * i), 2 * radius * Math.sin(step * i));
+	let step = ((Math.PI * 2) / obj.sides);
+	ctx.translate(obj.x, obj.y);
+	ctx.rotate(degToRad(obj.angle));
+	ctx.moveTo(obj.radius * 2, 0);
+	for (let i = 1; i < obj.sides + 2; i++) {
+		ctx.lineTo(2 * obj.radius * Math.cos(step * i), 2 * obj.radius * Math.sin(step * i));
 	}
 	ctx.lineWidth = 4;
 	ctx.fill();
@@ -408,7 +408,14 @@ let Shape = function (initPack) {
 			drawPolygon(x, y, self.angle, 9, self.color, 6);
 		} else {
 			if (self.name === 'triangle') {
-				drawPolygon(x, y, self.angle, 9, self.color, 3);
+				drawPolygon({
+					x: x,
+					y: y,
+					angle: self.angle,
+					radius: 9,
+					color: self.color,
+					sides: 3
+				});
 			} else {
 				if (self.name === 'alphapentagon') {
 					drawPolygon(x, y, self.angle, 50, self.color, 5);
