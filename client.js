@@ -318,8 +318,10 @@ let points = [];
 let nicknames = [];
 let selfId = null;
 let sortedScores = {};
-let ctx = document.getElementById('ctx').getContext('2d');
+
 let canvas = document.getElementById('ctx');
+let ctx = canvas.getContext("2d");
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 ctx.lineJoin = 'round';
