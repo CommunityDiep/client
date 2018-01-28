@@ -189,11 +189,11 @@ function drawTank(obj) {
 		ctx.fillStyle = '#555555';
 		ctx.strokeStyle = '#555555';
 		ctx.lineJoin = 'round';
-		let hA = ((Math.PI * 2) / 6);
+		var hA = ((Math.PI * 2) / 6);
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 			6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
 			animationTime / 6) % 360)) * 58);
-		for (let hI = 1; hI < 8; hI++) {
+		for (var hI = 1; hI < 8; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 				6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
 				animationTime / 6) % 360)) * 58);
@@ -214,11 +214,11 @@ function drawTank(obj) {
 		ctx.fillStyle = '#555555';
 		ctx.strokeStyle = '#555555';
 		ctx.lineJoin = 'round';
-		let hA = ((Math.PI * 2) / 3);
+		var hA = ((Math.PI * 2) / 3);
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 			3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
 			animationTime / 3) % 360)) * 64);
-		for (let hI = 1; hI < 5; hI++) {
+		for (var hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 				3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
 				animationTime / 3) % 360)) * 64);
@@ -226,7 +226,7 @@ function drawTank(obj) {
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
 			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 			90) + degToRad((animationTime / 3) % 360)) * 64);
-		for (let hI = 1; hI < 5; hI++) {
+		for (var hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
 				angle - 90) + degToRad((animationTime / 3) % 360)) * 64);
@@ -234,7 +234,7 @@ function drawTank(obj) {
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
 			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 			180) + degToRad((animationTime / 3) % 360)) * 64);
-		for (let hI = 1; hI < 5; hI++) {
+		for (var hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
 				angle - 180) + degToRad((animationTime / 3) % 360)) * 64);
@@ -242,7 +242,7 @@ function drawTank(obj) {
 		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
 			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 			270) + degToRad((animationTime / 3) % 360)) * 64);
-		for (let hI = 1; hI < 5; hI++) {
+		for (var hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
 				angle - 270) + degToRad((animationTime / 3) % 360)) * 64);
