@@ -220,7 +220,7 @@ function drawPolygon(obj) {
 	ctx.closePath();
 	ctx.restore();
 };
-let Shape = function (initPack) {
+let Shape = function(initPack) {
 	let self = {}
 	self.id = initPack.id;
 	self.x = initPack.x;
@@ -231,7 +231,7 @@ let Shape = function (initPack) {
 	self.colorname = initPack.colorname;
 	self.hp = initPack.hp;
 	self.hpPercent = initPack.hpPercent;
-	self.draw = function () {
+	self.draw = function() {
 		if (Math.abs(Player.list[selfId].x - self.x) > width / 2 + 50 || Math.abs(
 				Player.list[selfId].y - self.y) > height / 2 + 50) {
 			return;
@@ -300,6 +300,7 @@ let Shape = function (initPack) {
 	Shape.list[self.id] = self;
 	return self;
 }
+
 function drawGrid(x, y, width, height, slotSize, fillColor, lineColor, xOffset, yOffset) {
 	ctx.fillStyle = fillColor === undefined ? '#cdcdcd' : fillColor;
 	ctx.fillRect(x, y, width, height);
@@ -379,11 +380,12 @@ function drawUpgrades() {
 		}
 	}
 
-
 	function stfup(pos) {
 		return Object.values(selfTankUpgrades)[pos] <= selfPlayer.tier;
 	}
-	if (selfPlayer.tier && ![undefined, null, {}, []].includes(selfTankUpgrades)) {
+	if (selfPlayer.tier && ![undefined, null, {},
+			[]
+		].includes(selfTankUpgrades)) {
 		for (let index = 0; index < Object.keys(selfTankUpgrades).length; index++) {
 			let slotX = 10 + 86.25 * (index % 2);
 			let slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
@@ -473,7 +475,8 @@ function addStatusMessage(data) {
 		delete statusMessages[index];
 	}, 2200);
 }
-function drawServerSelectorUI () {
+
+function drawServerSelectorUI() {
 	ctx.fillStyle = 'white';
 	drawClickArea({
 		x: canvas.width / 2 - 300,
@@ -585,7 +588,7 @@ function drawBar(obj) {
 		})
 	}
 }
-let drawScoreboard = function () {
+let drawScoreboard = function() {
 	drawText({
 		text: 'Scoreboard',
 		x: width - 200,
