@@ -243,25 +243,30 @@ let angle_pure = 0;
 let mouseX;
 let mouseY;
 
-document.addEventListener("mousemove", function(e) {
+document.addEventListener("mousemove", function(event) {
 	if (!selfId || Player.list[selfId].autospin) return;
-	let x = -width + e.pageX - 8;
-	let y = -height + e.pageY - 8;
-	angle = Math.atan2(y, x) / (Math.PI * 180);
+
+	let x = -width + event.pageX - 8;
+	let y = -height + event.pageY - 8;
+
 	let boxCenter = [width / 2, height / 2];
-	angle = Math.atan2(e.pageX - boxCenter[0], -(e.pageY - boxCenter[1])) * (
+
+	angle = Math.atan2(y, x) / (Math.PI * 180);
+	angle = Math.atan2(event.pageX - boxCenter[0], -(event.pageY - boxCenter[1])) * (
 		180 / Math.PI);
-	angle_pure = Math.atan2(e.pageX - boxCenter[0], -(e.pageY - boxCenter[1]) *
+	angle_pure = Math.atan2(event.pageX - boxCenter[0], -(event.pageY - boxCenter[1]) *
 		(180 / Math.PI));
 	angle = angle - 90;
+
 	if (Player.list[selfId].autospin) {
 		let mgpower = setInterval(function() {
 			if (!Player.list[selfId].autospin) {
 				clearInterval(mgpower);
 			}
-			angle++
+			angle++;
 		})
 	}
+
 	socket.emit('keyPress', {
 		inputId: 'mouseAngle',
 		state: angle
