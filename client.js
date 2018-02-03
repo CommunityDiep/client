@@ -62,7 +62,7 @@ let hatImage = new Image();
 hatImage.src = 'http://www.officialpsds.com/images/thumbs/Santa-Hat-psd89867.png';
 
 // Prevent scrolling
-window.addEventListener('scroll', function (event) {
+window.addEventListener('scroll', function(event) {
 	event.preventDefault();
 	window.scrollTo(0, 0);
 });
@@ -99,17 +99,17 @@ let socket = io.connect(connectIP, {
 });
 
 let tanktree = {};
-socket.on('tanks_update', function (data) {
+socket.on('tanks_update', function(data) {
 	tanktree = data;
 })
 
-socket.on('disconnect', function (err) {
+socket.on('disconnect', function(err) {
 	addStatusMessage({
 		message: `Disconnected from server`,
 		color: "red"
 	});
 
-	socket = function () {
+	socket = function() {
 		return io.connect(connectIP, {
 			reconnect: false
 		});
@@ -123,14 +123,14 @@ let input = document.getElementById('textInput');
 
 let spin_angle = 0;
 
-window.addEventListener('load', function () {
+window.addEventListener('load', function() {
 	input.value = localStorage.getItem("username") || "";
 
 	canvas.style.display = "initial";
 	document.getElementById("loading").style.display = "none";
 });
 
-socket.on('signInResponse', function (data) {
+socket.on('signInResponse', function(data) {
 	if (data.success) {
 		inGame = true;
 		showServerSelector = false;
@@ -164,18 +164,18 @@ class Player {
 		this.y = initPack.y;
 		this.tank = defaults(initPack.tank, "basic");
 		this.hp = initPack.hp,
-		this.hpMax = initPack.hpMax,
-		this.score = defaults(initPack.score, 0),
-		this.level = defaults(initPack.level, 0),
-		this.tier = defaults(initPack.tier, 0),
-		this.name = defaults(initPack.name, ""),
-		this.mouseAngle = initPack.mouseAngle;
+			this.hpMax = initPack.hpMax,
+			this.score = defaults(initPack.score, 0),
+			this.level = defaults(initPack.level, 0),
+			this.tier = defaults(initPack.tier, 0),
+			this.name = defaults(initPack.name, ""),
+			this.mouseAngle = initPack.mouseAngle;
 		this.invisible = initPack.invisible;
 		this.team = initPack.team;
 		this.autospin = initPack.autospin;
 		this.angle = defaults(this.mouseAngle, 0);
 
-		this.draw = function (angle, isPlayer) {
+		this.draw = function(angle, isPlayer) {
 			if (isPlayer) {
 				this.angle = angle;
 			} else {
@@ -242,7 +242,7 @@ let angle = 0;
 let angle_pure = 0;
 let mouseX;
 let mouseY;
-$(document).mousemove(function (e) {
+$(document).mousemove(function(e) {
 	if (!selfId || Player.list[selfId].autospin) return;
 	let x = -width + e.pageX - 8;
 	let y = -height + e.pageY - 8;
@@ -254,7 +254,7 @@ $(document).mousemove(function (e) {
 		(180 / Math.PI));
 	angle = angle - 90;
 	if (Player.list[selfId].autospin) {
-		let mgpower = setInterval(function () {
+		let mgpower = setInterval(function() {
 			if (!Player.list[selfId].autospin) {
 				clearInterval(mgpower);
 			}
@@ -269,7 +269,7 @@ $(document).mousemove(function (e) {
 Player.list = {};
 
 class Bullet {
-	constructor (initPack) {
+	constructor(initPack) {
 		this.id = initPack.id;
 		this.pid = initPack.parent_id;
 		this.x = initPack.x;
@@ -284,7 +284,7 @@ class Bullet {
 		Bullet.list[this.id] = this;
 	}
 
-	draw () {
+	draw() {
 		let x = this.x - Player.list[selfId].x + width / 2;
 		let y = this.y - Player.list[selfId].y + height / 2;
 		if (this.parent_tank == 'destroyer' || this.parent_tank ==
@@ -310,7 +310,7 @@ class Bullet {
 }
 
 Bullet.list = {};
-socket.on('init', function (data) {
+socket.on('init', function(data) {
 	if (data.selfId) {
 		selfId = data.selfId;
 	}
@@ -325,7 +325,7 @@ socket.on('init', function (data) {
 		new Shape(item);
 	}
 });
-socket.on('update', function (data) {
+socket.on('update', function(data) {
 	points = [];
 	nicknames = [];
 	for (let i = 0; i < data.player.length; i++) {
@@ -379,7 +379,7 @@ let statusMessages = [];
 socket.on("statusMessage", data => addStatusMessage);
 
 // remove
-socket.on('remove', function (data) {
+socket.on('remove', function(data) {
 	for (let i = 0; i < data.player.length; i++) {
 		delete Player.list[data.player[i]];
 	}
@@ -393,7 +393,7 @@ socket.on('remove', function (data) {
 // drawing
 let pastx;
 let pasty;
-setInterval(function () {
+setInterval(function() {
 	canvas.width = window.innerWidth;
 	width = window.innerWidth;
 	canvas.height = window.innerHeight;
@@ -534,7 +534,8 @@ function inputHandler(event, isHeld) {
 		addStatusMessage({
 			message: `Auto Fire toggled`,
 			color: "indigo"
-		});}
+		});
+	}
 	if (event.keyCode == 67 && isHeld) { // c
 		socket.emit('keyPress', {
 			inputId: 'spin',
@@ -598,7 +599,7 @@ function inputHandler(event, isHeld) {
 	}
 }
 
-input.addEventListener("click", function (event) {
+input.addEventListener("click", function(event) {
 	if (event.detail >= 3) {
 		addStatusMessage({
 			message: "Control change mode activated",
@@ -607,7 +608,7 @@ input.addEventListener("click", function (event) {
 	}
 });
 
-document.addEventListener('mousedown', function (event) {
+document.addEventListener('mousedown', function(event) {
 	if (inGame) {
 		socket.emit('keyPress', {
 			inputId: event.button == 0 ? 'attack' : 'repel',
@@ -617,9 +618,9 @@ document.addEventListener('mousedown', function (event) {
 
 	for (let pos = 0; pos < hitRegions.length; pos++) {
 		let pastMinX = event.clientX >= hitRegions[pos].x,
-				pastMinY = event.clientY >= hitRegions[pos].y,
-				beforeMaxX = event.clientX <= hitRegions[pos].x + hitRegions[pos].width,
-				beforeMaxY = event.clientY <= hitRegions[pos].y + hitRegions[pos].height;
+			pastMinY = event.clientY >= hitRegions[pos].y,
+			beforeMaxX = event.clientX <= hitRegions[pos].x + hitRegions[pos].width,
+			beforeMaxY = event.clientY <= hitRegions[pos].y + hitRegions[pos].height;
 
 		if (pastMinX && pastMinY && beforeMaxX && beforeMaxY) {
 			hitRegions[pos].activate(pos);
@@ -627,7 +628,7 @@ document.addEventListener('mousedown', function (event) {
 	}
 });
 
-document.addEventListener('mouseup', function (event) {
+document.addEventListener('mouseup', function(event) {
 	socket.emit('keyPress', {
 		inputId: event.button == 0 ? 'attack' : 'repel',
 		state: false
