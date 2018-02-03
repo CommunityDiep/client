@@ -242,7 +242,8 @@ let angle = 0;
 let angle_pure = 0;
 let mouseX;
 let mouseY;
-$(document).mousemove(function(e) {
+
+document.addEventListener("mousemove", function(e) {
 	if (!selfId || Player.list[selfId].autospin) return;
 	let x = -width + e.pageX - 8;
 	let y = -height + e.pageY - 8;
@@ -266,6 +267,7 @@ $(document).mousemove(function(e) {
 		state: angle
 	});
 });
+
 Player.list = {};
 
 class Bullet {
