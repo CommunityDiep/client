@@ -274,8 +274,7 @@ function drawTank(obj) {
 };
 let width = window.innerWidth;
 let height = window.innerHeight;
-// sigin
-// let chooseTank = document.getElementById('choose-tank');
+
 let input = document.getElementById('textInput');
 input.addEventListener('change', function () {
 });
