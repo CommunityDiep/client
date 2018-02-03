@@ -36,4 +36,5 @@ body {
 #ctx {
     border: 1px solid #000000;
     display: none;
+    cursor: crosshair;
 }
