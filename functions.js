@@ -7,6 +7,7 @@ function calculateBarrelPos(angle) {
 	};
 }
 
+const bodyIndexToName = ["circular", "square", "smasher", "spike"];
 function drawTank(obj) {
 	let x = obj.x;
 	let y = obj.y;
@@ -14,7 +15,9 @@ function drawTank(obj) {
 	let radius = obj.radius;
 	let color = obj.bodyColor;
 	let barrels = obj.barrels;
-	let bodyType = obj.bodyType;
+	let bodyType = obj.bodyType === "number" ? {
+		type: bodyIndexToName[obj.bodyType]
+	 } : obj.bodyType;
 	let hat = obj.showHatSecret;
 
 	hat = hat == undefined ? true : hat;
@@ -56,95 +59,104 @@ function drawTank(obj) {
 	};
 	ctx.rotate(0);
 	ctx.lineWidth = 4 / (radius / 48);
-	if (bodyType == 0) {
-		ctx.beginPath();
-		ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
-		ctx.fillStyle = color;
-		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
-		ctx.fill();
-		ctx.stroke();
-		ctx.closePath();
-		ctx.fillStyle = '#000000';
-	} else if (bodyType == 1) {
-		ctx.fillStyle = color;
-		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
-		ctx.fillRect(-1 * radius * 2, -1 * radius * 2, radius * 4, radius * 4);
-		ctx.strokeRect(-1 * radius * 2, -1 * radius * 2, radius * 4, radius * 4);
-	} else if (bodyType == 2) {
-		ctx.beginPath();
-		ctx.fillStyle = '#555555';
-		ctx.strokeStyle = '#555555';
-		ctx.lineJoin = 'round';
-		var hA = ((Math.PI * 2) / 6);
-		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
-			6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
-			animationTime / 6) % 360)) * 58);
-		for (var hI = 1; hI < 8; hI++) {
-			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
+
+	switch (bodyType.type) {
+		case "square":
+			ctx.fillStyle = color;
+			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+			ctx.fillRect(-1 * radius * 2, -1 * radius * 2, radius * 4, radius * 4);
+			ctx.strokeRect(-1 * radius * 2, -1 * radius * 2, radius * 4, radius * 4);
+		
+		case "smasher":
+			ctx.beginPath();
+			ctx.fillStyle = '#555555';
+			ctx.strokeStyle = '#555555';
+			ctx.lineJoin = 'round';
+			var hA = ((Math.PI * 2) / 6);
+			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 				6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
-				animationTime / 6) % 360)) * 58);
-		};
-		ctx.fill();
-		ctx.stroke();
-		ctx.closePath();
-		ctx.beginPath();
-		ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
-		ctx.fillStyle = color;
-		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
-		ctx.fill();
-		ctx.stroke();
-		ctx.closePath();
-		ctx.fillStyle = '#000000';
-	} else if (bodyType == 3) {
-		ctx.beginPath();
-		ctx.fillStyle = '#555555';
-		ctx.strokeStyle = '#555555';
-		ctx.lineJoin = 'round';
-		var hA = ((Math.PI * 2) / 3);
-		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
-			3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
-			animationTime / 3) % 360)) * 64);
-		for (var hI = 1; hI < 5; hI++) {
-			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
+					animationTime / 6) % 360)) * 58);
+			for (var hI = 1; hI < 8; hI++) {
+				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
+					6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
+						animationTime / 6) % 360)) * 58);
+			};
+			ctx.fill();
+			ctx.stroke();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
+			ctx.fillStyle = color;
+			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+			ctx.fill();
+			ctx.stroke();
+			ctx.closePath();
+			ctx.fillStyle = '#000000';
+			break;
+
+		case "spike":
+			ctx.beginPath();
+			ctx.fillStyle = '#555555';
+			ctx.strokeStyle = '#555555';
+			ctx.lineJoin = 'round';
+			var hA = ((Math.PI * 2) / 3);
+			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 				3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
-				animationTime / 3) % 360)) * 64);
-		};
-		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
-			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
-			90) + degToRad((animationTime / 3) % 360)) * 64);
-		for (var hI = 1; hI < 5; hI++) {
-			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
-				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
-				angle - 90) + degToRad((animationTime / 3) % 360)) * 64);
-		};
-		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
-			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
-			180) + degToRad((animationTime / 3) % 360)) * 64);
-		for (var hI = 1; hI < 5; hI++) {
-			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
-				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
-				angle - 180) + degToRad((animationTime / 3) % 360)) * 64);
-		};
-		ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
-			animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
-			270) + degToRad((animationTime / 3) % 360)) * 64);
-		for (var hI = 1; hI < 5; hI++) {
-			ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
-				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
-				angle - 270) + degToRad((animationTime / 3) % 360)) * 64);
-		};
-		ctx.fill();
-		ctx.stroke();
-		ctx.closePath();
-		ctx.beginPath();
-		ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
-		ctx.fillStyle = color;
-		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
-		ctx.fill();
-		ctx.stroke();
-		ctx.closePath();
-		ctx.fillStyle = '#000000';
-	};
+					animationTime / 3) % 360)) * 64);
+			for (var hI = 1; hI < 5; hI++) {
+				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
+					3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
+						animationTime / 3) % 360)) * 64);
+			};
+			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
+				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
+					90) + degToRad((animationTime / 3) % 360)) * 64);
+			for (var hI = 1; hI < 5; hI++) {
+				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
+					animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
+						angle - 90) + degToRad((animationTime / 3) % 360)) * 64);
+			};
+			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
+				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
+					180) + degToRad((animationTime / 3) % 360)) * 64);
+			for (var hI = 1; hI < 5; hI++) {
+				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
+					animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
+						angle - 180) + degToRad((animationTime / 3) % 360)) * 64);
+			};
+			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
+				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
+					270) + degToRad((animationTime / 3) % 360)) * 64);
+			for (var hI = 1; hI < 5; hI++) {
+				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
+					animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
+						angle - 270) + degToRad((animationTime / 3) % 360)) * 64);
+			};
+			ctx.fill();
+			ctx.stroke();
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
+			ctx.fillStyle = color;
+			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+			ctx.fill();
+			ctx.stroke();
+			ctx.closePath();
+			ctx.fillStyle = '#000000';
+			break;
+
+		case "circular":
+		default:
+			ctx.beginPath();
+			ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
+			ctx.fillStyle = color;
+			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+			ctx.fill();
+			ctx.stroke();
+			ctx.closePath();
+			ctx.fillStyle = '#000000';
+			break;
+	}
 
 	if (hat && date.getMonth() == 11 && date.getDate() == 25) {
 		ctx.rotate(5.6);
