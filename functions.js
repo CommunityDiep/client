@@ -18,9 +18,7 @@ function drawTank(obj) {
 	let bodyType = obj.bodyType === "number" ? {
 		type: bodyIndexToName[obj.bodyType]
 	 } : obj.bodyType;
-	let hat = obj.showHatSecret;
-
-	hat = hat == undefined ? true : hat;
+	let hat = obj.showHatSecret || true;
 
 	let animationTime = new Date().getTime()
 	ctx.save();
