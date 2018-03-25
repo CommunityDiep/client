@@ -135,7 +135,7 @@ socket.on("signInResponse", function(data) {
 		inGame = true;
 		showServerSelector = false;
 		showAdvancedConnectionOptions = false;
-	} else {alert('Unable to join. Please try again later.');}
+	} else {alert("Unable to join. Please try again later.");}
 });
 
 // game
@@ -400,7 +400,8 @@ socket.on("remove", function(data) {
 // drawing
 let pastx;
 let pasty;
-setInterval(function() {
+
+function loopy() {
 	canvas.width = window.innerWidth;
 	width = window.innerWidth;
 	canvas.height = window.innerHeight;
@@ -517,7 +518,13 @@ setInterval(function() {
 
 		drawStatusMessages();
 	}
-}, 10);
+
+	// We loopy again.
+	window.requestAnimationFrame(loopy);
+}
+
+// Let's start to loopy.
+window.requestAnimationFrame(loopy);
 
 document.addEventListener("keydown", event => {
 	inputHandler(event, true);
