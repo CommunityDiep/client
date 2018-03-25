@@ -1,6 +1,6 @@
 "use strict";
 
-if (typeof window.orientation !== 'undefined') {
+if (typeof window.orientation !== "undefined") {
 	alert(
 		"It looks like you're on mobile. For the best experience, use a computer to play this game."
 	);
@@ -14,11 +14,11 @@ function shadeColor(color, percent) {
 		R = f >> 16,
 		G = f >> 8 & 0x00FF,
 		B = f & 0x0000FF;
-	return '#' + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round(
+	return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round(
 		(t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(
 		1);
 }
-let softStroke = true;
+const softStroke = true;
 
 let inGame = false;
 let showServerSelector = false;
@@ -34,47 +34,47 @@ const uiColors = [
 	"#6c96f0",
 	"#b894fa",
 	"#ec6bf1",
-	"#eeb790"
+	"#eeb790",
 ];
 
 const teamColors = {
 	// FFA psuedoteams
-	'enemy': '#F14E54',
-	'self': '#1DB2DF',
+	"enemy": "#F14E54",
+	"self": "#1DB2DF",
 
 	// TDM teams
-	'red': '#F14E54',
-	'blue': '#1DB2DF',
+	"red": "#F14E54",
+	"blue": "#1DB2DF",
 
 	// Extended set for 4-teamed TDM
-	'purple': '#BE83F2',
-	'green': '#24DF73'
+	"purple": "#BE83F2",
+	"green": "#24DF73",
 };
 
 let hitRegions = [];
 
-let bgImage = new Image();
-bgImage.src = 'https://diep.io/title.png';
+const bgImage = new Image();
+bgImage.src = "https://diep.io/title.png";
 
-let date = new Date();
+const date = new Date();
 
-let hatImage = new Image();
-hatImage.src = 'http://www.officialpsds.com/images/thumbs/Santa-Hat-psd89867.png';
+const hatImage = new Image();
+hatImage.src = "http://www.officialpsds.com/images/thumbs/Santa-Hat-psd89867.png";
 
 // Prevent scrolling
-window.addEventListener('scroll', function(event) {
+window.addEventListener("scroll", function(event) {
 	event.preventDefault();
 	window.scrollTo(0, 0);
 });
 
 // Disable Chrome two-finger swipe to go back/forward
 // Source: https://stackoverflow.com/a/46439501/5513988
-document.addEventListener('touchstart', this.handleTouchStart, {
-	passive: false
-})
-document.addEventListener('touchmove', this.handleTouchMove, {
-	passive: false
-})
+document.addEventListener("touchstart", this.handleTouchStart, {
+	passive: false,
+});
+document.addEventListener("touchmove", this.handleTouchMove, {
+	passive: false,
+});
 
 function randInt(min, max) {
 	min = Math.ceil(min);
@@ -87,31 +87,31 @@ function defaults(thing, efault) {
 }
 
 function param(name) {
-	return decodeURIComponent((new RegExp('[?|&]' + name + '=' +
-		'([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(
-		/\+/g, '%20')) || null;
+	return decodeURIComponent((new RegExp("[?|&]" + name + "=" +
+		"([^&;]+?)(&|#|;|$)").exec(location.search) || [null, ""])[1].replace(
+		/\+/g, "%20")) || null;
 }
 
-let connectIP = defaults(param("ip"), "http://localhost:8080");
+const connectIP = defaults(param("ip"), "http://localhost:8080");
 
 let socket = io.connect(connectIP, {
-	reconnect: false
+	reconnect: false,
 });
 
 let tanktree = {};
-socket.on('tanks_update', function(data) {
+socket.on("tanks_update", function(data) {
 	tanktree = data;
-})
+});
 
-socket.on('disconnect', function(err) {
+socket.on("disconnect", function(err) {
 	addStatusMessage({
-		message: `Disconnected from server`,
-		color: "red"
+		message: "Disconnected from server",
+		color: "red",
 	});
 
 	socket = function() {
 		return io.connect(connectIP, {
-			reconnect: false
+			reconnect: false,
 		});
 	};
 });
@@ -119,40 +119,40 @@ socket.on('disconnect', function(err) {
 let width = window.innerWidth;
 let height = window.innerHeight;
 
-let input = document.getElementById('textInput');
+const input = document.getElementById("textInput");
 
 let spin_angle = 0;
 
-window.addEventListener('load', function() {
+window.addEventListener("load", function() {
 	input.value = localStorage.getItem("username") || "";
 
 	canvas.style.display = "initial";
 	document.getElementById("loading").style.display = "none";
 });
 
-socket.on('signInResponse', function(data) {
+socket.on("signInResponse", function(data) {
 	if (data.success) {
 		inGame = true;
 		showServerSelector = false;
 		showAdvancedConnectionOptions = false;
-	} else alert('Unable to join. Please try again later.');
+	} else {alert('Unable to join. Please try again later.');}
 });
 
 // game
-let sorted = [];
-let changed_indexes = [];
-let original_indexes = [];
+const sorted = [];
+const changed_indexes = [];
+const original_indexes = [];
 let points = [];
 let nicknames = [];
 let selfId = null;
-let sortedScores = {};
+const sortedScores = {};
 
-let canvas = document.getElementById('ctx');
-let ctx = canvas.getContext("2d");
+const canvas = document.getElementById("ctx");
+const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-ctx.lineJoin = 'round';
+ctx.lineJoin = "round";
 // init
 
 Shape.list = {};
@@ -164,12 +164,12 @@ class Player {
 		this.y = initPack.y;
 		this.tank = defaults(initPack.tank, "basic");
 		this.hp = initPack.hp,
-			this.hpMax = initPack.hpMax,
-			this.score = defaults(initPack.score, 0),
-			this.level = defaults(initPack.level, 0),
-			this.tier = defaults(initPack.tier, 0),
-			this.name = defaults(initPack.name, ""),
-			this.mouseAngle = initPack.mouseAngle;
+		this.hpMax = initPack.hpMax,
+		this.score = defaults(initPack.score, 0),
+		this.level = defaults(initPack.level, 0),
+		this.tier = defaults(initPack.tier, 0),
+		this.name = defaults(initPack.name, ""),
+		this.mouseAngle = initPack.mouseAngle;
 		this.invisible = initPack.invisible;
 		this.team = initPack.team;
 		this.autospin = initPack.autospin;
@@ -181,29 +181,29 @@ class Player {
 			} else {
 				this.angle = this.mouseAngle;
 			}
-			let x = this.x - Player.list[selfId].x + width / 2;
-			let y = this.y - Player.list[selfId].y + height / 2;
-			ctx.fillStyle = 'black';
-			let hpWidth = 30 * this.hp / this.hpMax;
-			ctx.font = '30px Ubuntu';
+			const x = this.x - Player.list[selfId].x + width / 2;
+			const y = this.y - Player.list[selfId].y + height / 2;
+			ctx.fillStyle = "black";
+			const hpWidth = 30 * this.hp / this.hpMax;
+			ctx.font = "30px Ubuntu";
 			if (!this.invisible) {
-				let size = 25; // + parseInt(this.score)*1.25;
-				let score = this.score + 3
+				const size = 25; // + parseInt(this.score)*1.25;
+				const score = this.score + 3;
 				if (size > 32) {
-					let size = 32;
+					const size = 32;
 				}
 				if (size < 25) {
-					let size = 25;
+					const size = 25;
 				}
 				if (score > 3) {
-					let score = 3;
+					const score = 3;
 				}
-				let color = teamColors["blue"];
-				if (this.team === 'none') {
-					let color = this.id === selfId ? '#1DB2DF' : '#F14E54';
+				const color = teamColors["blue"];
+				if (this.team === "none") {
+					const color = this.id === selfId ? "#1DB2DF" : "#F14E54";
 				} else {
-					let color = teamColors[this.team];
-				};
+					const color = teamColors[this.team];
+				}
 				drawTank({
 					x: x,
 					y: y,
@@ -212,7 +212,7 @@ class Player {
 					bodyColor: color,
 					barrels: tanktree[this.tank].barrels,
 					bodyType: tanktree[this.tank].body,
-					showHatSecret: true
+					showHatSecret: true,
 				});
 				drawBar({
 					x: x + size,
@@ -220,7 +220,7 @@ class Player {
 					filled: this.hp / this.hpMax,
 					width: 38,
 					height: 7,
-					renderOnFull: false
+					renderOnFull: false,
 				});
 				// DRAW NAMES
 				if (this.id !== selfId) {
@@ -228,7 +228,7 @@ class Player {
 						text: this.name,
 						x: x + (size / 2),
 						y: y - size + 16,
-						font: '17px Ubuntu'
+						font: "17px Ubuntu",
 					});
 				}
 			}
@@ -246,10 +246,10 @@ let mouseY;
 document.addEventListener("mousemove", function(event) {
 	if (!selfId || Player.list[selfId].autospin) return;
 
-	let x = -width + event.pageX - 8;
-	let y = -height + event.pageY - 8;
+	const x = -width + event.pageX - 8;
+	const y = -height + event.pageY - 8;
 
-	let boxCenter = [width / 2, height / 2];
+	const boxCenter = [width / 2, height / 2];
 
 	angle = Math.atan2(y, x) / (Math.PI * 180);
 	angle = Math.atan2(event.pageX - boxCenter[0], -(event.pageY - boxCenter[1])) * (
@@ -259,17 +259,17 @@ document.addEventListener("mousemove", function(event) {
 	angle = angle - 90;
 
 	if (Player.list[selfId].autospin) {
-		let mgpower = setInterval(function() {
+		const mgpower = setInterval(function() {
 			if (!Player.list[selfId].autospin) {
 				clearInterval(mgpower);
 			}
 			angle++;
-		})
+		});
 	}
 
-	socket.emit('keyPress', {
-		inputId: 'mouseAngle',
-		state: angle
+	socket.emit("keyPress", {
+		inputId: "mouseAngle",
+		state: angle,
 	});
 });
 
@@ -285,61 +285,61 @@ class Bullet {
 			this.parent_tank = Player.list[this.pid].tank;
 		}
 		this.type = initPack.type;
-		this.color = this.parent_tank == 'Arena Closer' ? '#FEE769' : this.pid ===
-			selfId ? '#1DB2DF' : '#F14E54';
+		this.color = this.parent_tank == "Arena Closer" ? "#FEE769" : this.pid ===
+			selfId ? "#1DB2DF" : "#F14E54";
 
 		Bullet.list[this.id] = this;
 	}
 
 	draw() {
-		let x = this.x - Player.list[selfId].x + width / 2;
-		let y = this.y - Player.list[selfId].y + height / 2;
-		if (this.parent_tank == 'destroyer' || this.parent_tank ==
-			'destroyerflank' || this.parent_tank == 'Hybrid') {
+		const x = this.x - Player.list[selfId].x + width / 2;
+		const y = this.y - Player.list[selfId].y + height / 2;
+		if (this.parent_tank == "destroyer" || this.parent_tank ==
+			"destroyerflank" || this.parent_tank == "Hybrid") {
 			ctx.fillStyle = this.color;
-			drawCircle(x, y, 20, this.color, this.type)
-		} else if (this.parent_tank == 'Arena Closer') {
+			drawCircle(x, y, 20, this.color, this.type);
+		} else if (this.parent_tank == "Arena Closer") {
 			ctx.fillStyle = this.parent_tankcolor;
-			drawCircle(x, y, 19, self.color, this.type)
-		} else if (this.parent_tank == 'streamliner') {
+			drawCircle(x, y, 19, self.color, this.type);
+		} else if (this.parent_tank == "streamliner") {
 			ctx.fillStyle = self.color;
-			drawCircle(x, y, 8, self.color, this.type)
+			drawCircle(x, y, 8, self.color, this.type);
 			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,15,15);
 		} else {
 			ctx.fillStyle = self.color;
 			drawCircle(x, y, 10, {
-				'red': 'F14E54',
-				'blue': '#1DB2DF'
-			}.team, this.type)
+				"red": "F14E54",
+				"blue": "#1DB2DF",
+			}.team, this.type);
 			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,20,20);
 		}
 	}
 }
 
 Bullet.list = {};
-socket.on('init', function(data) {
+socket.on("init", function(data) {
 	if (data.selfId) {
 		selfId = data.selfId;
 	}
 
-	for (let item of data.player) {
+	for (const item of data.player) {
 		new Player(item);
 	}
-	for (let item of data.bullet) {
+	for (const item of data.bullet) {
 		new Bullet(item);
 	}
-	for (let item of data.shape) {
+	for (const item of data.shape) {
 		new Shape(item);
 	}
 });
-socket.on('update', function(data) {
+socket.on("update", function(data) {
 	points = [];
 	nicknames = [];
 	for (let i = 0; i < data.player.length; i++) {
-		let player_id = data.player[i].id;
-		let pack = data.player[i];
-		let p = Player.list[pack.id]
-		points.push(data.player[i].score + '.' + player_id);
+		const player_id = data.player[i].id;
+		const pack = data.player[i];
+		const p = Player.list[pack.id];
+		points.push(data.player[i].score + "." + player_id);
 		if (p) {
 			if (pack.tank) {
 				p.tank = pack.tank;
@@ -357,9 +357,9 @@ socket.on('update', function(data) {
 	}
 	for (let i = 0; i < data.player.length; i++) {
 		if (data.player[i].id == selfId) {
-			let pack = data.shape[data.player[i].id];
+			const pack = data.shape[data.player[i].id];
 			for (let i = 0; i < pack.length; i++) {
-				let s = Shape.list[pack[i].id];
+				const s = Shape.list[pack[i].id];
 				if (s) {
 					if (pack[i].x !== undefined) s.x = pack[i].x;
 					if (pack[i].y !== undefined) s.y = pack[i].y;
@@ -368,8 +368,8 @@ socket.on('update', function(data) {
 		}
 	}
 	for (let i = 0; i < data.bullet.length; i++) {
-		let pack = data.bullet[i];
-		let b = Bullet.list[data.bullet[i].id];
+		const pack = data.bullet[i];
+		const b = Bullet.list[data.bullet[i].id];
 		if (b) {
 			if (pack.x !== undefined) b.x = pack.x;
 			if (pack.y !== undefined) b.y = pack.y;
@@ -377,16 +377,16 @@ socket.on('update', function(data) {
 	}
 });
 
-socket.on('scoreboard', (data) => {
+socket.on("scoreboard", (data) => {
 	scoreboardData = data;
-})
+});
 
-let statusMessages = [];
+const statusMessages = [];
 
 socket.on("statusMessage", data => addStatusMessage);
 
 // remove
-socket.on('remove', function(data) {
+socket.on("remove", function(data) {
 	for (let i = 0; i < data.player.length; i++) {
 		delete Player.list[data.player[i]];
 	}
@@ -410,7 +410,7 @@ setInterval(function() {
 
 	if (inGame) {
 		if (Player.list[selfId]) {
-			textInput.style.display = 'none';
+			textInput.style.display = "none";
 		}
 		if (spin_angle < 360) {
 			spin_angle += 0.25;
@@ -419,19 +419,19 @@ setInterval(function() {
 		}
 		if (!selfId) return;
 		ctx.clearRect(0, 0, width, height);
-		ctx.fillStyle = '#b9b9b9';
+		ctx.fillStyle = "#b9b9b9";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		drawGrid(width / 2 - Player.list[selfId].x, height / 2 - Player.list[
-			selfId].y, 1500, 1500, 24, '#cdcdcd', '#C6C6C6', 0, 0);
+			selfId].y, 1500, 1500, 24, "#cdcdcd", "#C6C6C6", 0, 0);
 		pastx = Player.list[selfId].x;
 		pasty = Player.list[selfId].y;
-		for (let i in Shape.list) {
+		for (const i in Shape.list) {
 			Shape.list[i].draw();
 		}
-		for (let i in Bullet.list) {
+		for (const i in Bullet.list) {
 			Bullet.list[i].draw();
 		}
-		for (let i in Player.list) {
+		for (const i in Player.list) {
 			if (Player.list[i].id == selfId) {
 				Player.list[i].draw(angle, true);
 			} else {
@@ -448,8 +448,8 @@ setInterval(function() {
 		drawUpgrades();
 	} else {
 		// TITLE SCREEN IMAGE
-		let canvasRatio = canvas.width / canvas.height;
-		let bgImageRatio = bgImage.width / bgImage.height;
+		const canvasRatio = canvas.width / canvas.height;
+		const bgImageRatio = bgImage.width / bgImage.height;
 		if (canvasRatio > bgImageRatio) {
 			ctx.drawImage(bgImage, 0, canvas.height / 2 - canvas.width /
 				bgImageRatio / 2, canvas.width, canvas.width / bgImageRatio);
@@ -463,26 +463,26 @@ setInterval(function() {
 
 		ctx.fillRect(0, 0, canvas.width, canvas.height);*/
 		drawText({
-			text: 'This is the tale of...',
+			text: "This is the tale of...",
 			x: canvas.width / 2,
 			y: (canvas.height / 2) - 28,
-			font: 'bold 18px Ubuntu'
+			font: "bold 18px Ubuntu",
 		});
-		ctx.fillStyle = 'white';
+		ctx.fillStyle = "white";
 		ctx.fillRect((canvas.width / 2) - 160, (canvas.height / 2) - 20, 320,
 			40);
-		ctx.fillStyle = 'black';
+		ctx.fillStyle = "black";
 		ctx.strokeRect((canvas.width / 2) - 160, (canvas.height / 2) - 20, 320,
 			40);
 		input.style.left = (canvas.width / 2) -
-			160 + 'px';
+			160 + "px";
 		input.style.top = (canvas.height / 2) -
-			20 + 'px';
+			20 + "px";
 		drawText({
-			text: '(press enter to spawn)',
+			text: "(press enter to spawn)",
 			x: canvas.width / 2,
 			y: (canvas.height / 2) + 32,
-			font: 'bold 10px Ubuntu'
+			font: "bold 10px Ubuntu",
 		});
 
 		drawClickArea({
@@ -490,9 +490,9 @@ setInterval(function() {
 			y: 15,
 			width: 120,
 			height: 25,
-			color: '#b0b0b0',
+			color: "#b0b0b0",
 			strokeWidth: 4.5,
-			tankData: 'Server Finder'
+			tankData: "Server Finder",
 		});
 
 		hitRegions.push({
@@ -504,26 +504,26 @@ setInterval(function() {
 				if (!inGame) {
 					showServerSelector = !showServerSelector;
 				}
-			}
+			},
 		});
 
 		if (showServerSelector || showAdvancedConnectionOptions) {
 			drawServerSelectorUI();
-			textInput.style.display = 'none';
+			textInput.style.display = "none";
 		} else {
 			// SHOW TEXT INPUT
-			textInput.style.display = 'initial';
+			textInput.style.display = "initial";
 		}
 
 		drawStatusMessages();
 	}
 }, 10);
 
-document.addEventListener('keydown', event => {
+document.addEventListener("keydown", event => {
 	inputHandler(event, true);
 });
 
-document.addEventListener('keyup', event => {
+document.addEventListener("keyup", event => {
 	inputHandler(event, false);
 });
 
@@ -533,76 +533,76 @@ function inputHandler(event, isHeld) {
 	}
 
 	if (event.keyCode == 69 && isHeld) { // e
-		socket.emit('keyPress', {
-			inputId: 'auto',
-			state: true
+		socket.emit("keyPress", {
+			inputId: "auto",
+			state: true,
 		});
 
 		addStatusMessage({
-			message: `Auto Fire toggled`,
-			color: "indigo"
+			message: "Auto Fire toggled",
+			color: "indigo",
 		});
 	}
 	if (event.keyCode == 67 && isHeld) { // c
-		socket.emit('keyPress', {
-			inputId: 'spin',
-			state: true
+		socket.emit("keyPress", {
+			inputId: "spin",
+			state: true,
 		});
 
 		addStatusMessage({
-			message: `Auto Spin toggled`,
-			color: "indigo"
+			message: "Auto Spin toggled",
+			color: "indigo",
 		});
 	}
 
 	switch (event.keyCode) {
-		case 68:
-		case 39:
-			socket.emit('keyPress', {
-				inputId: 'right',
-				state: isHeld
-			});
-			break;
-		case 83:
-		case 40:
-			socket.emit('keyPress', {
-				inputId: 'down',
-				state: isHeld
-			});
-			break;
-		case 65:
-		case 37:
-			socket.emit('keyPress', {
-				inputId: 'left',
-				state: isHeld
-			});
-			break;
-		case 87:
-		case 38:
-			socket.emit('keyPress', {
-				inputId: 'up',
-				state: isHeld
-			});
-			break;
-		case 32:
-			socket.emit('keyPress', {
-				inputId: 'attack',
-				state: isHeld
-			});
-			break;
-		case 16:
-			socket.emit('keyPress', {
-				inputId: 'repel',
-				state: isHeld
-			});
-			break;
-		case 123: // f11
-			if (!document.fullscreenElement && isHeld) {
-				canvas.webkitRequestFullscreen();
-			} else {
-				document.exitFullscreen();
-			}
-			break;
+	case 68:
+	case 39:
+		socket.emit("keyPress", {
+			inputId: "right",
+			state: isHeld,
+		});
+		break;
+	case 83:
+	case 40:
+		socket.emit("keyPress", {
+			inputId: "down",
+			state: isHeld,
+		});
+		break;
+	case 65:
+	case 37:
+		socket.emit("keyPress", {
+			inputId: "left",
+			state: isHeld,
+		});
+		break;
+	case 87:
+	case 38:
+		socket.emit("keyPress", {
+			inputId: "up",
+			state: isHeld,
+		});
+		break;
+	case 32:
+		socket.emit("keyPress", {
+			inputId: "attack",
+			state: isHeld,
+		});
+		break;
+	case 16:
+		socket.emit("keyPress", {
+			inputId: "repel",
+			state: isHeld,
+		});
+		break;
+	case 123: // f11
+		if (!document.fullscreenElement && isHeld) {
+			canvas.webkitRequestFullscreen();
+		} else {
+			document.exitFullscreen();
+		}
+		break;
 	}
 }
 
@@ -610,16 +610,16 @@ input.addEventListener("click", function(event) {
 	if (event.detail >= 3) {
 		addStatusMessage({
 			message: "Control change mode activated",
-			color: "indigo"
+			color: "indigo",
 		});
 	}
 });
 
-document.addEventListener('mousedown', function(event) {
+document.addEventListener("mousedown", function(event) {
 	if (inGame) {
-		socket.emit('keyPress', {
-			inputId: event.button == 0 ? 'attack' : 'repel',
-			state: true
+		socket.emit("keyPress", {
+			inputId: event.button == 0 ? "attack" : "repel",
+			state: true,
 		});
 	}
 
@@ -635,9 +635,9 @@ document.addEventListener('mousedown', function(event) {
 	}
 });
 
-document.addEventListener('mouseup', function(event) {
-	socket.emit('keyPress', {
-		inputId: event.button == 0 ? 'attack' : 'repel',
-		state: false
+document.addEventListener("mouseup", function(event) {
+	socket.emit("keyPress", {
+		inputId: event.button == 0 ? "attack" : "repel",
+		state: false,
 	});
 });
