@@ -285,15 +285,10 @@ class Bullet {
 			this.parent_tank = Player.list[this.pid].tank;
 		}
 		this.type = initPack.type;
-<<<<<<< HEAD
-		this.color = this.parent_tank == "Arena Closer" ? "#FEE769" : this.pid ===
-			selfId ? "#1DB2DF" : "#F14E54";
-=======
 		this.color = this.parent_tank == 'Arena Closer' ? '#FEE769' : this.pid ===
 			selfId ? '#1DB2DF' : '#F14E54';
 		this.barrels = initPack.barrels;
 		this.angle = initPack.angle;
->>>>>>> origin/master
 
 		Bullet.list[this.id] = this;
 	}
