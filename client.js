@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 
 if (typeof window.orientation !== 'undefined') {
 	alert(
@@ -238,7 +238,7 @@ class Player {
 	}
 }
 
-let angle = 0;
+var angle = 0;
 let angle_pure = 0;
 let mouseX;
 let mouseY;
@@ -287,6 +287,8 @@ class Bullet {
 		this.type = initPack.type;
 		this.color = this.parent_tank == 'Arena Closer' ? '#FEE769' : this.pid ===
 			selfId ? '#1DB2DF' : '#F14E54';
+		this.barrels = initPack.barrels;
+		this.angle = initPack.angle;
 
 		Bullet.list[this.id] = this;
 	}
@@ -306,11 +308,12 @@ class Bullet {
 			drawCircle(x, y, 8, self.color, this.type)
 			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,15,15);
 		} else {
-			ctx.fillStyle = self.color;
-			drawCircle(x, y, 10, {
+			//ctx.fillStyle = self.color;
+			/*drawCircle(x, y, 10, {
 				'red': 'F14E54',
 				'blue': '#1DB2DF'
-			}.team, this.type)
+			}.team, this.type)*/
+			drawTank({"x":x,"y":y,"angle":this.angle,"radius":10,"bodyColor":this.color,"barrels":this.barrels,"bodyType":0})
 			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,20,20);
 		}
 	}
