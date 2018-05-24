@@ -322,15 +322,15 @@ socket.on("init", function(data) {
         selfId = data.selfId;
     }
 
-    for (const item of data.player) {
+    data.player.forEach(item => {
         new Player(item);
-    }
-    for (const item of data.bullet) {
+    });
+    data.bullet.forEach(item => {
         new Bullet(item);
-    }
-    for (const item of data.shape) {
+    });
+    data.shape.forEach(item => {
         new Shape(item);
-    }
+    });
 });
 socket.on("update", function(data) {
             points = [];
@@ -356,13 +356,13 @@ socket.on("update", function(data) {
                     }
                     if (data.player[i].id == selfId) {
                         const pack = data.shape[data.player[i].id];
-                        for (let i = 0; i < pack.length; i++) {
+                        pack.forEach((s, i) => {
                             const s = Shape.list[pack[i].id];
                             if (s) {
                                 if (pack[i].x !== undefined) s.x = pack[i].x;
                                 if (pack[i].y !== undefined) s.y = pack[i].y;
                             }
-                        }
+                        });
                     }
                 }
                 data.bullet.forEach(bullet => {
@@ -384,15 +384,15 @@ socket.on("update", function(data) {
 
         // remove
         socket.on("remove", function(data) {
-            for (let i = 0; i < data.player.length; i++) {
-                delete Player.list[data.player[i]];
-            }
-            for (let i = 0; i < data.bullet.length; i++) {
-                delete Bullet.list[data.bullet[i]];
-            }
-            for (let i = 0; i < data.shape.length; i++) {
-                delete Shape.list[data.shape[i]];
-            }
+            data.player.forEach((item, index) => {
+                delete Player.list[data.player[index]];
+            });
+            data.bullet.forEach((item, index) => {
+                delete Bullet.list[data.bullet[index]];
+            });
+            data.shape.forEach((item, index) => {
+                delete Shape.list[data.shape[index]];
+            });
         });
         // drawing
         let pastx;
@@ -418,12 +418,9 @@ socket.on("update", function(data) {
                     selfId].y, 1500, 1500, 24, "#cdcdcd", "#C6C6C6", 0, 0);
                 pastx = Player.list[selfId].x;
                 pasty = Player.list[selfId].y;
-                for (const i in Shape.list) {
-                    Shape.list[i].draw();
-                }
-                for (const i in Bullet.list) {
-                    Bullet.list[i].draw();
-                }
+                
+                Shape.list.forEach(shape => shape.draw());
+                Bullet.list.forEach(bullet => bullet.draw());
                 Player.list.forEach((pla, i) => {
                     if (Player.list[i].id == selfId) {
                         Player.list[i].draw(angle, true);
@@ -619,16 +616,16 @@ socket.on("update", function(data) {
                 });
             }
 
-            for (let pos = 0; pos < hitRegions.length; pos++) {
-                let pastMinX = event.clientX >= hitRegions[pos].x,
-                    pastMinY = event.clientY >= hitRegions[pos].y,
-                    beforeMaxX = event.clientX <= hitRegions[pos].x + hitRegions[pos].width,
-                    beforeMaxY = event.clientY <= hitRegions[pos].y + hitRegions[pos].height;
+            hitRegions.forEach((hitRegion, index) => {
+                let pastMinX = event.clientX >= hitRegion.x,
+                    pastMinY = event.clientY >= hitRegion.y,
+                    beforeMaxX = event.clientX <= hitRegion.x + hitRegion.width,
+                    beforeMaxY = event.clientY <= hitRegion.y + hitRegion.height;
 
                 if (pastMinX && pastMinY && beforeMaxX && beforeMaxY) {
-                    hitRegions[pos].activate(pos);
+                    hitRegion.activate(index);
                 }
-            }
+            });
         });
 
         document.addEventListener("mouseup", (event) => {
