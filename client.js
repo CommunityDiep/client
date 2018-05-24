@@ -175,60 +175,52 @@ class Player {
 		this.autospin = initPack.autospin;
 		this.angle = defaults(this.mouseAngle, 0);
 
-		this.draw = function(angle, isPlayer) {
-			if (isPlayer) {
-				this.angle = angle;
-			} else {
-				this.angle = this.mouseAngle;
-			}
-			const x = this.x - Player.list[selfId].x + width / 2;
-			const y = this.y - Player.list[selfId].y + height / 2;
-			ctx.fillStyle = "black";
-			const hpWidth = 30 * this.hp / this.hpMax;
-			ctx.font = "30px Ubuntu";
-			if (!this.invisible) {
-				const size = 25; // + parseInt(this.score)*1.25;
-				const score = this.score + 3;
-				if (size > 32) {
-					const size = 32;
-				}
-				if (size < 25) {
-					const size = 25;
-				}
-				if (score > 3) {
-					const score = 3;
-				}
-				drawTank({
-					x: x,
-					y: y,
-					angle: this.angle,
-					radius: 24 + (this.level / 3),
-					bodyColor: this.color(),
-					barrels: tanktree[this.tank].barrels,
-					bodyType: tanktree[this.tank].body,
-					showHatSecret: true,
-				});
-				drawBar({
-					x: x + size,
-					y: (y + size) + 15,
-					filled: this.hp / this.hpMax,
-					width: 38,
-					height: 7,
-					renderOnFull: false,
-				});
-				// DRAW NAMES
-				if (this.id !== selfId) {
-					drawText({
-						text: this.name,
-						x: x + (size / 2),
-						y: y - size + 16,
-						font: "17px Ubuntu",
-					});
-				}
-			}
-		};
-
 		Player.list[this.id] = this;
+	}
+	
+	draw() {
+		if (isPlayer) {
+			this.angle = angle;
+		} else {
+			this.angle = this.mouseAngle;
+		}
+		const x = this.x - Player.list[selfId].x + width / 2;
+		const y = this.y - Player.list[selfId].y + height / 2;
+		ctx.fillStyle = "black";
+		const hpWidth = 30 * this.hp / this.hpMax;
+		ctx.font = "30px Ubuntu";
+		if (!this.invisible) {
+			const size = 25;
+
+			drawTank({
+				x: x,
+				y: y,
+				angle: this.angle,
+				radius: 24 + (this.level / 3),
+				bodyColor: this.color(),
+				barrels: tanktree[this.tank].barrels,
+				bodyType: tanktree[this.tank].body,
+				showHatSecret: true,
+			});
+			drawBar({
+				x: x + size,
+				y: (y + size) + 15,
+				filled: this.hp / this.hpMax,
+				width: 38,
+				height: 7,
+				renderOnFull: false,
+			});
+
+			// DRAW NAMES
+			if (this.id !== selfId) {
+				drawText({
+					text: this.name,
+					x: x + (size / 2),
+					y: y - size + 16,
+					font: "17px Ubuntu",
+				});
+			}
+		}
 	}
 	
 	color() {
@@ -295,25 +287,22 @@ class Bullet {
 	draw() {
 		const x = this.x - Player.list[selfId].x + width / 2;
 		const y = this.y - Player.list[selfId].y + height / 2;
-		if (this.parent_tank == "destroyer" || this.parent_tank ==
-			"destroyerflank" || this.parent_tank == "Hybrid") {
-			ctx.fillStyle = this.color;
-			drawCircle(x, y, 20, this.color, this.type);
-		} else if (this.parent_tank == "Arena Closer") {
-			ctx.fillStyle = this.parent_tankcolor;
-			drawCircle(x, y, 19, self.color, this.type);
-		} else if (this.parent_tank == "streamliner") {
-			ctx.fillStyle = self.color;
-			drawCircle(x, y, 8, self.color, this.type);
-			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,15,15);
-		} else {
-			// ctx.fillStyle = self.color;
-			/* drawCircle(x, y, 10, {
-				'red': 'F14E54',
-				'blue': '#1DB2DF'
-			}.team, this.type)*/
-			drawTank({ "x":x, "y":y, "angle":this.angle, "radius":10, "bodyColor":this.color, "barrels":this.barrels, "bodyType":0 });
-			// ctx.drawImage(Img.bullet,this.x-5,this.y-5,20,20);
+		
+		ctx.fillStyle = this.color;
+		switch (this.parent_tank) {
+			case "destroyer":
+			case "destroyerflank":
+			case "Hybrid":
+				drawCircle(x, y, 20, this.color, this.type);
+				break;
+			case "Arena Closer": 
+				drawCircle(x, y, 19, self.color, this.type);
+				break;
+			case "streamliner":
+				drawCircle(x, y, 8, self.color, this.type);
+				break;
+			default:
+				drawTank({ "x":x, "y":y, "angle":this.angle, "radius":10, "bodyColor":this.color, "barrels":this.barrels, "bodyType":0 });
 		}
 	}
 }
