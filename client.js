@@ -27,14 +27,14 @@ let showAdvancedConnectionOptions = false;
 let scoreboardData = [];
 
 const uiColors = [
-	"#6cf1ec",
-	"#98f06b",
-	"#f06c6c",
-	"#f0d96c",
-	"#6c96f0",
-	"#b894fa",
-	"#ec6bf1",
-	"#eeb790",
+	"#6cf1ec", // movement speed
+	"#98f06b", // reload
+	"#f06c6c", // bullet damage
+	"#f0d96c", // bullet penetration
+	"#6c96f0", // bullet speed
+	"#b894fa", // body damage
+	"#ec6bf1", // max health
+	"#eeb790", // health regen
 ];
 
 const teamColors = {
