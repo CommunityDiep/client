@@ -521,7 +521,7 @@ socket.on("update", function(data) {
         document.addEventListener("keydown", inputHandler); document.addEventListener("keyup", inputHandler);
 
         function inputHandler(event, isHeld = event.type === "keydown") {
-            if (document.activeElement == input && event.keyCode == 13) {
+            if (document.activeElement == input && event.code === "Enter") {
                 tryJoin();
             }
 
@@ -537,7 +537,7 @@ socket.on("update", function(data) {
                         color: "indigo",
                     });
                 }
-                if (event.keyCode == "KeyC") {
+                if (event.code == "KeyC") {
                     socket.emit("keyPress", {
                         inputId: "spin",
                         state: true,
@@ -550,48 +550,49 @@ socket.on("update", function(data) {
                 }
             }
 
-            switch (event.keyCode) {
-                case 68:
-                case 39:
+            switch (event.code) {
+                case "KeyD":
+                case "ArrowRight":
                     socket.emit("keyPress", {
                         inputId: "right",
                         state: isHeld,
                     });
                     break;
-                case 83:
-                case 40:
+                case "KeyS":
+                case "ArrowDown":
                     socket.emit("keyPress", {
                         inputId: "down",
                         state: isHeld,
                     });
                     break;
-                case 65:
-                case 37:
+                case "KeyA":
+                case "ArrowLeft":
                     socket.emit("keyPress", {
                         inputId: "left",
                         state: isHeld,
                     });
                     break;
-                case 87:
-                case 38:
+                case "KeyW":
+                case "ArrowUp":
                     socket.emit("keyPress", {
                         inputId: "up",
                         state: isHeld,
                     });
                     break;
-                case 32:
+                case "Space":
                     socket.emit("keyPress", {
                         inputId: "attack",
                         state: isHeld,
                     });
                     break;
-                case 16:
+                case "ShiftLeft":
+                case "ShiftRight:
                     socket.emit("keyPress", {
                         inputId: "repel",
                         state: isHeld,
                     });
                     break;
-                case 123: // f11
+                case "F2":
                     if (!document.fullscreenElement && isHeld) {
                         canvas.webkitRequestFullscreen();
                     } else {
