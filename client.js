@@ -250,13 +250,11 @@ document.addEventListener("mousemove", function(event) {
 	const y = -height + event.pageY - 8;
 
 	const boxCenter = [width / 2, height / 2];
-
-	angle = Math.atan2(y, x) / (Math.PI * 180);
+	
 	angle = Math.atan2(event.pageX - boxCenter[0], -(event.pageY - boxCenter[1])) * (
-		180 / Math.PI);
+		180 / Math.PI) - 90;
 	angle_pure = Math.atan2(event.pageX - boxCenter[0], -(event.pageY - boxCenter[1]) *
 		(180 / Math.PI));
-	angle = angle - 90;
 
 	if (Player.list[selfId].autospin) {
 		const mgpower = setInterval(function() {
@@ -338,7 +336,7 @@ socket.on("init", function(data) {
 socket.on("update", function(data) {
 	points = [];
 	nicknames = [];
-	for (let i = 0; i < data.player.length; i++) {
+	data.player.forEach((player, i) => {
 		const player_id = data.player[i].id;
 		const pack = data.player[i];
 		const p = Player.list[pack.id];
@@ -357,8 +355,6 @@ socket.on("update", function(data) {
 			p.level = pack.level;
 			p.tier = pack.tier;
 		}
-	}
-	for (let i = 0; i < data.player.length; i++) {
 		if (data.player[i].id == selfId) {
 			const pack = data.shape[data.player[i].id];
 			for (let i = 0; i < pack.length; i++) {
@@ -370,14 +366,13 @@ socket.on("update", function(data) {
 			}
 		}
 	}
-	for (let i = 0; i < data.bullet.length; i++) {
-		const pack = data.bullet[i];
-		const b = Bullet.list[data.bullet[i].id];
+	data.bullet.forEach(bullet => {
+		const b = Bullet.list[bullet.id];
 		if (b) {
-			if (pack.x !== undefined) b.x = pack.x;
-			if (pack.y !== undefined) b.y = pack.y;
+			if (bullet.x !== undefined) b.x = bullet.x;
+			if (bullet.y !== undefined) b.y = bullet.y;
 		}
-	}
+	});
 });
 
 socket.on("scoreboard", (data) => {
@@ -386,7 +381,7 @@ socket.on("scoreboard", (data) => {
 
 const statusMessages = [];
 
-socket.on("statusMessage", data => addStatusMessage);
+socket.on("statusMessage", addStatusMessage);
 
 // remove
 socket.on("remove", function(data) {
@@ -405,10 +400,8 @@ let pastx;
 let pasty;
 
 function loopy() {
-	canvas.width = window.innerWidth;
-	width = window.innerWidth;
-	canvas.height = window.innerHeight;
-	height = window.innerHeight;
+	canvas.width = width = window.innerWidth;
+	canvas.height = height = window.innerHeight;
 
 	hitRegions = [];
 
@@ -416,11 +409,8 @@ function loopy() {
 		if (Player.list[selfId]) {
 			textInput.style.display = "none";
 		}
-		if (spin_angle < 360) {
-			spin_angle += 0.25;
-		} else {
-			spin_angle = 0;
-		}
+		spin_angle = spin_angle < 360 ? spin_angle + 0.25 : 0;
+		
 		if (!selfId) return;
 		ctx.clearRect(0, 0, width, height);
 		ctx.fillStyle = "#b9b9b9";
@@ -435,13 +425,13 @@ function loopy() {
 		for (const i in Bullet.list) {
 			Bullet.list[i].draw();
 		}
-		for (const i in Player.list) {
+		Player.list.forEach((pla, i) => {
 			if (Player.list[i].id == selfId) {
 				Player.list[i].draw(angle, true);
 			} else {
 				Player.list[i].draw(angle, false);
 			}
-		}
+		});
 
 		// DRAW USER INTERFACE
 		drawPlayerCount();
@@ -529,40 +519,37 @@ function loopy() {
 // Let's start to loopy.
 window.requestAnimationFrame(loopy);
 
-document.addEventListener("keydown", event => {
-	inputHandler(event, true);
-});
+document.addEventListener("keydown", inputHandler);
+document.addEventListener("keyup", inputHandler);
 
-document.addEventListener("keyup", event => {
-	inputHandler(event, false);
-});
-
-function inputHandler(event, isHeld) {
+function inputHandler(event, isHeld = event.type === "keydown") {
 	if (document.activeElement == input && event.keyCode == 13) {
 		tryJoin();
 	}
+	
+	if (isHeld) {
+		if (event.code == "KeyE") {
+			socket.emit("keyPress", {
+				inputId: "auto",
+				state: true,
+			});
 
-	if (event.keyCode == 69 && isHeld) { // e
-		socket.emit("keyPress", {
-			inputId: "auto",
-			state: true,
-		});
+			addStatusMessage({
+				message: "Auto Fire toggled",
+				color: "indigo",
+			});
+		}
+		if (event.keyCode == "KeyC") {
+			socket.emit("keyPress", {
+				inputId: "spin",
+				state: true,
+			});
 
-		addStatusMessage({
-			message: "Auto Fire toggled",
-			color: "indigo",
-		});
-	}
-	if (event.keyCode == 67 && isHeld) { // c
-		socket.emit("keyPress", {
-			inputId: "spin",
-			state: true,
-		});
-
-		addStatusMessage({
-			message: "Auto Spin toggled",
-			color: "indigo",
-		});
+			addStatusMessage({
+				message: "Auto Spin toggled",
+				color: "indigo",
+			});
+		}
 	}
 
 	switch (event.keyCode) {
@@ -645,7 +632,7 @@ document.addEventListener("mousedown", function(event) {
 	}
 });
 
-document.addEventListener("mouseup", function(event) {
+document.addEventListener("mouseup", (event) => {
 	socket.emit("keyPress", {
 		inputId: event.button == 0 ? "attack" : "repel",
 		state: false,
