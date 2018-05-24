@@ -198,18 +198,12 @@ class Player {
 				if (score > 3) {
 					const score = 3;
 				}
-				const color = teamColors["blue"];
-				if (this.team === "none") {
-					const color = this.id === selfId ? "#1DB2DF" : "#F14E54";
-				} else {
-					const color = teamColors[this.team];
-				}
 				drawTank({
 					x: x,
 					y: y,
 					angle: this.angle,
 					radius: 24 + (this.level / 3),
-					bodyColor: color,
+					bodyColor: this.color(),
 					barrels: tanktree[this.tank].barrels,
 					bodyType: tanktree[this.tank].body,
 					showHatSecret: true,
@@ -235,6 +229,14 @@ class Player {
 		};
 
 		Player.list[this.id] = this;
+	}
+	
+	color() {
+		if (this.team === "none") {
+			return this.id === selfId ? "#1DB2DF" : "#F14E54";
+		} else {
+			return teamColors[this.team];
+		}
 	}
 }
 
@@ -283,8 +285,7 @@ class Bullet {
 			this.parent_tank = Player.list[this.pid].tank;
 		}
 		this.type = initPack.type;
-		this.color = this.parent_tank == "Arena Closer" ? "#FEE769" : this.pid ===
-			selfId ? "#1DB2DF" : "#F14E54";
+		this.color = this.parent_tank.color();
 		this.barrels = initPack.barrels;
 		this.angle = initPack.angle;
 
