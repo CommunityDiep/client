@@ -1,1 +1,0 @@
-const funcs = require("./functions.js");
