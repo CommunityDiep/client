@@ -2,6 +2,11 @@
     "name": "cdiep-client",
     "devDependencies": {
         "eslint": "^5.0.1",
-        "eslint-config-haykam": "^1.1.0"
+        "eslint-config-haykam": "^1.2.0",
+        "eslint-plugin-extra-rules": "0.0.0-development",
+        "eslint-plugin-html": "^4.0.5",
+        "eslint-plugin-json": "^1.2.0",
+        "eslint-plugin-unicorn": "^4.0.3"
+    }
     }
 }
