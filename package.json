@@ -11,7 +11,8 @@
     "dependencies": {
         "browserify-middleware": "^8.1.1",
         "express": "^4.16.3",
-        "jquery-browserify": "^1.8.1"
+        "jquery-browserify": "^1.8.1",
+        "ws": "^5.2.1"
     },
     "main": "webserver.js"
 }
