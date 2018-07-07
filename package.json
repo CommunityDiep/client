@@ -1,0 +1,7 @@
+{
+    "name": "cdiep-client",
+    "devDependencies": {
+        "eslint": "^5.0.1",
+        "eslint-config-haykam": "^1.1.0"
+    }
+}

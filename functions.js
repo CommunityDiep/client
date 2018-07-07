@@ -1,33 +1,62 @@
-function calculateBarrelPos(angle) {
-	let xPos = Math.cos(angle / 180 * Math.PI) * 15;
-	let yPos = Math.sin(angle / 180 * Math.PI) * 15;
+const softStroke = true;
+
+// for soft stroking
+// Source: https://stackoverflow.com/a/13542669/5513988
+function shadeColor(color, percent) {
+	let f = parseInt(color.slice(1), 16),
+		t = percent < 0 ? 0 : 255,
+		p = percent < 0 ? percent * -1 : percent,
+		R = f >> 16,
+		G = f >> 8 & 0x00FF,
+		B = f & 0x0000FF;
+	return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round(
+		(t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(
+		1);
+}
+
+const scoreboardData = [];
+
+const uiColors = [
+	"#6cf1ec", // movement speed
+	"#98f06b", // reload
+	"#f06c6c", // bullet damage
+	"#f0d96c", // bullet penetration
+	"#6c96f0", // bullet speed
+	"#b894fa", // body damage
+	"#ec6bf1", // max health
+	"#eeb790", // health regen
+];
+
+module.exports.calculateBarrelPos = (angle) => {
+	const xPos = Math.cos(angle / 180 * Math.PI) * 15;
+	const yPos = Math.sin(angle / 180 * Math.PI) * 15;
 	return {
 		x: xPos,
 		y: yPos,
 	};
-}
+};
 
 const bodyIndexToName = ["circular", "square", "smasher", "spike"];
-function drawTank(obj) {
-	let x = obj.x;
-	let y = obj.y;
-	let angle = obj.angle;
-	let radius = obj.radius;
-	let color = obj.bodyColor;
-	let barrels = obj.barrels;
-	let bodyType = obj.bodyType === "number" ? {
-		type: bodyIndexToName[obj.bodyType]
+module.exports.drawTank = (obj) => {
+	const x = obj.x;
+	const y = obj.y;
+	const angle = obj.angle;
+	const radius = obj.radius;
+	const color = obj.bodyColor;
+	const barrels = obj.barrels;
+	const bodyType = obj.bodyType === "number" ? {
+		type: bodyIndexToName[obj.bodyType],
 	 } : obj.bodyType;
-	let hat = obj.showHatSecret || true;
+	const hat = obj.showHatSecret || true;
 
-	let animationTime = new Date().getTime()
+	const animationTime = new Date().getTime();
 	ctx.save();
 	ctx.translate(x, y);
 	ctx.rotate(degToRad(angle));
 	ctx.scale(radius / 48, radius / 48);
-	ctx.lineJoin = 'round';
-	ctx.strokeStyle = softStroke ? shadeColor('#999999', -0.25) : '#555555';
-	ctx.fillStyle = '#999999';
+	ctx.lineJoin = "round";
+	ctx.strokeStyle = softStroke ? shadeColor("#999999", -0.25) : "#555555";
+	ctx.fillStyle = "#999999";
 	ctx.lineWidth = 4 / (radius / 48);
 	for (let i = 0; i < barrels.length; i++) {
 		if (barrels[i].barrelType == 0) {
@@ -53,94 +82,94 @@ function drawTank(obj) {
 			ctx.stroke();
 			ctx.closePath();
 			ctx.restore();
-		};
-	};
+		}
+	}
 	ctx.rotate(0);
 	ctx.lineWidth = 4 / (radius / 48);
 
 	switch (bodyType.type) {
 		case "square":
 			ctx.fillStyle = color;
-			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : "#555555";
 			ctx.fillRect(-1 * radius * 2, -1 * radius * 2, radius * 4, radius * 4);
 			ctx.strokeRect(-1 * radius * 2, -1 * radius * 2, radius * 4, radius * 4);
-		
+
 		case "smasher":
 			ctx.beginPath();
-			ctx.fillStyle = '#555555';
-			ctx.strokeStyle = '#555555';
-			ctx.lineJoin = 'round';
+			ctx.fillStyle = "#555555";
+			ctx.strokeStyle = "#555555";
+			ctx.lineJoin = "round";
 			var hA = ((Math.PI * 2) / 6);
 			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 				6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
-					animationTime / 6) % 360)) * 58);
+				animationTime / 6) % 360)) * 58);
 			for (var hI = 1; hI < 8; hI++) {
 				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 					6) % 360)) * 58, Math.sin((hA * hI) - degToRad(angle) + degToRad((
-						animationTime / 6) % 360)) * 58);
-			};
+					animationTime / 6) % 360)) * 58);
+			}
 			ctx.fill();
 			ctx.stroke();
 			ctx.closePath();
 			ctx.beginPath();
 			ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
 			ctx.fillStyle = color;
-			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : "#555555";
 			ctx.fill();
 			ctx.stroke();
 			ctx.closePath();
-			ctx.fillStyle = '#000000';
+			ctx.fillStyle = "#000000";
 			break;
 
 		case "spike":
 			ctx.beginPath();
-			ctx.fillStyle = '#555555';
-			ctx.strokeStyle = '#555555';
-			ctx.lineJoin = 'round';
+			ctx.fillStyle = "#555555";
+			ctx.strokeStyle = "#555555";
+			ctx.lineJoin = "round";
 			var hA = ((Math.PI * 2) / 3);
 			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 				3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
-					animationTime / 3) % 360)) * 64);
+				animationTime / 3) % 360)) * 64);
 			for (var hI = 1; hI < 5; hI++) {
 				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle) + degToRad((animationTime /
 					3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle) + degToRad((
-						animationTime / 3) % 360)) * 64);
-			};
+					animationTime / 3) % 360)) * 64);
+			}
 			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 					90) + degToRad((animationTime / 3) % 360)) * 64);
 			for (var hI = 1; hI < 5; hI++) {
 				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 90) + degToRad((
 					animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
-						angle - 90) + degToRad((animationTime / 3) % 360)) * 64);
-			};
+					angle - 90) + degToRad((animationTime / 3) % 360)) * 64);
+			}
 			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 					180) + degToRad((animationTime / 3) % 360)) * 64);
 			for (var hI = 1; hI < 5; hI++) {
 				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 180) + degToRad((
 					animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
-						angle - 180) + degToRad((animationTime / 3) % 360)) * 64);
-			};
+					angle - 180) + degToRad((animationTime / 3) % 360)) * 64);
+			}
 			ctx.moveTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
 				animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(angle -
 					270) + degToRad((animationTime / 3) % 360)) * 64);
 			for (var hI = 1; hI < 5; hI++) {
 				ctx.lineTo(Math.cos((hA * hI) - degToRad(angle - 270) + degToRad((
 					animationTime / 3) % 360)) * 60, Math.sin((hA * hI) - degToRad(
-						angle - 270) + degToRad((animationTime / 3) % 360)) * 64);
-			};
+					angle - 270) + degToRad((animationTime / 3) % 360)) * 64);
+			}
 			ctx.fill();
 			ctx.stroke();
 			ctx.closePath();
 			ctx.beginPath();
 			ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
 			ctx.fillStyle = color;
-			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : "#555555";
 			ctx.fill();
 			ctx.stroke();
 			ctx.closePath();
-			ctx.fillStyle = '#000000';
+			ctx.fillStyle = "#000000";
 			break;
 
 		case "circular":
@@ -148,11 +177,11 @@ function drawTank(obj) {
 			ctx.beginPath();
 			ctx.arc(48 - 48, 48 - 48, 48, 0, 2 * Math.PI);
 			ctx.fillStyle = color;
-			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+			ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : "#555555";
 			ctx.fill();
 			ctx.stroke();
 			ctx.closePath();
-			ctx.fillStyle = '#000000';
+			ctx.fillStyle = "#000000";
 			break;
 	}
 
@@ -165,19 +194,19 @@ function drawTank(obj) {
 	ctx.restore();
 };
 
-function tryJoin() {
-	if (input.value != '') {
-		let ip = 104024 * Math.random();
-		socket.emit('signIn', {
+module.exports.tryJoin = () => {
+	if (input.value != "") {
+		const ip = 104024 * Math.random();
+		socket.emit("signIn", {
 			name: input.value,
 			address: ip,
-			tank: 'basic',
+			tank: "basic",
 			width: width,
-			height: height
+			height: height,
 		});
 		localStorage.setItem("username", input.value || "");
 	}
-}
+};
 
 /**
  * Draw Diep.io-styled text in object form.
@@ -191,33 +220,33 @@ function tryJoin() {
  * @param {string} [obj.strokeColor=#333333] - The color of the text's stroke.
  * @param {string} [obj.font] - The font to draw the text in.
  */
-function drawText(obj) {
+module.exports.drawText = (obj) => {
 	ctx.globalAlpha = obj.opacity == undefined ? 1 : obj.opacity;
-	ctx.font = obj.font == undefined ? ctx.font == undefined ? '20px Ubuntu' :
+	ctx.font = obj.font == undefined ? ctx.font == undefined ? "20px Ubuntu" :
 		ctx.font : obj.font;
 	obj.maxSize = obj.maxSize == undefined ? 200 : obj.maxSize;
 	ctx.lineWidth = 4;
-	ctx.textAlign = 'center';
+	ctx.textAlign = "center";
 	ctx.save();
 	ctx.translate(obj.x, obj.y);
-	ctx.fillStyle = obj.strokeColor == undefined ? '#333333' : obj.strokeColor;
+	ctx.fillStyle = obj.strokeColor == undefined ? "#333333" : obj.strokeColor;
 	ctx.strokeText(obj.text, 0, 0, obj.maxSize);
-	ctx.fillStyle = obj.color == undefined ? 'white' : obj.color;
+	ctx.fillStyle = obj.color == undefined ? "white" : obj.color;
 	ctx.fillText(obj.text, 0, 0, obj.maxSize);
 	ctx.restore();
 };
 
-function degToRad(deg) {
+module.exports.degToRad = (deg) => {
 	return deg * (Math.PI / 180);
-}
+};
 
-function drawPolygon(obj) {
+module.exports.drawPolygon = (obj) => {
 	ctx.save();
 	ctx.fillStyle = obj.color;
-	ctx.strokeStyle = softStroke ? shadeColor(obj.color, -0.25) : '#555555';
-	ctx.lineJoin = 'round';
+	ctx.strokeStyle = softStroke ? shadeColor(obj.color, -0.25) : "#555555";
+	ctx.lineJoin = "round";
 	ctx.beginPath();
-	let step = ((Math.PI * 2) / obj.sides);
+	const step = ((Math.PI * 2) / obj.sides);
 	ctx.translate(obj.x, obj.y);
 	ctx.rotate(degToRad(obj.angle));
 	ctx.moveTo(obj.radius * 2, 0);
@@ -230,8 +259,8 @@ function drawPolygon(obj) {
 	ctx.closePath();
 	ctx.restore();
 };
-let Shape = function(initPack) {
-	let self = {}
+const Shape = function(initPack) {
+	const self = {};
 	self.id = initPack.id;
 	self.x = initPack.x;
 	self.y = initPack.y;
@@ -243,11 +272,11 @@ let Shape = function(initPack) {
 	self.hpPercent = initPack.hpPercent;
 	self.draw = function() {
 		if (Math.abs(Player.list[selfId].x - self.x) > width / 2 + 50 || Math.abs(
-				Player.list[selfId].y - self.y) > height / 2 + 50) {
+			Player.list[selfId].y - self.y) > height / 2 + 50) {
 			return;
 		}
-		let x = self.x - Player.list[selfId].x + width / 2;
-		let y = self.y - Player.list[selfId].y + height / 2;
+		const x = self.x - Player.list[selfId].x + width / 2;
+		const y = self.y - Player.list[selfId].y + height / 2;
 		switch (self.name) {
 			case "secret-shape1":
 				/*
@@ -267,7 +296,7 @@ let Shape = function(initPack) {
 					angle: self.angle,
 					radius: 9,
 					color: self.color,
-					sides: 3
+					sides: 3,
 				});
 
 				break;
@@ -278,7 +307,7 @@ let Shape = function(initPack) {
 					angle: self.angle,
 					radius: 50,
 					color: self.color,
-					sides: 5
+					sides: 5,
 				});
 
 				break;
@@ -289,7 +318,7 @@ let Shape = function(initPack) {
 					angle: self.angle,
 					radius: 17,
 					color: self.color,
-					sides: 5
+					sides: 5,
 				});
 
 				break;
@@ -301,18 +330,18 @@ let Shape = function(initPack) {
 					angle: self.angle + 45,
 					radius: 10,
 					color: self.color,
-					sides: 4
+					sides: 4,
 				});
 
 				break;
 		}
-	}
+	};
 	Shape.list[self.id] = self;
 	return self;
-}
+};
 
-function drawGrid(x, y, width, height, slotSize, fillColor, lineColor, xOffset, yOffset) {
-	ctx.fillStyle = fillColor === undefined ? '#cdcdcd' : fillColor;
+module.exports.drawGrid = (x, y, width, height, slotSize, fillColor, lineColor, xOffset, yOffset) => {
+	ctx.fillStyle = fillColor === undefined ? "#cdcdcd" : fillColor;
 	ctx.fillRect(x, y, width, height);
 	ctx.save();
 	ctx.translate(x, y);
@@ -324,58 +353,58 @@ function drawGrid(x, y, width, height, slotSize, fillColor, lineColor, xOffset, 
 		ctx.lineTo(width, i);
 		ctx.moveTo(i + (xOffset % slotSize), 0);
 		ctx.lineTo(i + (xOffset % slotSize), height);
-	};
+	}
 	ctx.strokeStyle = lineColor;
 	ctx.stroke();
 	ctx.closePath();
 	ctx.restore();
-}
+};
 
-function drawClickArea(obj) {
+module.exports.drawClickArea = (obj) => {
 	ctx.save();
 
 	ctx.globalAlpha = obj.opacity === undefined ? 0.9 : obj.opacity;
-	ctx.lineJoin = 'round';
+	ctx.lineJoin = "round";
 
 	ctx.lineWidth = obj.strokeWidth === undefined ? 2.5 : obj.strokeWidth;
-	ctx.strokeStyle = obj.strokeColor === undefined ? '#333333' : obj.strokeColor;
+	ctx.strokeStyle = obj.strokeColor === undefined ? "#333333" : obj.strokeColor;
 
 	ctx.fillStyle = obj.color;
 
 	ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
-	ctx.fillStyle = '#000000';
+	ctx.fillStyle = "#000000";
 	ctx.globalAlpha = 0.2;
 	ctx.fillRect(obj.x, obj.y + (obj.height / 2), obj.width, obj.height / 2);
 	ctx.globalAlpha = 1;
 	ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
-	if (typeof obj.tankData !== 'string') {
+	if (typeof obj.tankData !== "string") {
 		ctx.globalAlpha = 1;
 		drawTank({
 			x: obj.x + (obj.width / 2),
 			y: obj.y + (obj.height / 2),
 			angle: spin_angle,
 			radius: obj.width / 5,
-			bodyColor: '#1DB2DF',
+			bodyColor: "#1DB2DF",
 			barrels: obj.tankData.barrels,
-			bodyType: obj.tankData.body
+			bodyType: obj.tankData.body,
 		});
 	}
 	drawText({
-		text: typeof obj.tankData == 'string' ? obj.tankData : obj.tankData.localized,
+		text: typeof obj.tankData == "string" ? obj.tankData : obj.tankData.localized,
 		x: obj.x + (obj.width / 2),
 		y: obj.y + obj.height - 8,
 		font: `${obj.width / 7}px Ubuntu`,
-		maxSize: obj.width - 3
+		maxSize: obj.width - 3,
 	});
 	ctx.restore();
 };
 
-function drawUpgrades() {
-	let selfPlayer = Player.list[selfId];
-	let selfTankUpgrades = tanktree[selfPlayer.tank].upgrades;
+module.exports.drawUpgrades = () => {
+	const selfPlayer = Player.list[selfId];
+	const selfTankUpgrades = tanktree[selfPlayer.tank].upgrades;
 
 	function nfup(pos) {
-		let uptank = tanktree[Object.keys(tanktree[selfPlayer.tank].upgrades)[
+		const uptank = tanktree[Object.keys(tanktree[selfPlayer.tank].upgrades)[
 			pos]];
 		if (uptank == undefined) {
 			return undefined;
@@ -394,11 +423,11 @@ function drawUpgrades() {
 		return Object.values(selfTankUpgrades)[pos] <= selfPlayer.tier;
 	}
 	if (selfPlayer.tier && ![undefined, null, {},
-			[]
-		].includes(selfTankUpgrades)) {
+		[],
+	].includes(selfTankUpgrades)) {
 		for (let index = 0; index < Object.keys(selfTankUpgrades).length; index++) {
-			let slotX = 10 + 86.25 * (index % 2);
-			let slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
+			const slotX = 10 + 86.25 * (index % 2);
+			const slotY = index % 2 === 1 ? 103 + 86.25 * (index / 2 - 1) : 60 + 86.25 * index / 2;
 
 			if (nfup(index) !== undefined && stfup(index)) {
 				drawClickArea({
@@ -407,7 +436,7 @@ function drawUpgrades() {
 					width: 80,
 					height: 80,
 					color: uiColors[index],
-					tankData: nfup(index)
+					tankData: nfup(index),
 				});
 
 				hitRegions.push({
@@ -416,10 +445,10 @@ function drawUpgrades() {
 					width: 80,
 					height: 80,
 					activate: function(pos) {
-						socket.emit('upgrade', {
-							pos: pos
+						socket.emit("upgrade", {
+							pos: pos,
 						});
-					}
+					},
 				});
 			}
 		}
@@ -428,37 +457,37 @@ function drawUpgrades() {
 			y: 626,
 			width: 100,
 			height: 30,
-			color: '#b0b0b0',
-			tankData: 'Ignore'
+			color: "#b0b0b0",
+			tankData: "Ignore",
 		});
 		drawText({
-			text: 'Upgrades',
+			text: "Upgrades",
 			x: 138,
 			y: 40,
-			opacity: '1',
-			font: 'bold 20px Ubuntu'
+			opacity: "1",
+			font: "bold 20px Ubuntu",
 		});
 	}
 };
 
-function drawCircle(x, y, radius, color, trap) {
-	color = color == undefined ? '#1DB2DF' : color;
-	if (trap == 'trap') {
-		let radius = 0; // for some reason it's 0?
+module.exports.drawCircle = (x, y, radius, color, trap) => {
+	color = color == undefined ? "#1DB2DF" : color;
+	if (trap == "trap") {
+		const radius = 0; // for some reason it's 0?
 		ctx.save();
 		ctx.lineWidth = 4;
-		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : "#555555";
 		ctx.fillStyle = color;
-		ctx.translate(x, y)
+		ctx.translate(x, y);
 		ctx.beginPath();
-		ctx.lineJoin = 'round';
-		var hA = ((Math.PI * 2) / 3);
+		ctx.lineJoin = "round";
+		const hA = ((Math.PI * 2) / 3);
 		ctx.moveTo(Math.cos(hA * hI) * radius, Math.sin(hA * hI) * radius);
 		for (var hI = 1; hI < 5; hI++) {
 			ctx.lineTo(Math.cos(hA * hI) * radius, Math.sin(hA * hI) * radius);
 			ctx.lineTo(Math.cos((hA * hI) + (hA / 2)) * (radius / 3.5), Math.sin((hA *
 				hI) + (hA / 2)) * (radius / 3.5));
-		};
+		}
 		ctx.fill();
 		ctx.stroke();
 		ctx.closePath();
@@ -470,36 +499,36 @@ function drawCircle(x, y, radius, color, trap) {
 		ctx.arc(x, y, radius, 0, 2 * Math.PI);
 		ctx.fillStyle = color;
 		ctx.fill();
-		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : '#555555';
+		ctx.strokeStyle = softStroke ? shadeColor(color, -0.25) : "#555555";
 		ctx.stroke();
 		ctx.closePath();
 		ctx.restore();
 	}
 };
 
-function addStatusMessage(data) {
-	let index = statusMessages.length;
+module.exports.addStatusMessage = (data) => {
+	const index = statusMessages.length;
 	statusMessages[index] = data;
 
 	setTimeout(function() {
 		delete statusMessages[index];
 	}, 2200);
-}
+};
 
-function drawServerSelectorUI() {
-	ctx.fillStyle = 'white';
+module.exports.drawServerSelectorUI = () => {
+	ctx.fillStyle = "white";
 	drawClickArea({
 		x: canvas.width / 2 - 300,
 		y: canvas.height / 2 - 200,
 		width: 600,
 		height: 400,
 		tankData: "",
-		opacity: 1
-	})
-}
+		opacity: 1,
+	});
+};
 
-function drawStatusMessages() {
-	for (let item of statusMessages) {
+module.exports.drawStatusMessages = () => {
+	for (const item of statusMessages) {
 		if (item !== undefined) {
 			ctx.globalAlpha = 0.7;
 
@@ -508,34 +537,34 @@ function drawStatusMessages() {
 				text: item.message,
 				x: canvas.width / 2,
 				y: 20,
-				font: "10px Ubuntu"
-			})
-		};
-	};
-}
+				font: "10px Ubuntu",
+			});
+		}
+	}
+};
 // Replace this with drawServerInfo soon.
 // The new function will include player count/server name,
 // but will look more like Diep.io's bottom-right corner text.
-function drawPlayerCount() {
-	let players = Object.keys(Player.list).length
-	let plural = Object.keys(Player.list).length == 1 ? '' : 's';
+module.exports.drawPlayerCount = () => {
+	const players = Object.keys(Player.list).length;
+	const plural = Object.keys(Player.list).length == 1 ? "" : "s";
 	drawText({
 		text: `${Object.keys(Player.list).length} player${plural} on this server`,
 		x: width - 190,
 		y: height - 50,
-		font: 'bold 30px Ubuntu'
+		font: "bold 30px Ubuntu",
 	});
 };
 
-function drawHotbar() {
-	ctx.fillStyle = 'white';
+module.exports.drawHotbar = () => {
+	ctx.fillStyle = "white";
 
 	drawText({
 		text: Player.list[selfId].name,
 		x: width / 2,
 		y: height - 57.5,
 		opacity: 0.58,
-		font: 'bold 30px Ubuntu'
+		font: "bold 30px Ubuntu",
 	});
 	drawBar({
 		x: canvas.width / 2 + (275 / 2),
@@ -545,7 +574,7 @@ function drawHotbar() {
 		width: 275,
 		height: 15,
 		renderOnFull: true,
-		opacity: 0.5
+		opacity: 0.5,
 	});
 	drawBar({
 		x: canvas.width / 2 + (350 / 2),
@@ -554,11 +583,11 @@ function drawHotbar() {
 		filled: 1,
 		width: 350,
 		height: 20,
-		fillColor: '#f0d96c',
+		fillColor: "#f0d96c",
 		renderOnFull: true,
-		opacity: 0.5
+		opacity: 0.5,
 	});
-}
+};
 // obj.width: total width of bar (in pixels)
 // obj.height: total height of bar (in pixels)
 // obj.color: background color
@@ -568,21 +597,21 @@ function drawHotbar() {
 // obj.label: label inside of bar
 // obj.x: X position of bar (centered)
 // obj.y: Y position of bar (centered)
-function drawBar(obj) {
+module.exports.drawBar = (obj) => {
 	// CREATE OBJECT IF NOT SPECIFIED
 	obj = obj == undefined ? {} : obj;
 	// DEFAULTS
 	obj.width = obj.width == undefined ? 30 : obj.width;
 	obj.height = obj.height == undefined ? 6 : obj.height;
-	obj.color = obj.color == undefined ? '#555555' : obj.color;
-	obj.fillColor = obj.fillColor == undefined ? '#88e281' : obj.fillColor;
+	obj.color = obj.color == undefined ? "#555555" : obj.color;
+	obj.fillColor = obj.fillColor == undefined ? "#88e281" : obj.fillColor;
 	obj.filled = obj.filled == undefined ? 0.5 : obj.filled;
 	obj.renderOnFull = obj.renderOnFull == undefined ? true : obj.renderOnFull;
-	obj.label = obj.label == undefined ? '' : obj.label;
+	obj.label = obj.label == undefined ? "" : obj.label;
 	obj.x = obj.x == undefined ? 30 : obj.x - (obj.width / 2);
 	obj.y = obj.y == undefined ? 30 : obj.y - (obj.height / 2);
 	if (obj.filled < 1 || obj.renderOnFull) {
-		ctx.lineJoin = 'round';
+		ctx.lineJoin = "round";
 		ctx.fillStyle = obj.color;
 		ctx.fillRect(obj.x - (obj.width / 2), obj.y - (obj.height / 2), obj.width,
 			obj.height);
@@ -594,17 +623,17 @@ function drawBar(obj) {
 			text: obj.label,
 			x: obj.x,
 			y: obj.y + 3,
-			font: `${obj.height - 5}px Ubuntu`
-		})
+			font: `${obj.height - 5}px Ubuntu`,
+		});
 	}
-}
-let drawScoreboard = function() {
+};
+const drawScoreboard = function() {
 	drawText({
-		text: 'Scoreboard',
+		text: "Scoreboard",
 		x: width - 200,
 		y: 40,
-		opacity: '0.8',
-		font: 'bold 30px Ubuntu'
+		opacity: "0.8",
+		font: "bold 30px Ubuntu",
 	});
 	scoreboardData.forEach((key, index) => {
 		drawBar({
@@ -614,7 +643,7 @@ let drawScoreboard = function() {
 			filled: key[1],
 			width: 200,
 			height: 15,
-			renderOnFull: true
+			renderOnFull: true,
 		});
 	});
-}
+};
