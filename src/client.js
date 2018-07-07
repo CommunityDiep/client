@@ -2,7 +2,8 @@ const funcs = require("./functions.js");
 
 const $ = require("jquery-browserify");
 
-const ws = new WebSocket("ws://localhost:8080/");
+const Socket = require("./socket.js");
+const ws = new Socket("ws://localhost:8080/");
 
 const canvas = $("#main");
 canvas.contextmenu(event => event.preventDefault());
@@ -23,11 +24,42 @@ window.addEventListener("load", () => {
 const inGame = false;
 let isConnected = false;
 
+let tanks = {};
+
 ws.addEventListener("open", () => {
 	isConnected = true;
 });
+ws.addEventListener("message", data => {
+	if (data.detail === null) return;
+
+	const msg = data.detail;
+	switch (msg[0]) {
+		case "tanks_update":
+			tanks = msg[1];
+			break;
+		case "signInResponse":
+			inGame = msg[1].success;
+			break;
+		default:
+			console.log(msg);
+	}
+});
 
 const input = $("#textInput");
+input.on("keydown", event => {
+	if (event.originalEvent.code === "Enter") {
+		input.val(input.val().slice(0, 16));
+		ws.emit([
+			"signIn",
+			{
+				name: input.val(),
+				tank: "basic",
+				width: 0,
+				height: 0,
+			},
+		]);
+	}
+});
 
 const ctx = canvas.get(0).getContext("2d");
 function render() {
