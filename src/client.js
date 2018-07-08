@@ -23,17 +23,34 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
+/**
+ * The loading screen element.
+ */
 const loading = $("#loading");
 window.addEventListener("load", () => {
 	loading.css("display", "none");
 });
 
+/**
+ * Whether this player has spawned yet.
+ */
 let inGame = false;
+
+/**
+ * Whether this player has successfully connected to the server.
+ */
 let isConnected = false;
 
 let entities = [];
+
+/**
+ * This player's ID.
+ */
 let selfID = null;
 
+/**
+ * Gets the entity for this connection.
+ */
 function getSelf() {
 	return entities.filter(entity => entity.id === selfID)[0];
 }
@@ -78,6 +95,9 @@ input.on("keydown", event => {
 	}
 });
 
+/**
+ * Whether this player is auto-firing or not.
+ */
 let isFiring = false;
 window.addEventListener("keydown", () => {
 	switch (event.keyCode) {
