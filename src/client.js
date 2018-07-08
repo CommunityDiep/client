@@ -2,8 +2,7 @@ const funcs = require("./functions.js");
 
 const $ = require("jquery-browserify");
 
-const Socket = require("./socket.js");
-const ws = new Socket("ws://localhost:8080/");
+const ws = new WebSocket("ws://localhost:8080/");
 
 const canvas = $("#main");
 canvas.contextmenu(event => event.preventDefault());
@@ -21,24 +20,36 @@ window.addEventListener("load", () => {
 	loading.css("display", "none");
 });
 
-const inGame = false;
+let inGame = false;
 let isConnected = false;
 
 let tanks = {};
 
+let entities = [];
+let selfID = null;
+
 ws.addEventListener("open", () => {
 	isConnected = true;
 });
-ws.addEventListener("message", data => {
-	if (data.detail === null) return;
-
-	const msg = data.detail;
+ws.addEventListener("close", () => {
+	isConnected = false;
+	location.reload();
+});
+ws.addEventListener("message", event => {
+	const msg = JSON.parse(event.data);
 	switch (msg[0]) {
-		case "tanks_update":
+		case "TANK_UPDATE":
 			tanks = msg[1];
 			break;
-		case "signInResponse":
-			inGame = msg[1].success;
+		case "UPDATE":
+			entities = msg[1];
+			console.log(entities);
+			break;
+		case "SPAWN_RESPONSE":
+			console.log(msg);
+			selfID = msg[1];
+			inGame = true;
+
 			break;
 		default:
 			console.log(msg);
@@ -49,15 +60,15 @@ const input = $("#textInput");
 input.on("keydown", event => {
 	if (event.originalEvent.code === "Enter") {
 		input.val(input.val().slice(0, 16));
-		ws.emit([
-			"signIn",
+		ws.send(JSON.stringify([
+			"SPAWN",
 			{
 				name: input.val(),
 				tank: "basic",
 				width: 0,
 				height: 0,
 			},
-		]);
+		]));
 	}
 });
 
@@ -65,8 +76,23 @@ const ctx = canvas.get(0).getContext("2d");
 function render() {
 	ctx.clearRect(0, 0, canvas.attr("width"), canvas.attr("height"));
 
-	if (inGame) {
+	if (inGame && selfID !== null) {
 		input.css("display", "none");
+
+		funcs.grid(ctx, 0, 0, canvas.attr("width"), canvas.attr("height"));
+
+		ctx.fillStyle = "black";
+		entities.forEach(entity => {
+			if (entity === null) return;
+
+			const x = entity.position.x - entities[selfID].position.x + canvas.attr("width") / 2;
+			const y = entity.position.y - entities[selfID].position.y + canvas.attr("height") / 2;
+
+			ctx.fillRect(x - 12.5, y - 12.5, 25, 25);
+			funcs.drawText(ctx, x, y - 30, entity.name || "an unnamed tank", 20);
+
+			ctx.restore();
+		});
 	} else {
 		funcs.grid(ctx, 0, 0, canvas.attr("width"), canvas.attr("height"));
 
