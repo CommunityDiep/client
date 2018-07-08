@@ -6,13 +6,18 @@
         "eslint-plugin-extra-rules": "0.0.0-development",
         "eslint-plugin-html": "^4.0.5",
         "eslint-plugin-json": "^1.2.0",
-        "eslint-plugin-unicorn": "^4.0.3"
+        "eslint-plugin-unicorn": "^4.0.3",
+        "jsdoc": "^3.5.5",
+        "minami": "^1.2.3"
     },
     "dependencies": {
         "browserify-middleware": "^8.1.1",
         "express": "^4.16.3",
         "jquery-browserify": "^1.8.1",
         "ws": "^5.2.1"
+    },
+    "scripts": {
+        "docs": "jsdoc ./src -t node_modules/minami"
     },
     "main": "webserver.js"
 }

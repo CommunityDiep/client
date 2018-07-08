@@ -2,14 +2,22 @@ const funcs = require("./functions.js");
 
 const $ = require("jquery-browserify");
 
+/**
+ * The websocket connection to the server.
+ */
 const ws = new WebSocket("ws://localhost:8080/");
 
 const canvas = $("#main");
 canvas.contextmenu(event => event.preventDefault());
 
+/**
+ * Adjusts the canvas size to fit the window.
+ */
 function resize() {
 	canvas.attr("width", window.innerWidth);
 	canvas.attr("height", window.innerHeight);
+
+	return [window.innerWidth, window.innerHeight];
 }
 
 window.addEventListener("resize", resize);
@@ -23,10 +31,12 @@ window.addEventListener("load", () => {
 let inGame = false;
 let isConnected = false;
 
-let tanks = {};
-
 let entities = [];
 let selfID = null;
+
+function getSelf() {
+	return entities.filter(entity => entity.id === selfID)[0];
+}
 
 ws.addEventListener("open", () => {
 	isConnected = true;
@@ -43,22 +53,18 @@ ws.addEventListener("message", event => {
 			break;
 		case "UPDATE":
 			entities = msg[1];
-			console.log(entities);
 			break;
 		case "SPAWN_RESPONSE":
-			console.log(msg);
 			selfID = msg[1];
 			inGame = true;
 
 			break;
-		default:
-			console.log(msg);
 	}
 });
 
 const input = $("#textInput");
 input.on("keydown", event => {
-	if (event.originalEvent.code === "Enter") {
+	if (event.keyCode === 13) {
 		input.val(input.val().slice(0, 16));
 		ws.send(JSON.stringify([
 			"SPAWN",
@@ -72,7 +78,38 @@ input.on("keydown", event => {
 	}
 });
 
+let isFiring = false;
+window.addEventListener("keydown", () => {
+	switch (event.keyCode) {
+		case 13:
+		case 32:
+			ws.send("[\"IS_FIRING\", true]");
+			break;
+		case 69:
+			isFiring = !isFiring;
+			ws.send(JSON.stringify(["IS_FIRING", isFiring]));
+
+			break;
+	}
+});
+window.addEventListener("keyup", () => {
+	switch (event.keyCode) {
+		case 13:
+		case 32:
+			ws.send("[\"IS_FIRING\", false]");
+			break;
+	}
+});
+
+/**
+ * The canvas context.
+ * @type {CanvasRenderingContext2D}
+ */
 const ctx = canvas.get(0).getContext("2d");
+
+/**
+ * Renders the game.
+ */
 function render() {
 	ctx.clearRect(0, 0, canvas.attr("width"), canvas.attr("height"));
 
@@ -85,11 +122,11 @@ function render() {
 		entities.forEach(entity => {
 			if (entity === null) return;
 
-			const x = entity.position.x - entities[selfID].position.x + canvas.attr("width") / 2;
-			const y = entity.position.y - entities[selfID].position.y + canvas.attr("height") / 2;
+			const x = entity.position.x - getSelf().position.x + canvas.attr("width") / 2;
+			const y = entity.position.y - getSelf().position.y + canvas.attr("height") / 2;
 
-			ctx.fillRect(x - 12.5, y - 12.5, 25, 25);
-			funcs.drawText(ctx, x, y - 30, entity.name || "an unnamed tank", 20);
+			funcs.drawTank(ctx, x, y, entity.angle, 15, "black", [], 0);
+			funcs.drawText(ctx, x, y - 30, entity.name || "", 20);
 
 			ctx.restore();
 		});
