@@ -19,6 +19,16 @@ module.exports.grid = (ctx, x = 0, y = 0, width, height, slotSize = 24, fillColo
 };
 
 /**
+ * Gets the angle from the center of the screen.
+ * @param {number} centerX The horizontal center coordinate of the screen.
+ * @param {number} centerY The vertical center coordinate of the screen.
+ * @param {MouseEvent} event The event.
+ */
+module.exports.getAngle = (centerX, centerY, event) => {
+	return Math.atan2(centerX - event.clientX, centerY - event.clientY);
+};
+
+/**
  * Draws text.
  * @param {CanvasRenderingContext2D} ctx The canvas context to render the text on.
  * @param {number} x The X coordinate to render the text on.
@@ -51,6 +61,15 @@ module.exports.drawText = (ctx, x = 0, y = 0, text, size) => {
 function degToRad(deg) {
 	return deg * (Math.PI / 180);
 }
+
+/**
+ * Converts radians to degrees.
+ * @param {number} rad
+ * @returns {number}
+ */
+module.exports.radToDeg = rad => {
+	return rad * 180 / Math.PI;
+};
 
 /**
  * Draws a tank at a position on a canvas.

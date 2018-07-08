@@ -121,6 +121,13 @@ window.addEventListener("keyup", () => {
 	}
 });
 
+window.addEventListener("mousemove", event => {
+	ws.send(JSON.stringify([
+		"ROTATION",
+		funcs.radToDeg(funcs.getAngle(canvas.attr("width") / 2, canvas.attr("height") / 2, event)),
+	]));
+});
+
 /**
  * The canvas context.
  * @type {CanvasRenderingContext2D}
@@ -145,7 +152,14 @@ function render() {
 			const x = entity.position.x - getSelf().position.x + canvas.attr("width") / 2;
 			const y = entity.position.y - getSelf().position.y + canvas.attr("height") / 2;
 
-			funcs.drawTank(ctx, x, y, entity.angle, 15, "black", [], 0);
+			funcs.drawTank(ctx, x, y, entity.angle + 90, 15, "black", [
+				{
+					barrelType: 0,
+					width: 20,
+					length: 48,
+					offsetX: 0,
+				},
+			], 0);
 			funcs.drawText(ctx, x, y - 30, entity.name || "", 20);
 
 			ctx.restore();
